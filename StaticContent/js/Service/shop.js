@@ -81,3 +81,12 @@ function TxtFormat(text, parameter) {
     //返回结果集
     return text;
 }
+
+//提示框弹出
+function NotifyAlert(txtMsg, time) {
+    var timeOut = 1500;
+    if (time) {
+        timeOut = time;
+    }
+    UIkit.notify(txtMsg, { timeout: timeOut });
+}

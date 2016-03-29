@@ -1,0 +1,17 @@
+﻿.b {
+    margin: 0px;
+    padding: 0px;
+    overflow: auto;
+}
+
+.w {
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border: 2px groove #f5f5f5;
+    cursor: default;
+    -moz-user-select: none;
+}

@@ -16,8 +16,20 @@
         }
 
         .uk-button:focus, .uk-button:hover {
-            background-color: white;
-            color: #ff5000;
+            background-color: none;
+            color: white;
+        }
+
+        .spc {
+            position: absolute;
+            right: 10px;
+            bottom: 40%;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            cursor: default;
+            -moz-user-select: none;
+            z-index: 999;
         }
     </style>
 }
@@ -230,7 +242,8 @@
         </div>
     </div>
 </div>
-
+<div class="spc" id="dShopCart" style="background-image: url('/StaticContent/image/public/shopping-cart.png');height:100px;width:100px;background-position:800px -200px;">
+</div>
 <input type="hidden" value="@Model.SCommodityInfo.StoreID" id="hStoreID" />
 
 @section LayoutShop{
@@ -256,6 +269,21 @@
         $(function () {
             //事件初始化
             BindEvent();
+
+            //悬浮代码如下：
+            new function (w, b, c, d, o) { // www.jquerycn.cn
+                d = document;
+                b = d.body;
+                o = b.childNodes;
+                c = "className";
+                b.appendChild(w = d.createElement("div"))[c] = "b";
+                for (var i = 0; i < o.length - 1; i++)
+                    if (o[i][c] != "spc") w.appendChild(o[i]), i--;
+                (window.onresize = function () {
+                    w.style.width = d.documentElement.clientWidth + "px";
+                    w.style.height = d.documentElement.clientHeight + "px";
+                })();
+            }; // suspend function end
         });
 
         //自定义方法区
@@ -306,12 +334,14 @@
                                     return false;
                                 }
                                 else {
-                                    alert('提交失败！请重新操作！');
+                                    NotifyAlert('提交失败！请重新操作！');
+                                    //alert();
                                 }
                             });
                     },
                     function () {
-                        alert('提交失败！请重新操作！');
+                        NotifyAlert('提交失败！请重新操作！');
+                        //alert('提交失败！请重新操作！');
                         window.location.href = '/WeShop/Main';
                     });
             });
@@ -339,10 +369,25 @@
                             beOrderLine.TotalPrice = $('#showOrderPrice').text().substr(1);
                         }
 
-                        TakeOrderOpe('addShop', par);
+                        TakeOrderOpe('addShop', par, function (vResult) {
+                            if (vResult && vResult.Flag) {
+
+                                NotifyAlert('加入购物车成功！');
+
+                                //var vBeOrderID = vResult.BeOrderID;
+                                //window.location.href = '/WeShop/PayAddressInfo/' + vBeOrderID;
+                                return false;
+                            }
+                            else {
+                                NotifyAlert('提交失败！请重新操作！');
+                                //alert();
+                            }
+                        });
                     },
                     function () { //失败
-
+                        NotifyAlert('提交失败！请重新操作！');
+                        //alert('提交失败！请重新操作！');
+                        window.location.href = '/WeShop/Main';
                     });
             });
 
@@ -378,6 +423,11 @@
                 btnCountChangeOpe('plus', btnCount, showPrice);
             });
 
+            //悬浮购物车按钮事件
+            $('#dShopCart').click(function () {
+                //跳转到购物车页面
+                window.location.href = "/WeShop/ShoppingList";
+            });
         }
 
         //规格按钮事件绑定
@@ -400,7 +450,8 @@
                     return uid;
                 }
                 else {
-                    alert('请选择规格！');
+                    NotifyAlert('请选择规格！');
+                    //alert('请选择规格！');
                     return false;
                 }
             }

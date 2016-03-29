@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "智种商城——店铺主页";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+@section LayoutHead{
+    <style type="text/css">
+        body {
+            background: #eee;
+        }
+    </style>
+}
+
+<div style="height:100%;width:100%;">
+    <div uRemark="头部|图片滑动">
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper shop-img">
+                <div class="swiper-slide">
+                    <a href="http://101.200.140.102:8123/zzwIntro.html">
+                        <img src="~/StaticContent/image/swiper/swpNa.jpg" alt="">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="http://101.200.140.102:8123/zzwIntro.html">
+                        <img src="~/StaticContent/image/swiper/swpNb.jpg" alt="">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="http://101.200.140.102:8123/zzwIntro.html">
+                        <img src="~/StaticContent/image/swiper/swpNc.jpg" alt="">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="http://101.200.140.102:8123/zzwIntro.html">
+                        <img src="~/StaticContent/image/swiper/swpNd.jpg" alt="">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="http://101.200.140.102:8123/zzwIntro.html">
+                        <img src="~/StaticContent/image/swiper/swpNe.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <br />
+    <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#f8f8f8;">
+        <br />
+        <div uRemark="搜素" class="uk-container-center">
+            <input type="text" placeholder="商品搜索：清输入商品关键字" class="uk-form-large" style="width:100%;font-size:48px;">
+        </div>
+        <br />
+
+        <div uRemark="模块" class="uk-grid">
+
+            @{
+                foreach (var item in ViewBag.listNa)
+                {
+                    <div class="uk-width-medium-1-2 shop-module" onclick="window.location.href = '/WeShop/CommodityList/@item.MID/@item.Title';">
+                        <div class="uk-cover-background uk-position-relative" style="height: 487px; background-image: url(../@item.Photo);">
+                        </div>
+                    </div>
+                }
+            }
+            <div class="uk-width-1-1" style="height:25px;"></div>
+        </div>
+        <br />
+        <div uRemark="推荐">
+            <div class="uk-grid">
+                <div class="uk-width-medium-1-2 uk-text-left">
+                    <span class="uk-text-large uk-text-bold mobile-font" style="color:#4E4E4E;">最热商品</span>
+                </div>
+                <div class="uk-width-medium-1-2 uk-text-right">
+                    <span class="uk-text-large uk-text-bold uk-text-right mobile-font"><a href="02CommodityInfo.html" style="color:#4E4E4E;">查看全部></a></span>
+                </div>
+            </div>
+            <div class="uk-width-1-1" style="height:25px;"></div>
+        </div>
+        <br />
+        <div uRemark="商品列表" class="uk-grid">
+            @{
+                foreach (var item in ViewBag.listNb)
+                {
+                    <div class="uk-width-medium-1-2">
+                        <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                            <a href="/WeShop/CommodityInfo/@item.ID">
+                                <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
+                                <p>
+                                    <h1>@item.Title</h1>
+                                </p>
+                                <h1 style="color:red;">￥@item.Price</h1>
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="uk-width-1-1" style="height:25px;"></div>
+        </div>
+    </div>
+</div>
+
+
+
+@section LayoutShop{
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false
+        });
+
+        $(function () {
+
+        })
+
+        //自定义方法区
+
+        //事件绑定
+        function BindEvent() {
+
+        }
+    </script>
+}
+

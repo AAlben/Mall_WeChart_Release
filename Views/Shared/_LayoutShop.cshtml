@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/StaticContent/css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/StaticContent/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/StaticContent/css/sticky.min.css" />
+
+    <link href="~/StaticContent/css/WeShop.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/StaticContent/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="~/StaticContent/js/swiper.min.js"></script>
+    <script type="text/javascript" src="~/StaticContent/js/uikit.min.js"></script>
+    <script type="text/javascript" src="~/StaticContent/js/sticky.min.js"></script>
+
+    <script src="~/StaticContent/js/Service/shop.js"></script>
+
+    @RenderSection("LayoutHead", required: false)
+
+</head>
+<body>
+
+    @RenderBody()
+
+    @RenderSection("LayoutShop", required: false)
+</body>
+</html>

@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "确认地址";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+@section LayoutHead{
+    <style type="text/css">
+        h1 {
+            font-size: 50px;
+        }
+    </style>
+}
+
+<script type="text/javascript">
+
+    //获取共享地址
+    function editAddress() {
+        var vWxEditAddrParam = {};
+
+        $.getJSON('/WeShop/PayAddressContent', { r: Math.random() }, function (data) {
+            if (data) { vWxEditAddrParam = data; }
+        }).done(function () {
+
+            WeixinJSBridge.invoke(
+                'editAddress',
+                vWxEditAddrParam,//josn串
+                  function (res) {
+                      var addr1 = res.proviceFirstStageName;
+                      var addr2 = res.addressCitySecondStageName;
+                      var addr3 = res.addressCountiesThirdStageName;
+                      var addr4 = res.addressDetailInfo;
+                      var tel = res.telNumber;
+                      var addr = addr1 + addr2 + addr3 + addr4;
+                      var vName = res.userName;
+                      //alert(addr + ":" + tel);
+
+                      //var vPar = JSON.stringify(res);
+                      //$.get('/Test/TestNg', { id: vPar }, function (data) { });
+
+                      //数据展示
+                      $('#hAddr').text('收货地址：' + addr);
+                      $('#hPhone').text('联系电话：' + tel);
+                      $('#hName').text('收货人：' + vName);
+                  }
+              );
+        });
+    }
+
+    window.onload = function () {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+            }
+            else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', editAddress);
+                document.attachEvent('onWeixinJSBridgeReady', editAddress);
+            }
+        }
+        else {
+            editAddress();
+        }
+    };
+
+    //自定义方法区
+    //立即支付按钮事件
+    function btnPayApply() {
+        var vOpenID = '@Session["openid"]';
+        var total_fee = '@ViewBag.TotalPrice';
+
+        //1.带参数的页面跳转
+        window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}', [vOpenID, total_fee]);
+    }
+</script>
+
+<div class="uk-container page-body">
+
+    <div uRemark="address" class="uk-block bgWhite shop-item uk-vertical-align">
+        <div class="uk-grid">
+            <div class="uk-width-medium-1-6">
+                <div class="uk-icon-map-marker uk-vertical-align-middle uk-align-center" style="font-size:70px;margin-top:50px;margin-left:50px;"></div>
+            </div>
+            <div class="uk-width-medium-4-6 " style="margin-right:auto;">
+                <h1 class="txt-add" id="hName">收货人：</h1>
+                <h1 class="txt-add" id="hPhone">联系电话：</h1>
+                <h1 class="txt-add" id="hAddr" style="line-height:50px;">收货地址：</h1>
+            </div>
+            <div class="uk-width-medium-1-6 ">
+                <div class="uk-icon-angle-right uk-float-right uk-vertical-align-middle" style="font-size:70px;margin-top:50px;margin-right:50px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="uk-width-1-1" style="height:25px;"></div>
+    <div uRemark="CommodityInfo">
+        <div class="bgWhite shop-item">
+            <br />
+            <h1>店铺：@ViewBag.StoreName</h1>
+            <br />
+            @{
+                foreach (var vItem in ViewBag.BeOrderLine)
+                {
+                    <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv">
+                        <img src="image/info/infoNb.jpg" alt="" class="uk-thumbnail uk-width-medium-2-10">
+                        <h2 class="uk-width-medium-5-10 uk-text-break">@vItem.Title</h2>
+                        <div class="uk-width-medium-2-10 mobile-font">
+                            <h1 style="color:red;">￥@vItem.RealUnitPrice</h1>
+                            <h1 style="color:red;">×@vItem.Count</h1>
+                        </div>
+                    </div>
+                }
+            }
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">运费</h1>
+                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px;">￥0.0</h1>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <div class="uk-width-medium-1-10"></div>
+                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:100px;font-size:24px;">
+                <div class="uk-width-medium-1-10"></div>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">合计</h1>
+                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px;color:red;">￥0.0</h1>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">优惠</h1>
+                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px">无可用优惠</h1>
+                <br />
+                <div class="uk-width-1-1" style="height:25px;"></div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div uRemark="price" class="bgWhite shop-item uk-text-center">
+        <br />
+        <h1>￥@ViewBag.TotalPrice + ￥0.00运费</h1>
+        <h1 style="color:red;">需付：￥@ViewBag.TotalPrice</h1>
+        <br />
+    </div>
+    <br />
+    <div uRemark="button">
+        <div class="uk-width-medium-1-1">
+            <a href="javascript:;" onclick="btnPayApply();" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#00CD00;line-height:120px;">微信安全支付</a>
+        </div>
+    </div>
+    <br />
+    <div style="height:50px"></div>
+</div>
+

@@ -1,0 +1,156 @@
+﻿html,
+body {
+    position: relative;
+    height: 100%;
+}
+
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 48px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 20%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.mobile-font {
+    font-size: 48px;
+}
+
+.uk-panel-box-primary {
+    background-color: #FFFFFF;
+}
+
+
+.mobile-shopItem {
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.zzw-color {
+    color: #FF0000;
+}
+
+.uk-panel-box-primary {
+    background-color: #FFFFFF;
+}
+
+.mobile-button {
+    height: 120px;
+    color: white;
+    font-size: 48px;
+}
+
+.mobile-redirectButton {
+    width: 100%;
+    border: solid 1px black;
+    background-color: white;
+    height: 120px;
+}
+
+.mobile-HomeBtn {
+    width: 100%;
+    border: solid 1px white;
+    background-color: #FF0000;
+    color: white;
+    height: 120px;
+}
+
+.mobile-radio {
+    width: 40px;
+    height: 40px;
+}
+
+.shop-img {
+    min-height: 560px;
+}
+
+.shop-item {
+    border: 3px solid #e5e5e5;
+}
+
+.shop-module {
+    height: 500px;
+}
+
+.module-imgDiv {
+    line-height: 100px;
+    font-weight: 900;
+}
+
+hr {
+    border: 1px solid #eee;
+}
+
+.br-box {
+    background-color: #F8F8F8;
+    border-top: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+}
+
+.swp-img {
+    height: 800px;
+}
+
+.uk-modal-dialog {
+    width: 100%;
+    margin: 78% auto;
+    height: 50%;
+}
+
+.commodity-type {
+    font-size: 36px;
+    line-height: 42px;
+    height: 90px;
+    margin-right: 50px;
+    width: auto;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.commodity-count {
+    font-size: 36px;
+    line-height: 42px;
+    height: 90px;
+    width: 130px;
+    margin: 0px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.option-cur {
+    border: 4px solid #ff5000;
+    background-color: white;
+    color: #ff5000;
+}
+
+.active {
+    border-bottom: 2px solid #F15A0C;
+}
+
+    .active h1 {
+        color: #F15A0C;
+    }

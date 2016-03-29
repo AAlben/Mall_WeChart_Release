@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "收货地址共享";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<input type="button" ID="Button1" value="立即购买" style="width:210px; height:50px; border-radius: 15px;background-color:#00CD00; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" OnClick="btnPayOpe();" />
+
+@section LayoutShop{
+    <script type="text/javascript">
+        //获取共享地址
+        function editAddress() {
+            WeixinJSBridge.invoke(
+                'editAddress',
+                '@ViewBag.wxEditAddrParam',//josn串
+                  function (res) {
+                      var addr1 = res.proviceFirstStageName;
+                      var addr2 = res.addressCitySecondStageName;
+                      var addr3 = res.addressCountiesThirdStageName;
+                      var addr4 = res.addressDetailInfo;
+                      var tel = res.telNumber;
+                      var addr = addr1 + addr2 + addr3 + addr4;
+                      alert(addr + ":" + tel);
+                  }
+              );
+        }
+
+        window.onload = function () {
+            if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+                }
+                else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', editAddress);
+                    document.attachEvent('onWeixinJSBridgeReady', editAddress);
+                }
+            }
+            else {
+                editAddress();
+            }
+        };
+
+        //自定义方法区
+
+        function btnPayOpe() {
+
+            return false;
+
+            var total_free = '1';
+            var openID = '@ViewBag.OpenID';
+            var url = "http://paysdk.weixin.qq.com/example/JsApiPayPage.aspx?openid=" + openID + "&total_fee=" + total_fee;
+            window.location.href = url;
+        }
+    </script>
+}
+
+

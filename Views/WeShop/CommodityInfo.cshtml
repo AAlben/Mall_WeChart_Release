@@ -1,0 +1,431 @@
+﻿@model ZZSCModel.Service.CommodityServiceInfo
+
+@{
+    ViewBag.Title = Model.SCommodityInfo.Title;
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+@section LayoutHead{
+    <style>
+        body {
+            background-color: none;
+        }
+
+        h1 {
+            font-size: 50px;
+        }
+
+        .uk-button:focus, .uk-button:hover {
+            background-color: white;
+            color: #ff5000;
+        }
+    </style>
+}
+
+
+
+<div class="ui-container">
+    <!-- <div uRemark="头部" data-uk-sticky>
+        <div class="uk-panel uk-panel-box uk-grid" style="background-color:white;">
+            <div class="uk-width-medium-1-2">
+                <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#ff5000;">立即购买</button>
+            </div>
+            <div class="uk-width-medium-1-2">
+                <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#ff9402;">加入购物车</button>
+            </div>
+        </div>
+    </div>
+    <div uRemark="swiper"> -->
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            @if (Model.SDicPhoto.ContainsKey(2))
+            {
+                foreach (var item in Model.SDicPhoto[2])
+                {
+                    <div class="swiper-slide">
+                        <a href="javascript:;" target="_blank">
+                            <img src="~/@item" alt="" class="swp-img" />
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+    <br />
+</div>
+<div uRemark="介绍1" class="uk-article" style="background-color:white;">
+    @{
+        <h1>@Model.SCommodityInfo.Title</h1>
+        <hr />
+        <h1 style="color:red;">￥@Model.SCommodityPriceInterVal</h1>
+        <hr />
+        <h1>运费：@Model.SPostType</h1>
+        <br />
+    }
+</div>
+<div class="br-box">
+    <br />
+</div>
+<div class="uk-panel uk-panel-box uk-grid" style="background-color:white;">
+    <div class="uk-width-medium-1-2">
+        <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#ff5000;" id="btnTakeOrder" data-uk-modal="{target:'#modalTakeOrder'}">立即购买</button>
+    </div>
+    <div class="uk-width-medium-1-2">
+        <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#ff9402;" id="btnTakeShopOrder" data-uk-modal="{target:'#modalAddShop'}">加入购物车</button>
+    </div>
+</div>
+<div class="uk-block" uRemark="整体介绍" style="padding-top:0px;">
+    <div uRemark="跳转" class="uk-grid uk-panel uk-panel-box" style="background-color:white;">
+        <div class="uk-width-medium-1-2">
+            <button class="uk-button uk-button-large uk-width-1-1 uk-icon-home mobile-font mobile-HomeBtn" type="button" onclick="window.location.href = '/WeShop/Main';">智种网</button>
+        </div>
+        <div class="uk-width-medium-1-2">
+            <button class="uk-button uk-button-large uk-width-1-1 uk-icon-share mobile-font mobile-redirectButton" type="button" onclick="window.location.href = '/WeShop/Main';">进入店铺</button>
+        </div>
+    </div>
+    <div class="br-box">
+        <br />
+    </div>
+    <div rRemark="介绍" class="uk-block">
+        @if (Model.SDicPhoto.ContainsKey(3))
+        {
+            foreach (var item in Model.SDicPhoto[3])
+            {
+                <img src="~/@item" alt="" class="uk-thumbnail shop-img uk-align-center ">
+                <br />
+            }
+        }
+        <div class="uk-article">
+            <h1 class="uk-article-title">@Model.SCommodityInfo.Intro</h1>
+            <br />
+        </div>
+        <br />
+        <button class="uk-button uk-width-1-1 mobile-font" style="height:60px;border:1px solid #444;color:black;">继续阅读</button>
+    </div>
+</div>
+<div uRemark="底部" data-uk-sticky class="uk-grid">
+</div>
+
+<div id="modalTakeOrder" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header uk-grid">
+            <div class="uk-width-2-6">
+                @if (Model.SDicPhoto.ContainsKey(4))
+                {
+                    <img class="uk-thumbnail" src="~/@Model.SDicPhoto[4]" alt="">
+                }
+                else
+                {
+                    <img class="uk-thumbnail" src="" alt="">
+                }
+            </div>
+            <div class="uk-width-3-6">
+                <h1 style="font-size:36px;">@Model.SCommodityInfo.Title</h1>
+                <h1 style="color:red;font-size:36px;" id="showOrderPrice">￥@Model.SCommodityPriceInterVal</h1>
+            </div>
+            <div class="uk-width-1-6">
+                <a href="" class="uk-icon-hover uk-icon-close uk-modal-close uk-float-right" style="font-size:100px;"></a>
+            </div>
+        </div>
+        <div class="br-box">
+            <br />
+        </div>
+        @if (Model.SCommdityOptionInfo.Count() > 0)
+        {
+            <div class="uk-width-1-1">
+                <br />
+                <h1>规格：</h1>
+            </div>
+            <div class="uk-flex" id="dCommoOptionBeOrder" uid="" uPrice="0">
+                @foreach (var vItem in Model.SCommdityOptionInfo)
+                {
+                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
+                }
+            </div>
+            <br />
+            <div class="br-box">
+                <br />
+            </div>
+        }
+        <br />
+        <div class="uk-grid">
+            <h1 class="uk-width-1-4">数量:</h1>
+            <div class="uk-width-1-4"></div>
+            <div class="uk-width-2-4 uk-float-right">
+                <button class="uk-button commodity-count" id="btnOrderCountSub">-</button>
+                <button class="uk-button commodity-count" disabled="disabled" id="btnOrderCount">1</button>
+                <button class="uk-button commodity-count" id="btnOrderCountPlus">+</button>
+            </div>
+        </div>
+        <br />
+        <div class="br-box">
+            <br />
+        </div>
+        <div class="uk-modal-footer">
+            <button type="button" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#ff5000;" id="btnOrderNext">下一步</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalAddShop" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header uk-grid">
+            <div class="uk-width-2-6">
+                @if (Model.SDicPhoto.ContainsKey(4))
+                {
+                    <img class="uk-thumbnail" src="~/@Model.SDicPhoto[4]" alt="">
+                }
+                else
+                {
+                    <img class="uk-thumbnail" src="" alt="">
+                }
+            </div>
+            <div class="uk-width-3-6">
+                <h1 style="font-size:36px;">@Model.SCommodityInfo.Title</h1>
+                <h1 style="color:red;font-size:36px;" id="showShopPrice">￥@Model.SCommodityPriceInterVal</h1>
+            </div>
+            <div class="uk-width-1-6">
+                <a href="" class="uk-icon-hover uk-icon-close uk-modal-close uk-float-right" style="font-size:100px;"></a>
+            </div>
+        </div>
+        <div class="br-box">
+            <br />
+        </div>
+        @if (Model.SCommdityOptionInfo.Count() > 0)
+        {
+            <div class="uk-width-1-1">
+                <br />
+                <h1>规格：</h1>
+            </div>
+            <div class="uk-flex" id="dCommoOptionShop" uid="" uPrice="0">
+                @foreach (var vItem in Model.SCommdityOptionInfo)
+                {
+                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('shop');">@vItem.Name</button>
+                }
+            </div>
+            <br />
+            <div class="br-box">
+                <br />
+            </div>
+        }
+        <br />
+        <div class="uk-grid">
+            <h1 class="uk-width-1-4">数量:</h1>
+            <div class="uk-width-1-4"></div>
+            <div class="uk-width-2-4 uk-float-right">
+                <button class="uk-button commodity-count" id="btnShopCountSub">-</button>
+                <button class="uk-button commodity-count" disabled="disabled" id="btnShopCount">1</button>
+                <button class="uk-button commodity-count" id="btnShopCountPlus">+</button>
+            </div>
+        </div>
+        <br />
+        <div class="br-box">
+            <br />
+        </div>
+        <div class="uk-modal-footer">
+            <button type="button" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#ff5000;" id="btnAddShop">加入购物车</button>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" value="@Model.SCommodityInfo.StoreID" id="hStoreID" />
+
+@section LayoutShop{
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false,
+            height: 800
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        //公共参数
+        var vCommodityID = '@Model.SCommodityInfo.ID';
+
+        $(function () {
+            //事件初始化
+            BindEvent();
+        });
+
+        //自定义方法区
+
+        //事件绑定
+        function BindEvent() {
+            //按钮事件绑定
+
+            //立即购买 - 下一步按钮事件
+            $('#btnOrderNext').click(function () {
+
+                //Check Post Value
+                if (!CheckOpeBtn($('#dCommoOptionBeOrder'))) { return false; }
+
+                //Result Data
+                var vResult = null;
+
+                var token = '';
+                var tokenResult = RequestZZSCToken('beOrder',
+                    function (token) { //校验成功
+                        //准备参数
+                        var par = { beOrderInfo: {}, beOrderLineList: [] };
+                        var beOrderInfo = {};
+                        var beOrderLine = {};
+
+                        beOrderLine.Count = $('#btnOrderCount').text();
+                        beOrderLine.CommodityID = vCommodityID;
+
+                        var vdCommodityOption = $('#dCommoOptionBeOrder');
+                        if (vdCommodityOption && vdCommodityOption.length > 0) {
+                            beOrderLine.CommodityOptionID = vdCommodityOption.attr('uid');
+                            beOrderLine.UnitPrice = vdCommodityOption.attr('uPrice');
+                            beOrderLine.RealUnitPrice = vdCommodityOption.attr('uPrice');
+                            beOrderLine.TotalPrice = parseInt(beOrderLine.Count) * parseFloat(beOrderLine.RealUnitPrice);
+                        }
+                        else {
+                            beOrderLine.TotalPrice = $('#showOrderPrice').text().substr(1);
+                        }
+                        par.beOrderInfo.StoreID = $('#hStoreID').val();
+                        par.beOrderLineList = [beOrderLine];
+
+                        //提交
+                        TakeOrderOpe('placeOrder', par,
+                            function (vResult) {
+                                if (vResult && vResult.Flag) {
+                                    var vBeOrderID = vResult.BeOrderID;
+                                    window.location.href = '/WeShop/PayAddressInfo/' + vBeOrderID;
+                                    return false;
+                                }
+                                else {
+                                    alert('提交失败！请重新操作！');
+                                }
+                            });
+                    },
+                    function () {
+                        alert('提交失败！请重新操作！');
+                        window.location.href = '/WeShop/Main';
+                    });
+            });
+
+            //加入购物车 - 业务提交按钮事件
+            $('#btnAddShop').click(function () {
+                //Check Post Value
+                if (!CheckOpeBtn($('#dCommoOptionShop'))) { return false; }
+
+                var token = '';
+                var tokenResult = RequestZZSCToken('shopOrder',
+                    function (token) { //校验成功
+                        var par = {};
+                        par.Count = $('#btnShopCount').text();
+                        par.CommodityID = vCommodityID;
+                        par.StoreID = $('#hStoreID').val();
+
+                        var vdCommodityOption = $('#dCommoOptionShop');
+                        if (vdCommodityOption && vdCommodityOption.length > 0) {
+                            par.CommodityOptionID = vdCommodityOption.attr('uid');
+                            par.Price = vdCommodityOption.attr('uPrice');
+                            par.RealPrice = vdCommodityOption.attr('uPrice');
+                        }
+                        else {
+                            beOrderLine.TotalPrice = $('#showOrderPrice').text().substr(1);
+                        }
+
+                        TakeOrderOpe('addShop', par);
+                    },
+                    function () { //失败
+
+                    });
+            });
+
+            //立即购买 - Count相关按钮事件
+            $('#btnOrderCountSub').click(function () {
+                var btnCount = $('#btnOrderCount');
+                var showPrice = $('#showOrderPrice');
+
+                btnCountChangeOpe('sub', btnCount, showPrice);
+            });
+
+            //立即购买 - Count相关按钮事件
+            $('#btnOrderCountPlus').click(function () {
+                var btnCount = $('#btnOrderCount');
+                var showPrice = $('#showOrderPrice');
+
+                btnCountChangeOpe('plus', btnCount, showPrice);
+            });
+
+            //加入购物车 - Count相关按钮事件
+            $('#btnShopCountSub').click(function () {
+                var btnCount = $('#btnShopCount');
+                var showPrice = $('#showShopPrice');
+
+                btnCountChangeOpe('sub', btnCount, showPrice);
+            });
+
+            //加入购物车 - Count相关按钮事件
+            $('#btnShopCountPlus').click(function () {
+                var btnCount = $('#btnShopCount');
+                var showPrice = $('#showShopPrice');
+
+                btnCountChangeOpe('plus', btnCount, showPrice);
+            });
+
+        }
+
+        //规格按钮事件绑定
+        function btnOptionClick(type) {
+            var vItem = $(event.target);
+
+            //样式操作
+            vItem.addClass('option-cur');
+            vItem.siblings('button').removeClass('option-cur');
+            //数据赋值操作
+            if (type == 'beOrder') { $('#dCommoOptionBeOrder').attr('uid', vItem.attr('uid')).attr('uPrice', vItem.attr('uPrice')); $('#showOrderPrice').text('￥' + vItem.attr('uPrice')); }
+            else { $('#dCommoOptionShop').attr('uid', vItem.attr('uid')).attr('uPrice', vItem.attr('uPrice')); $('#showShopPrice').text('￥' + vItem.attr('uPrice')); }
+        }
+
+        //校验 - 立即购买按钮，内容
+        function CheckOpeBtn(itemOptionBtn) {
+            if (itemOptionBtn.length != 0) { //存在商品规格
+                var uid = itemOptionBtn.attr('uid');
+                if (uid) {
+                    return uid;
+                }
+                else {
+                    alert('请选择规格！');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //商品个数增减按钮事件实现
+        function btnCountChangeOpe(opeType, btnCount, showPrice) {
+            var orderCount = btnCount.text();
+
+            if (opeType == 'sub' && orderCount == '1') {
+                return false;
+            }
+
+            var count = parseInt(orderCount);
+            var price = parseFloat(showPrice.text().substr(1));
+            var orgPrice = price / count;
+
+            if (opeType == 'sub') { count = count - 1; }
+            else { count = count + 1; }
+            btnCount.text(count);
+
+            price = orgPrice * count;
+            showPrice.text('￥' + price);
+        }
+    </script>
+}
+

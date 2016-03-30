@@ -1,0 +1,304 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width;charset=utf-8" />
+    <title></title>
+    <script src="~/StaticContent/js/uploadify/jquery-1.8.2.js"></script>
+    <link href="~/StaticContent/js/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/StaticContent/js/uploadify/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+
+     $(function () {
+         $("#file_upload").uploadify({
+             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+             uploader: '/Admin/Upload?type=1',    // 服务器端处理地址
+             //显示参数
+             width: 80,                   // 按钮的宽度
+             height: 24,                  // 按钮的高度
+             buttonText: "浏览",      // 按钮上的文字
+             buttonCursor: "hand",        // 按钮的鼠标图标
+             buttonClass: "up_button2",
+             fileObjName: 'Filedata',     // 上传参数名称
+             //规则参数
+             fileSizeLimit: "5000KB",
+             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+             fileSizeLimit: "2MB",         //允许上传的文件大小
+             multi: true,                 // 是否支持同时上传多个文件
+             removeTimeout: 1,
+             onUploadSuccess: function (file, data, respose) {
+                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
+                 if (obj.ret) {
+                     $("#SltTxt").val(obj.FilePath);
+                 }
+                 else {
+                     alert(obj.message);
+                 }
+
+             }
+         });
+         $("#file_upload1").uploadify({
+             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+             uploader: '/Admin/Upload?type=2',    // 服务器端处理地址
+             //显示参数
+             width: 80,                   // 按钮的宽度
+             height: 24,                  // 按钮的高度
+             buttonText: "浏览",      // 按钮上的文字
+             buttonCursor: "hand",        // 按钮的鼠标图标
+             buttonClass: "up_button2",
+             fileObjName: 'Filedata',     // 上传参数名称
+             //规则参数
+             fileSizeLimit: "5000KB",
+             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+             fileSizeLimit: "2MB",         //允许上传的文件大小
+             multi: true,                 // 是否支持同时上传多个文件
+             removeTimeout: 1,
+             onUploadSuccess: function (file, data, respose) {
+                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
+                 if (obj.ret) {
+                     $("#GdTxt1").val(obj.FilePath);
+                 }
+                 else {
+                     alert(obj.message);
+                 }
+
+             }
+         });
+         $("#file_upload1").uploadify({
+             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+             uploader: '/Admin/Upload?type=2',    // 服务器端处理地址
+             //显示参数
+             width: 80,                   // 按钮的宽度
+             height: 24,                  // 按钮的高度
+             buttonText: "浏览",      // 按钮上的文字
+             buttonCursor: "hand",        // 按钮的鼠标图标
+             buttonClass: "up_button2",
+             fileObjName: 'Filedata',     // 上传参数名称
+             //规则参数
+             fileSizeLimit: "5000KB",
+             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+             fileSizeLimit: "2MB",         //允许上传的文件大小
+             multi: true,                 // 是否支持同时上传多个文件
+             removeTimeout: 1,
+             onUploadSuccess: function (file, data, respose) {
+                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
+                 if (obj.ret) {
+                     $("#GdTxt1").val(obj.FilePath);
+                 }
+                 else {
+                     alert(obj.message);
+                 }
+
+             }
+         });
+         $("#file_upload2").uploadify({
+             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+             uploader: '/Admin/Upload?type=2',    // 服务器端处理地址
+             //显示参数
+             width: 80,                   // 按钮的宽度
+             height: 24,                  // 按钮的高度
+             buttonText: "浏览",      // 按钮上的文字
+             buttonCursor: "hand",        // 按钮的鼠标图标
+             buttonClass: "up_button2",
+             fileObjName: 'Filedata',     // 上传参数名称
+             //规则参数
+             fileSizeLimit: "5000KB",
+             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+             fileSizeLimit: "2MB",         //允许上传的文件大小
+             multi: true,                 // 是否支持同时上传多个文件
+             removeTimeout: 1,
+             onUploadSuccess: function (file, data, respose) {
+                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
+                 if (obj.ret) {
+                     $("#GdTxt2").val(obj.FilePath);
+                 }
+                 else {
+                     alert(obj.message);
+                 }
+
+             }
+         });
+         $("#file_upload3").uploadify({
+             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+             uploader: '/Admin/Upload?type=2',    // 服务器端处理地址
+             //显示参数
+             width: 80,                   // 按钮的宽度
+             height: 24,                  // 按钮的高度
+             buttonText: "浏览",      // 按钮上的文字
+             buttonCursor: "hand",        // 按钮的鼠标图标
+             buttonClass: "up_button2",
+             fileObjName: 'Filedata',     // 上传参数名称
+             //规则参数
+             fileSizeLimit: "5000KB",
+             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+             fileSizeLimit: "2MB",         //允许上传的文件大小
+             multi: true,                 // 是否支持同时上传多个文件
+             removeTimeout: 1,
+             onUploadSuccess: function (file, data, respose) {
+                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
+                 if (obj.ret) {
+                     $("#GdTxt3").val(obj.FilePath);
+                 }
+                 else {
+                     alert(obj.message);
+                 }
+
+             }
+         });
+         $("#file_upload4").uploadify({
+             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+             uploader: '/Admin/Upload?type=2',    // 服务器端处理地址
+             //显示参数
+             width: 80,                   // 按钮的宽度
+             height: 24,                  // 按钮的高度
+             buttonText: "浏览",      // 按钮上的文字
+             buttonCursor: "hand",        // 按钮的鼠标图标
+             buttonClass: "up_button2",
+             fileObjName: 'Filedata',     // 上传参数名称
+             //规则参数
+             fileSizeLimit: "5000KB",
+             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+             fileSizeLimit: "2MB",         //允许上传的文件大小
+             multi: true,                 // 是否支持同时上传多个文件
+             removeTimeout: 1,
+             onUploadSuccess: function (file, data, respose) {
+                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
+                 if (obj.ret) {
+                     $("#GdTxt4").val(obj.FilePath);
+                 }
+                 else {
+                     alert(obj.message);
+                 }
+
+             }
+         });
+     })
+ </script>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>商品名称</td>
+                <td colspan="2"><input type="text" id="txtTitle" /></td>
+            </tr>
+            <tr>
+                <td>价格</td>
+                <td colspan="2"><input type="number" id="txtPrice" /></td>
+            </tr>
+            <tr>
+                <td>缩略图</td>
+                <td width="180px">
+                    <input type="text" disabled="disabled" id="SltTxt" />
+
+                </td>
+                <td><input id="file_upload" style="float:left" /></td>
+            </tr>
+            <tr>
+                <td>滚动图1</td>
+                <td width="180px">
+                    <input type="text" disabled="disabled" id="GdTxt1" />
+
+                </td>
+                <td><input id="file_upload1" style="float:left" /></td>
+            </tr>
+            <tr>
+                <td>滚动图2</td>
+                <td width="180px">
+                    <input type="text" disabled="disabled" id="GdTxt2" />
+
+                </td>
+                <td><input id="file_upload2" style="float:left" /></td>
+            </tr>
+            <tr>
+                <td width="180px">滚动图3</td>
+                <td>
+                    <input type="text" disabled="disabled" id="GdTxt3" />
+
+                </td>
+                <td><input id="file_upload3" style="float:left" /></td>
+            </tr>
+            <tr>
+                <td>滚动图4</td>
+                <td width="180px">
+                    <input type="text" disabled="disabled" id="GdTxt4" />
+
+                </td>
+                <td><input id="file_upload4" style="float:left" /></td>
+            </tr>
+            <tr>
+               <td>类别</td>
+                @*<td  colspan="2">@Html.DropDownList("ddlcategory", ViewBag.selList1 as IEnumerable<SelectListItem>)</td>*@
+            </tr>
+            <tr>
+                <td>
+                    商品状态
+                </td>
+                <td><input type="radio" name="state" value="1"  />上架 <input type="radio" name="state" value="1" />下架</td>
+            </tr>
+            <tr>
+                <td>库存</td>
+                <td colspan="2"><input type="number" id="txtQuantity" /></td>
+            </tr>
+            <tr>
+                <td>
+                    排序
+                </td>
+                <td><input type="number" id="txtorder" /></td>
+            </tr>
+            <tr>
+                <td>商品介绍</td>
+                <td colspan="2">
+                    <script id="editor" type="text/plain" style="width:600px;height:600px;">
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"><input type="button" value="保存" onclick="Sumblit()" /></td>
+            </tr>
+        </table>
+        
+    </div>
+    <script type="text/javascript">
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+        var ue = UE.getEditor('editor');
+        function Sumblit()
+        {
+            var commodityname = $("#txtTitle").val();
+            var Price = $("#txtPrice").val();
+            var SltImg = $("#SltTxt").val();
+            var GdImg1 = $("#GdTxt1").val();
+            var GdImg2 = $("#GdTxt2").val();
+            var GdImg3 = $("#GdTxt3").val();
+            var GdImg4 = $("#GdTxt4").val();
+            var category = "";
+            var Quantity = $("#txtQuantity").val();
+            var introduce = UE.getEditor('editor').getContent();
+            var iOrder = $("#txtorder").val();
+            $.post("/Admin/AddCommodity", { commodityname: commodityname, Price: Price, SltImg: SltImg, GdImg1: GdImg1, GdImg2: GdImg2, GdImg3: GdImg3, GdImg4: GdImg4, category: category, Quantity: Quantity, introduce: introduce, iOrder: iOrder }, function (data) {
+                if(data)
+                {
+                    alert("保存成功！");
+                }
+                else
+                {
+                    alert("保存失败！");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SystemConfig>
+  <PrjSettingType>Server</PrjSettingType>
+  <AppID>wxcaeddc47a910840c</AppID>
+  <AppSecret>a08e850fcaa4f5494a030d60569476ad</AppSecret>
+  <KEY>04671fa9459e485782850e5eb9798e18</KEY>
+  <mch_id>1310179301</mch_id>
+  <device_info>WEB</device_info>
+  <fee_type>CNY</fee_type>
+  <trade_type>JSAPI</trade_type>
+  <scope>snsapi_base</scope>
+  <TestSystemConfig>
+    <AppID>wx641cc64f546184fc</AppID>
+    <AppSecret>d4624c36b6795d1d99dcf0547af5443d</AppSecret>
+  </TestSystemConfig>
+  <SendMessage>
+    <zzsc_Contect>
+      E-mail：novoseed@163.com
+      客服电话：400-676-9596
+      联系电话：010-57132808
+    </zzsc_Contect>
+  </SendMessage>
+  <Redirect>
+    <Action>TestPayAddressInfo</Action>
+    <Controller>TestExt</Controller>
+  </Redirect>
+</SystemConfig>
+
+
+
+
+

@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "我的订单";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="uk-container">
+    <div uRemark="结算" data-uk-sticky>
+        <div class="uk-panel uk-panel-box uk-grid" style="height:130px;">
+            <div class="uk-width-medium-1-5 uk-height-1-1 uk-vertical-align">
+                <h1 class="uk-vertical-align-middle">
+                    <div class="item-check" style="float:left;width:50px;"></div>
+                    <lable for="cbAll" class="mobile-font" style="margin-left:10px;">全选</lable>
+                </h1>
+            </div>
+            <div class="uk-width-medium-2-5 uk-height-1-1 uk-vertical-align">
+                <h1 style="color:#FF0000" class="mobile-font uk-vertical-align-middle">合计：@ViewBag.SumPrice 元</h1>
+            </div>
+            <div class="uk-width-medium-2-5">
+                <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#f50;height:130px;" onclick="window.location.href='04OrderList.html';">
+                    结算
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="uk-block">
+        <div uRemark="导航">
+            <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
+                <li class="uk-width-medium-1-4 uk-text-center" uid="shoppingList">
+                    <h1 class="mobile-font">购物车</h1>
+                </li>
+                <li class="uk-width-medium-1-4 uk-text-center uk-active active" uid="orderList">
+                    <h1 class="mobile-font ">我的订单</h1>
+                </li>
+                <li class="uk-width-medium-1-4 uk-text-center">
+                    <h1 class="mobile-font">我的红包</h1>
+                </li>
+                <li class="uk-width-medium-1-4 uk-text-center">
+                    <h1 class="mobile-font">我的返现</h1>
+                </li>
+            </ul>
+            <div class="br-box">
+                <br />
+            </div>
+            <ul id="tab-content" class="uk-switcher">
+                <li class="uk-active">
+                </li>
+                <li>
+                    <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
+                        <input type="checkbox" class="mobile-radio" />
+                        <img src="image/info/infoNb.jpg" alt="" class="uk-thumbnail uk-width-medium-2-10 shop-img" style="width:480px;">
+                        <p class="uk-width-medium-5-10 uk-text-break mobile-shopItem">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</p>
+                        <div class="uk-width-medium-2-10 mobile-font">
+                            <h1 style="color:red;">￥99.00</h1>
+                            <h1 style="color:red;">×1</h1>
+                        </div>
+                    </div>
+                </li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div uRemark="购物车列表"></div>
+    </div>
+</div>
+
+@section LayoutShop{
+    <script type="text/javascript">
+        $(function () {
+            //事件初始化
+            BindEvent();
+        });
+
+        //自定义方法区
+        function BindEvent() {
+            //Tab按钮事件
+            $('.uk-tab li').click(function () {
+                var vThis = event.currentTarget;
+                vThis = $(vThis);
+
+                vThis.addClass('active');
+                vThis.siblings('li').removeClass('active');
+
+                var type = vThis.attr('uid');
+
+                switch (type) {
+                    case 'shoppingList':
+                        window.location.href = '/WeShop/ShoppingList';
+                        break;
+
+                    case 'orderList':
+                        break;
+
+                    default:
+                        break;
+                }
+            });
+        }
+    </script>
+}

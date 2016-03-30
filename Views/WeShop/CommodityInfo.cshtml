@@ -366,7 +366,8 @@
                             par.RealPrice = vdCommodityOption.attr('uPrice');
                         }
                         else {
-                            beOrderLine.TotalPrice = $('#showOrderPrice').text().substr(1);
+                            par.Price = $('#showOrderPrice').text().substr(1);
+                            par.RealPrice = par.Price;
                         }
 
                         TakeOrderOpe('addShop', par, function (vResult) {

@@ -47,29 +47,29 @@
                     @{
                         foreach (var item in Model)
                         {
-                    <div uRemark="编辑" class="uk-grid">
-                        <div class="uk-width-1-1" style="height:25px;"></div>
-                        <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：@item.Key</div>
-                        <div class="uk-width-medium-1-2 uk-text-right mobile-font"><a href="javascript:;" onclick="EditShopCommodity('@item.ElementAt(0).StoreID')">编辑</a></div>
-                        <div class="uk-width-1-1" style="height:25px;"></div>
-                    </div>
-                    <br />
+                            <div uRemark="编辑" class="uk-grid">
+                                <div class="uk-width-1-1" style="height:25px;"></div>
+                                <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：@item.Key</div>
+                                <div class="uk-width-medium-1-2 uk-text-right mobile-font"><a href="javascript:;" onclick="EditShopCommodity('@item.ElementAt(0).StoreID')">编辑</a></div>
+                                <div class="uk-width-1-1" style="height:25px;"></div>
+                            </div>
+                            <br />
 
                             foreach (var vItem in item)
                             {
-                    <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
-                        <div class="item-check" uid="@vItem.StoreID" uType="commItem"></div>
-                        <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-1-3 shoppList-img" style="width:300px;">
-                        <p class="uk-width-medium-1-3 uk-text-break mobile-shopItem" style="padding:0 15px;">@vItem.Title</p>
-                        <div class="uk-width-medium-1-3 mobile-font uk-text-align dCommCount" uid="@vItem.StoreID">
-                            <h1 style="color:red;">￥@(vItem.Count * vItem.RealPrice)</h1>
-                            <h1 style="color:red;">×@vItem.Count</h1>
-                            <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnSub('@vItem.ID')">-</button>
-                            <button class="uk-button commodity-count-smile" disabled="disabled" style="display:none;">1</button>
-                            <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnAdd('@vItem.ID')">+</button>
-                        </div>
-                        <a href="javascript:;" class="uk-close uk-close-alt item-close" onclick="btnDelete('@vItem.ID')" style="display:none;"></a>
-                    </div>
+                                <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
+                                    <div class="item-check" uid="@vItem.StoreID" uType="commItem"></div>
+                                    <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-1-3 shoppList-img" style="width:300px;">
+                                    <p class="uk-width-medium-1-3 uk-text-break mobile-shopItem" style="padding:0 15px;">@vItem.Title</p>
+                                    <div class="uk-width-medium-1-3 mobile-font uk-text-align dCommCount" uid="@vItem.StoreID" uShopID="@vItem.ID">
+                                        <h1 style="color:red;">￥@(vItem.Count * vItem.RealPrice)</h1>
+                                        <h1 style="color:red;">×@vItem.Count</h1>
+                                        <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnSub('@vItem.ID')">-</button>
+                                        <button class="uk-button commodity-count-smile" disabled="disabled" style="display:none;">1</button>
+                                        <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnAdd('@vItem.ID')">+</button>
+                                    </div>
+                                    <a href="javascript:;" class="uk-close uk-close-alt item-close" onclick="btnDelete('@vItem.ID')" style="display:none;"></a>
+                                </div>
                             }
                         }
                     }
@@ -83,6 +83,7 @@
         <div uRemark="购物车列表"></div>
     </div>
 </div>
+<input type="hidden" id="hCheckShopID" />
 @section LayoutShop{
     <script type="text/javascript">
         $(function () {
@@ -116,7 +117,15 @@
 
             //购物车结算按钮事件
             $('#btnShoppPay').click(function () {
+                //准备 ShopID
+                var vShopIDs = $('#hCheckShopID').val();
 
+                $.get('/WeShop/ShopOrderToBeOrder',
+                    { r: Math.random(), id: vShopIDs },
+                    function (data) {
+
+                    },
+                    'json');
             });
 
             //选中图标Click事件
@@ -136,6 +145,9 @@
                             var vList = $('.item-uncheck');
                             vList.removeClass('item-uncheck'); vList.addClass('item-check');
                         }
+
+                        //进行结算
+                        SumPriceOpe();
                         break;
 
                     case 'commItem': //单选
@@ -143,6 +155,9 @@
 
                         if (isCheck) { vThis.removeClass('item-check'); vThis.addClass('item-uncheck'); }
                         else { vThis.removeClass('item-uncheck'); vThis.addClass('item-check'); }
+
+                        //进行结算
+                        SumPriceOpe();
                         break;
 
                     default:
@@ -275,12 +290,16 @@
             var vDiv = $('.dCommCount');
 
             var vPrice = 0.0;
+            var vShopIDs = '';
 
             $.each(vDiv, function (index, item) {
                 var vItem = $(item);
                 var vState = vItem.siblings('div').hasClass('item-check');
 
                 if (vState) {
+                    vShopIDs += vItem.attr('uShopID') + ',';
+                    $('#hCheckShopID').val(vShopIDs);
+
                     var vH = $($('h1', vItem)[0]).text().substr(1);
                     var vItemPrice = parseFloat(vH);
                     vPrice += vItemPrice;

@@ -142,7 +142,7 @@
                 b.appendChild(w = d.createElement("div"))[c] = "b";
                 for (var i = 0; i < o.length - 1; i++)
                     if (o[i][c] != "w") w.appendChild(o[i]), i--;
-                (window.onresize = function () {
+                (window.touchmove = function () {
                     w.style.width = d.documentElement.clientWidth + "px";
                     w.style.height = d.documentElement.clientHeight + "px";
                 })();

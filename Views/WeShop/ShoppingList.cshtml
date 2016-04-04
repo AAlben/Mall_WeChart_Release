@@ -120,6 +120,10 @@
                 //准备 ShopID
                 var vShopIDs = $('#hCheckShopID').val();
 
+                if (vShopIDs == undefined || vShopIDs == '') {
+                    NotifyAlert('无可结算商品！');
+                }
+
                 $.get('/WeShop/ShopOrderToBeOrder',
                     { r: Math.random(), id: vShopIDs },
                     function (data) {
@@ -301,13 +305,16 @@
             var vPrice = 0.0;
             var vShopIDs = '';
 
+            var vHidden = $('#hCheckShopID');
+            vHidden.val('');
+
             $.each(vDiv, function (index, item) {
                 var vItem = $(item);
                 var vState = vItem.siblings('div').hasClass('item-check');
 
                 if (vState) {
                     vShopIDs += vItem.attr('uShopID') + ',';
-                    $('#hCheckShopID').val(vShopIDs);
+                    vHidden.val(vShopIDs);
 
                     var vH = $($('h1', vItem)[0]).text().substr(1);
                     var vItemPrice = parseFloat(vH);

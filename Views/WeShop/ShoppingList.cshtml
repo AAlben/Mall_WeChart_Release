@@ -122,6 +122,7 @@
 
                 if (vShopIDs == undefined || vShopIDs == '') {
                     NotifyAlert('无可结算商品！');
+                    return false;
                 }
 
                 $.get('/WeShop/ShopOrderToBeOrder',

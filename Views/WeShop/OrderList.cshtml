@@ -4,6 +4,15 @@
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
 
+@section LayoutHead{
+    <style type="text/css">
+        .right-btn {
+            padding-right: 15px;
+        }
+    </style>
+}
+
+
 <div class="uk-container">
     <div class="uk-block">
         <div uRemark="导航">
@@ -36,10 +45,8 @@
                                 <div class="uk-width-1-1" style="height:25px;"></div>
                             </div>
                             <br />
-
                             <div class="uk-width-1-1">
-                                订单号：<span class="">@item.ElementAt(0).OrderNum</span>
-                                <a class="uk-text-right" href="javascript:;">取消</a>
+                                <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('@item.ElementAt(0).ID');">取消</a></h1>
                             </div>
                             foreach (var vItem in item)
                             {
@@ -52,9 +59,9 @@
                                     </div>
                                 </div>
                             }
+                            <br />
                             <div class="uk-width-1-1">
-                                总价：<span>￥@item.ElementAt(0).Price</span>
-                                <a class="uk-text-right" href="javascript:;">付款</a>
+                                <h1>总价：<span>￥@item.ElementAt(0).Price</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnPayApply('@item.ElementAt(0).ID');">付款</a></h1>
                             </div>
                             <br />
                         }
@@ -99,6 +106,46 @@
                         break;
                 }
             });
+        }
+
+        //订单取消按钮事件
+        function btnCancel(beOrderID) {
+            //Init
+            var vThis = $(event.currentTarget);
+            if (vThis.text() == '已取消') {
+                return false;
+            }
+
+            //校验
+            if (beOrderID == undefined || beOrderID == '') {
+                var vMsg = '提交失败！请重新操作！';
+                NotifyAlert(vMsg);
+
+                return false;
+            }
+
+            //数据提交
+            $.get('/WeShop/BeOrderCancel',
+                { r: Math.random(), id: beOrderID },
+                function (data) {
+                    if (data && data.Flag) {
+                        var vMsg = '订单取消成功！';
+                        NotifyAlert(vMsg);
+
+                        vThis.text('已取消');
+                        vThis.unbind();
+                    }
+                    else {
+                        var vMsg = '订单取消失败！请重新操作！';
+                        NotifyAlert(vMsg);
+                    }
+                },
+                'json');
+        }
+
+        //订单付款按钮事件
+        function btnPayApply(beOrderID) {
+            window.location.href = '/WeShop/PayAddressInfo/' + beOrderID;
         }
     </script>
 }

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+
+<script>
+    $(function () {
+        query();
+    });
+    function query()
+    {
+        var state = $("#stateselect").val();
+        var startdate = $("#startdate").val();
+        var enddate = $("#enddate").val();
+        $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
+        });
+    }
+</script>
+<section>
+    <div class="page_title">
+        <h2 class="fl">订单详情</h2>
+    </div>
+</section>
+<section>
+    <h2><strong style="color:grey;">查询条件</strong></h2>
+    订单状态：
+    <select class="select" id="stateselect">
+        <option value="0">全部</option>
+        <option value="1">待付款</option>
+        <option  value="2">待发货</option>
+        <option value="3">已发货</option>
+        <option value="4">退款中</option>
+        <option value="5">已完成</option>
+        <option value="6">已关闭</option>
+    </select>
+    &nbsp; &nbsp; &nbsp; &nbsp;订单时间：
+    <input type="text" class="textbox" id="startdate"/>至<input type="text" class="textbox" id="enddate" />
+    &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="查询" class="group_btn" onclick="query()" />
+    <div id="recordlist"></div>
+</section>

@@ -7,8 +7,38 @@
 @section LayoutHead{
     <style type="text/css">
         .right-btn {
-            padding-right: 15px;
+            margin-right: 15px;
         }
+
+        .order-btn {
+            /*width: 100%;*/
+            color: #fff;
+            border-color: #f60;
+            background-color: #f60;
+            font-size: 36px;
+            height: 42px;
+            border-radius: 8px;
+        }
+
+        .dItemBtn {
+        }
+
+            .dItemBtn > ul {
+                position: relative;
+                float: right;
+            }
+
+                .dItemBtn > ul li {
+                    float: right;
+                    padding: 0 .267rem;
+                    margin: .133rem 0 .133rem .133rem;
+                    height: .693rem;
+                    line-height: .693rem;
+                    text-align: center;
+                    border: 1px solid #999;
+                    border-radius: .053rem;
+                    font-size: 36px;
+                }
     </style>
 }
 
@@ -46,7 +76,20 @@
                             </div>
                             <br />
                             <div class="uk-width-1-1">
-                                <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('@item.ElementAt(0).ID');">取消</a></h1>
+                                @if (item.ElementAt(0).OrderState == 1)
+                                {
+                                    <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('@item.ElementAt(0).ID');">取消</a></h1>
+                                    <h1 style="display:none;">订单号：<span class="">@item.ElementAt(0).OrderNum</span><span class="uk-float-right right-btn"></span></h1>
+                                }
+                                else
+                                {
+                                    string sTxt = string.Empty;
+                                    var vItem = item.ElementAt(0);
+                                    if (vItem.OrderState == 3) { if (vItem.LogisticsState == 0) { sTxt = "未发货"; } else if (vItem.LogisticsState == 1) { sTxt = "已发货"; } else if (vItem.LogisticsState == 2) { sTxt = "已签收"; } }
+                                    else if (vItem.OrderState == 4) { sTxt = "已取消"; }
+
+                                    <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><span class="uk-float-right right-btn">@sTxt</span></h1>
+                                }
                             </div>
                             foreach (var vItem in item)
                             {
@@ -61,7 +104,18 @@
                             }
                             <br />
                             <div class="uk-width-1-1">
-                                <h1>总价：<span>￥@item.ElementAt(0).RealPrice</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnPayApply('@item.ElementAt(0).ID');">付款</a></h1>
+                                <h1>
+                                    总价：<span>￥@item.ElementAt(0).RealPrice</span>
+
+                                    @if (item.ElementAt(0).OrderState == 1)
+                                    {
+                                        <a class="uk-float-right right-btn order-btn" href="javascript:;" onclick="btnPayApply('@item.ElementAt(0).ID');">付款</a>
+                                    }
+                                    else if (item.ElementAt(0).OrderState == 3)
+                                    {
+                                        <a class="uk-float-right right-btn order-btn" href="javascript:;" onclick="btnLogistics('@item.ElementAt(0).ID');">查看物流</a>
+                                    }
+                                </h1>
                             </div>
                             <br />
                         }
@@ -120,7 +174,6 @@
             if (beOrderID == undefined || beOrderID == '') {
                 var vMsg = '提交失败！请重新操作！';
                 NotifyAlert(vMsg);
-
                 return false;
             }
 
@@ -132,8 +185,10 @@
                         var vMsg = '订单取消成功！';
                         NotifyAlert(vMsg);
 
-                        vThis.text('已取消');
-                        vThis.unbind();
+                        vThis.parent().next('h1').show().find('.right-btn').text('已取消');
+                        vThis.parent().remove();
+                        //vThis.text('已取消');
+                        //vThis.unbind();
                     }
                     else {
                         var vMsg = '订单取消失败！请重新操作！';
@@ -146,6 +201,11 @@
         //订单付款按钮事件
         function btnPayApply(beOrderID) {
             window.location.href = '/WeShop/PayAddressInfo/' + beOrderID;
+        }
+
+        //查询订单物流信息按钮事件
+        function btnLogistics(beOrderID) {
+
         }
     </script>
 }

@@ -133,20 +133,20 @@
         });
 
         $(function () {
-            //悬浮代码如下：
-            new function (w, b, c, d, o) { // www.jquerycn.cn
-                d = document;
-                b = d.body;
-                o = b.childNodes;
-                c = "className";
-                b.appendChild(w = d.createElement("div"))[c] = "b";
-                for (var i = 0; i < o.length - 1; i++)
-                    if (o[i][c] != "w") w.appendChild(o[i]), i--;
-                (window.touchmove = function () {
-                    w.style.width = d.documentElement.clientWidth + "px";
-                    w.style.height = d.documentElement.clientHeight + "px";
-                })();
-            }; // suspend function end
+            ////悬浮代码如下：
+            //new function (w, b, c, d, o) { // www.jquerycn.cn
+            //    d = document;
+            //    b = d.body;
+            //    o = b.childNodes;
+            //    c = "className";
+            //    b.appendChild(w = d.createElement("div"))[c] = "b";
+            //    for (var i = 0; i < o.length - 1; i++)
+            //        if (o[i][c] != "w") w.appendChild(o[i]), i--;
+            //    (window.touchmove = function () {
+            //        w.style.width = d.documentElement.clientWidth + "px";
+            //        w.style.height = d.documentElement.clientHeight + "px";
+            //    })();
+            //}; // suspend function end
 
             //事件绑定
             BindEvent();

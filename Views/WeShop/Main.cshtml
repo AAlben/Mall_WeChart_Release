@@ -108,10 +108,26 @@
     <div class="uk-width-1-4" style="border-left:1px solid #777777;">
         <button class="uk-button uk-icon-home suspend-bottom" style="font-size:72px;" id="susBtnNa"></button>
     </div>
-    <div class="uk-width-1-4" style="border-left:1px solid #777777;">
+    <div class="uk-width-1-4 " data-uk-dropdown={mode:'click',pos:'top-center'} style="border-left:1px solid #777777;">
         <button class="uk-button suspend-bottom" id="susBtnNb">商品分类</button>
+        <div class="uk-dropdown">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li>
+                    <a>育种素材</a>
+                </li>
+                <li>
+                    <a>育种素材</a>
+                </li>
+                <li>
+                    <a>育种素材</a>
+                </li>
+                <li>
+                    <a>育种素材</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="uk-width-1-4" style="border-left:1px solid #777777;">
+    <div class="uk-width-1-4 " style="border-left:1px solid #777777;">
         <button class="uk-button suspend-bottom" id="susBtnNc">购物车</button>
     </div>
     <div class="uk-width-1-4" style="border-left:1px solid #777777;">
@@ -164,7 +180,7 @@
             //购物车
             $('#susBtnNc').click(function () { window.location.href = '/WeShop/ShoppingList'; });
             //我的订单
-            $('#susBtnNd').click(function () { });
+            $('#susBtnNd').click(function () { window.location.href = '/WeShop/OrderList'; });
         }
     </script>
 }

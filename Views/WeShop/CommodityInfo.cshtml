@@ -126,11 +126,11 @@
             <div class="uk-width-2-6">
                 @if (Model.SDicPhoto.ContainsKey(4))
                 {
-                    <img class="uk-thumbnail" src="~/@Model.SDicPhoto[4]" alt="">
+                <img class="uk-thumbnail" src="~/@Model.SDicPhoto[4]" alt="">
                 }
                 else
                 {
-                    <img class="uk-thumbnail" src="" alt="">
+                <img class="uk-thumbnail" src="" alt="">
                 }
             </div>
             <div class="uk-width-3-6">
@@ -146,20 +146,20 @@
         </div>
         @if (Model.SCommdityOptionInfo.Count() > 0)
         {
-            <div class="uk-width-1-1">
-                <br />
-                <h1>规格：</h1>
-            </div>
-            <div class="uk-flex" id="dCommoOptionBeOrder" uid="" uPrice="0">
-                @foreach (var vItem in Model.SCommdityOptionInfo)
-                {
-                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
-                }
-            </div>
+        <div class="uk-width-1-1">
             <br />
-            <div class="br-box">
-                <br />
-            </div>
+            <h1>规格：</h1>
+        </div>
+        <div class="uk-flex" id="dCommoOptionBeOrder" uid="" uPrice="0">
+            @foreach (var vItem in Model.SCommdityOptionInfo)
+                {
+                <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
+                }
+        </div>
+        <br />
+        <div class="br-box">
+            <br />
+        </div>
         }
         <br />
         <div class="uk-grid">
@@ -374,6 +374,9 @@
                             if (vResult && vResult.Flag) {
 
                                 NotifyAlert('加入购物车成功！');
+
+                                var modal = UIkit.modal("#modalAddShop");
+                                modal.hide();
 
                                 //var vBeOrderID = vResult.BeOrderID;
                                 //window.location.href = '/WeShop/PayAddressInfo/' + vBeOrderID;

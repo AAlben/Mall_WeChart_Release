@@ -10,20 +10,23 @@
     function jsApiCall() {
         var vWxJsApiParam = {};
         $.getJSON('/WeToken/PayApplyContent', { r: Math.random() }, function (data) {
+            if (data == undefined || data == '') {
+                NotifyAlert('下单失败！请重新操作！');
+                window.location.href = '/WeShop/OrderList';
+                return false;
+            }
             vWxJsApiParam = data;
         }).done(function () {
+
             WeixinJSBridge.invoke(
-            'getBrandWCPayRequest',
-            vWxJsApiParam,//josn串
-             function (res) {
-
-                 var vPar = JSON.stringify(res);
-                 $.get('/Test/TestNg', { id: vPar }, function () { });
-
-                 WeixinJSBridge.log(res.err_msg);
-                 alert(res.err_code + res.err_desc + res.err_msg);
-             }
+                'getBrandWCPayRequest',
+                vWxJsApiParam,//josn串
+                 function (res) {
+                     WeixinJSBridge.log(res.err_msg);
+                     alert(res.err_code + res.err_desc + res.err_msg);
+                 }
              );
+
         });
     }
 

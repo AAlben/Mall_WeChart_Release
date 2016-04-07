@@ -163,6 +163,7 @@
 
 <div style="height:100%;width:100%;" id='wrapper'>
     <div id="scroller">
+
         <div uRemark="头部|图片滑动">
             <!-- Swiper -->
             <div class="swiper-container">
@@ -197,7 +198,9 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
+
         <br />
+
         <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#f8f8f8;">
             <br />
             <div uRemark="搜素" class="uk-container-center">
@@ -210,10 +213,10 @@
                 @{
                     foreach (var item in ViewBag.listNa)
                     {
-                        <div class="uk-width-medium-1-2 shop-module" onclick="window.location.href = '/WeShop/CommodityList/@item.MID/@item.Title';">
-                            <div class="uk-cover-background uk-position-relative" style="height: 487px; background-image: url(../@item.Photo);">
-                            </div>
-                        </div>
+                <div class="uk-width-medium-1-2 shop-module" onclick="window.location.href = '/WeShop/CommodityList/@item.MID/@item.Title';">
+                    <div class="uk-cover-background uk-position-relative" style="height: 487px; background-image: url(../@item.Photo);">
+                    </div>
+                </div>
                     }
                 }
                 <div class="uk-width-1-1" style="height:25px;"></div>
@@ -235,57 +238,58 @@
                 @{
                     foreach (var item in ViewBag.listNb)
                     {
-                        <div class="uk-width-medium-1-2">
-                            <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
-                                <a href="/WeShop/CommodityInfo/@item.ID">
-                                    <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
-                                    <p>
-                                        <h1>@item.Title</h1>
-                                    </p>
-                                    <h1 style="color:red;">￥@item.Price</h1>
-                                </a>
-                            </div>
-                        </div>
+                <div class="uk-width-medium-1-2">
+                    <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                        <a href="/WeShop/CommodityInfo/@item.ID">
+                            <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
+                            <p>
+                                <h1>@item.Title</h1>
+                            </p>
+                            <h1 style="color:red;">￥@item.Price</h1>
+                        </a>
+                    </div>
+                </div>
                     }
                 }
                 <div class="uk-width-1-1" style="height:25px;"></div>
             </div>
         </div>
+
         <div class="uk-width-1-1" style="height:75px;"></div>
-    </div>
 
-    <div id="pullUp" class="">
-        <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to load more...</span>
-    </div>
-
-    <div class="uk-grid w" style="background-color:#FAFAFA;">
-        <div class="uk-width-1-4" style="border-left:1px solid #777777;">
-            <button class="uk-button uk-icon-home suspend-bottom" style="font-size:72px;" id="susBtnNa"></button>
+        <div id="pullUp" class="">
+            <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to load more...</span>
         </div>
-        <div class="uk-width-1-4 " data-uk-dropdown={mode:'click',pos:'top-center'} style="border-left:1px solid #777777;">
-            <button class="uk-button suspend-bottom" id="susBtnNb">商品分类</button>
-            <div class="uk-dropdown">
-                <ul class="uk-nav uk-nav-dropdown">
-                    <li>
-                        <a>育种素材</a>
-                    </li>
-                    <li>
-                        <a>育种素材</a>
-                    </li>
-                    <li>
-                        <a>育种素材</a>
-                    </li>
-                    <li>
-                        <a>育种素材</a>
-                    </li>
-                </ul>
+
+        <div class="uk-grid w" style="background-color:#FAFAFA;">
+            <div class="uk-width-1-4" style="border-left:1px solid #777777;">
+                <button class="uk-button uk-icon-home suspend-bottom" style="font-size:72px;" id="susBtnNa"></button>
             </div>
-        </div>
-        <div class="uk-width-1-4 " style="border-left:1px solid #777777;">
-            <button class="uk-button suspend-bottom" id="susBtnNc">购物车</button>
-        </div>
-        <div class="uk-width-1-4" style="border-left:1px solid #777777;">
-            <button class="uk-button suspend-bottom" id="susBtnNd">我的订单</button>
+            <div class="uk-width-1-4 " data-uk-dropdown={mode:'click',pos:'top-center'} style="border-left:1px solid #777777;">
+                <button class="uk-button suspend-bottom" id="susBtnNb">商品分类</button>
+                <div class="uk-dropdown">
+                    <ul class="uk-nav uk-nav-dropdown">
+                        <li>
+                            <a>育种素材</a>
+                        </li>
+                        <li>
+                            <a>育种素材</a>
+                        </li>
+                        <li>
+                            <a>育种素材</a>
+                        </li>
+                        <li>
+                            <a>育种素材</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-width-1-4 " style="border-left:1px solid #777777;">
+                <button class="uk-button suspend-bottom" id="susBtnNc">购物车</button>
+            </div>
+            <div class="uk-width-1-4" style="border-left:1px solid #777777;">
+                <button class="uk-button suspend-bottom" id="susBtnNd">我的订单</button>
+            </div>
         </div>
     </div>
 </div>

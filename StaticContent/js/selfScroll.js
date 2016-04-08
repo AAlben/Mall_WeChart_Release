@@ -1,14 +1,23 @@
-var myScroll,
+﻿var myScroll,
     pullDownEl, pullDownOffset,
     pullUpEl, pullUpOffset,
     generatedCount = 0;
 
-function pullDownAction() {
+function ScrollRefreshF() {
+    myScroll.refresh();
+}
+
+function pullDownAction(vDeferred, vFun) {
     // setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
     var el, li, i;
     el = document.getElementById('thelist');
 
-    myScroll.refresh();
+    //注册事件
+    vDeferred.done(ScrollRefreshF);
+
+    //执行
+    vFun(vDeferred);
+
     return false;
 
     for (i = 0; i < 3; i++) {
@@ -21,12 +30,17 @@ function pullDownAction() {
     // }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
 }
 
-function pullUpAction() {
+function pullUpAction(vDeferred, vFun) {
     // setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
     var el, li, i;
     el = document.getElementById('thelist');
 
-    myScroll.refresh();
+    //注册事件
+    vDeferred.done(ScrollRefreshF);
+
+    //执行
+    vFun(vDeferred);
+
     return false;
 
     for (i = 0; i < 3; i++) {
@@ -39,7 +53,7 @@ function pullUpAction() {
     // }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
 }
 
-function loaded(type) {
+function loaded(type, vDeferred, vFunNa, vFunNb) {
 
     var upFlag = false;
     var downFlag = false;
@@ -72,43 +86,43 @@ function loaded(type) {
     myScroll = new iScroll('wrapper', {
         useTransition: true,
         topOffset: pullDownOffset,
-        onRefresh: function() {
+        onRefresh: function () {
             if (downFlag && pullDownEl.className.match('loading')) {
                 pullDownEl.className = '';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+                pullDownEl.querySelector('.pullDownLabel').innerText = '下拉刷新';
             } else if (upFlag && pullUpEl.className.match('loading')) {
                 pullUpEl.className = '';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+                pullUpEl.querySelector('.pullUpLabel').innerText = '上拉加载更多';
             }
         },
-        onScrollMove: function() {
+        onScrollMove: function () {
             if (downFlag && this.y > 5 && !pullDownEl.className.match('flip')) {
                 pullDownEl.className = 'flip';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+                pullDownEl.querySelector('.pullDownLabel').innerHTML = '向上松手刷新';
                 this.minScrollY = 0;
             } else if (downFlag && this.y < 5 && pullDownEl.className.match('flip')) {
                 pullDownEl.className = '';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+                pullDownEl.querySelector('.pullDownLabel').innerText = '下拉刷新';
                 this.minScrollY = -pullDownOffset;
             } else if (upFlag && this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
                 pullUpEl.className = 'flip';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
+                pullUpEl.querySelector('.pullUpLabel').innerHTML = '向下松手加载';
                 this.maxScrollY = this.maxScrollY;
             } else if (upFlag && this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
                 pullUpEl.className = '';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+                pullUpEl.querySelector('.pullUpLabel').innerText = '上拉加载更多';
                 this.maxScrollY = pullUpOffset;
             }
         },
-        onScrollEnd: function() {
+        onScrollEnd: function () {
             if (downFlag && pullDownEl.className.match('flip')) {
                 pullDownEl.className = 'loading';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';
-                pullDownAction(); // Execute custom function (ajax call?)
+                pullDownEl.querySelector('.pullDownLabel').innerText = '加载中';
+                pullDownAction(vDeferred, vFunNa); // Execute custom function (ajax call?)
             } else if (upFlag && pullUpEl.className.match('flip')) {
                 pullUpEl.className = 'loading';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';
-                pullUpAction(); // Execute custom function (ajax call?)
+                pullUpEl.querySelector('.pullUpLabel').innerText = '加载中';
+                pullUpAction(vDeferred, vFunNb); // Execute custom function (ajax call?)
             }
         }
     });

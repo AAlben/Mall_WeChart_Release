@@ -107,8 +107,8 @@
         #pullDown,
         #pullUp {
             background: #fff;
-            height: 100px;
-            line-height: 100px;
+            height: 150px;
+            line-height: 150px;
             padding: 5px 10px;
             border-bottom: 1px solid #ccc;
             font-weight: bold;
@@ -120,11 +120,11 @@
             #pullUp .pullUpIcon {
                 display: block;
                 float: left;
-                width: 100px;
-                height: 100px;
+                width: 150px;
+                height: 150px;
                 background: url('../../StaticContent/image/public/pull-icon@2x.png') 0 0 no-repeat;
-                -webkit-background-size: 100px 200px;
-                background-size: 100px 200px;
+                -webkit-background-size: 150px 300px;
+                background-size: 150px 300px;
                 -webkit-transition-property: -webkit-transform;
                 -webkit-transition-duration: 250ms;
             }
@@ -155,10 +155,31 @@
                 -webkit-animation-iteration-count: infinite;
                 -webkit-animation-timing-function: linear;
             }
+
+        .pullUpLabel {
+            font-size: 30px;
+        }
     </style>
 
     <script src="~/StaticContent/js/iscroll.js"></script>
-    <script src="~/StaticContent/js/selfScroll.js"></script>
+    <script src="~/StaticContent/js/selfScroll.js" charset="UTF-8"></script>
+    <script src="~/StaticContent/js/template.js"></script>
+
+    <script id="tplCommodity" type="text/html">
+        {{each List as value index}}
+        <div class="uk-width-medium-1-2">
+            <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                <a href="/WeShop/CommodityInfo/{{value.ID}}">
+                    <img src="/{{value.Photo}}" alt="" class="uk-thumbnail uk-align-center shop-img">
+                    <p>
+                        <h1>{{value.Title}}</h1>
+                    </p>
+                    <h1 style="color:red;">￥{{value.Price}}</h1>
+                </a>
+            </div>
+        </div>
+        {{/each}}
+    </script>
 }
 
 <div style="height:100%;width:100%;" id='wrapper'>
@@ -213,10 +234,10 @@
                 @{
                     foreach (var item in ViewBag.listNa)
                     {
-                <div class="uk-width-medium-1-2 shop-module" onclick="window.location.href = '/WeShop/CommodityList/@item.MID/@item.Title';">
-                    <div class="uk-cover-background uk-position-relative" style="height: 487px; background-image: url(../@item.Photo);">
-                    </div>
-                </div>
+                        <div class="uk-width-medium-1-2 shop-module" onclick="window.location.href = '/WeShop/CommodityList/@item.MID/@item.Title';">
+                            <div class="uk-cover-background uk-position-relative" style="height: 487px; background-image: url(../@item.Photo);">
+                            </div>
+                        </div>
                     }
                 }
                 <div class="uk-width-1-1" style="height:25px;"></div>
@@ -234,21 +255,21 @@
                 <div class="uk-width-1-1" style="height:25px;"></div>
             </div>
             <br />
-            <div uRemark="商品列表" class="uk-grid">
+            <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
                 @{
                     foreach (var item in ViewBag.listNb)
                     {
-                <div class="uk-width-medium-1-2">
-                    <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
-                        <a href="/WeShop/CommodityInfo/@item.ID">
-                            <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
-                            <p>
-                                <h1>@item.Title</h1>
-                            </p>
-                            <h1 style="color:red;">￥@item.Price</h1>
-                        </a>
-                    </div>
-                </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                                <a href="/WeShop/CommodityInfo/@item.ID">
+                                    <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
+                                    <p>
+                                        <h1>@item.Title</h1>
+                                    </p>
+                                    <h1 style="color:red;">￥@item.Price</h1>
+                                </a>
+                            </div>
+                        </div>
                     }
                 }
                 <div class="uk-width-1-1" style="height:25px;"></div>
@@ -256,7 +277,9 @@
         </div>
 
         <div id="pullUp" class="" style="margin-bottom:100px;">
-            <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to load more...</span>
+            <div class="uk-align-center" style="width:35%">
+                <span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多</span>
+            </div>
         </div>
 
     </div>
@@ -293,7 +316,7 @@
     </div>
 </div>
 
-
+<input type="hidden" id="hPageIndex" value="0" />
 
 @section LayoutShop{
     <script>
@@ -348,7 +371,30 @@
         }, false);
 
         document.addEventListener('DOMContentLoaded', function () {
-            loaded('up');
+            //Deferred对象
+            var deferred = $.Deferred();
+
+            //底部上划数据加载方法
+            var vFunLoad = function (deferred) {
+                var vHItem = $('#hPageIndex');
+                var vIndex = vHItem.val();
+                vIndex = parseInt(vIndex) + 1;
+                vHItem.val(vIndex);
+
+                $.get('/RequestData/CommodityInfoByPage', { r: Math.random(), par1: '', par2: vIndex, par3: '' }, function (data) {
+                    if (data && data.List) {
+                        var vHtml = template('tplCommodity', data);
+                        $('#dCommodityList').append(vHtml);
+                        deferred.resolve();
+                    }
+                    else {
+                        NotifyAlert('数据加载失败！');
+                    }
+                }, 'json');
+            };
+
+            //Load
+            loaded('up', deferred, null, vFunLoad);
         }, false);
 
     </script>

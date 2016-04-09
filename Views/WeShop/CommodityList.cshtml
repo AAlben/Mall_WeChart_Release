@@ -144,6 +144,7 @@
                     else {
                         NotifyAlert('数据加载失败！');
                     }
+                    deferred.resolve();
                 }, 'json');
             };
 

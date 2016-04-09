@@ -4,93 +4,161 @@
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
 
-<div class="uk-container">
-    <div uRemark="结算" data-uk-sticky>
-        <div class="uk-panel uk-panel-box uk-grid" style="height:130px;">
-            <div class="uk-width-medium-1-5 uk-height-1-1 uk-vertical-align" style="margin-top:5px;">
-                <h1 class="uk-vertical-align-middle">
-                    <div class="item-check" style="float:left;width:50px;" uType="all"></div>
-                    <lable for="cbAll" class="mobile-font" style="margin-left:10px;">全选</lable>
-                </h1>
+@section LayoutHead{
+    <link href="~/StaticContent/css/selfScroll.css" rel="stylesheet" />
+
+    <script src="~/StaticContent/js/iscroll.js"></script>
+    <script src="~/StaticContent/js/selfScroll.js" charset="UTF-8"></script>
+    <script src="~/StaticContent/js/template.js"></script>
+
+    <style type="text/css">
+        .uk-container {
+            background-color: none;
+        }
+    </style>
+
+    <script type="text/html" id="tplShop">
+        {{each List as value index}}
+        <div uRemark="编辑" class="uk-grid" style="border-top:3px solid #e5e5e5;">
+            <div class="uk-width-1-1" style="height:40px;"></div>
+            <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：{{value.Key}}</div>
+            <div class="uk-width-medium-1-2 uk-text-right mobile-font"><a href="javascript:;" onclick="EditShopCommodity('{{value.Content[0].StoreID}}')">编辑</a></div>
+            <div class="uk-width-1-1" style="height:25px;"></div>
+        </div>
+        <br />
+        {{each value.Content as eValue eIndex}}
+        <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
+            <div class="item-check" uid="{{eValue.StoreID}}" uType="commItem"></div>
+            <img src="/{{eValue.Photo}}" alt="" class="uk-thumbnail uk-width-medium-1-3 shoppList-img" style="width:300px;">
+            <p class="uk-width-medium-1-3 uk-text-break mobile-shopItem" style="padding:0 15px;">{{eValue.Title}}</p>
+            <div class="uk-width-medium-1-3 mobile-font uk-text-align dCommCount" uid="{{eValue.StoreID}}" uShopID="{{eValue.ID}}">
+                <h1 style="color:red;">￥{{(eValue.Count * eValue.RealPrice)}}</h1>
+                <h1 style="color:red;">×{{eValue.Count}}</h1>
+                <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnSub('{{eValue.ID}}')">-</button>
+                <button class="uk-button commodity-count-smile" disabled="disabled" style="display:none;">1</button>
+                <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnAdd('{{eValue.ID}}')">+</button>
             </div>
-            <div class="uk-width-medium-2-5 uk-height-1-1 uk-vertical-align">
-                <h1 style="color:#FF0000" class="mobile-font uk-vertical-align-middle" id="hSumPrice">合计：@ViewBag.SumPrice 元</h1>
-            </div>
-            <div class="uk-width-medium-2-5">
-                <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#f50;height:130px;" id="btnShoppPay">
-                    结算
-                </button>
+            <a href="javascript:;" class="uk-close uk-close-alt item-close" onclick="btnDelete('{{eValue.ID}}')" style="display:none;"></a>
+        </div>
+        {{/each}}
+        {{/each}}
+    </script>
+}
+
+<div class="uk-container" id='wrapper'>
+    <div id="scroller">
+
+        <div uRemark="结算" data-uk-sticky>
+            <div class="uk-panel uk-panel-box uk-grid" style="height:130px;">
+                <div class="uk-width-medium-1-5 uk-height-1-1 uk-vertical-align" style="margin-top:5px;">
+                    <h1 class="uk-vertical-align-middle">
+                        <div class="item-check" style="float:left;width:50px;" uType="all"></div>
+                        <lable for="cbAll" class="mobile-font" style="margin-left:10px;">全选</lable>
+                    </h1>
+                </div>
+                <div class="uk-width-medium-2-5 uk-height-1-1 uk-vertical-align">
+                    <h1 style="color:#FF0000" class="mobile-font uk-vertical-align-middle" id="hSumPrice">合计：@ViewBag.SumPrice 元</h1>
+                </div>
+                <div class="uk-width-medium-2-5">
+                    <button class="uk-button uk-button-large uk-width-1-1 mobile-button" type="button" style="background-color:#f50;height:130px;" id="btnShoppPay">
+                        结算
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="uk-block">
-        <div uRemark="导航">
-            <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
-                <li class="uk-active uk-width-medium-1-4 active uk-text-center" uid="shoppingList">
-                    <h1 class="mobile-font">购物车</h1>
-                </li>
-                <li class="uk-width-medium-1-4 uk-text-center" uid="orderList">
-                    <h1 class="mobile-font">我的订单</h1>
-                </li>
-                <li class="uk-width-medium-1-4 uk-text-center">
-                    <h1 class="mobile-font">我的红包</h1>
-                </li>
-                <li class="uk-width-medium-1-4 uk-text-center">
-                    <h1 class="mobile-font">我的返现</h1>
-                </li>
-            </ul>
 
-            <br />
+        <div class="uk-block">
+            <div uRemark="导航">
+                <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
+                    <li class="uk-active uk-width-medium-1-4 active uk-text-center" uid="shoppingList">
+                        <h1 class="mobile-font">购物车</h1>
+                    </li>
+                    <li class="uk-width-medium-1-4 uk-text-center" uid="orderList">
+                        <h1 class="mobile-font">我的订单</h1>
+                    </li>
+                    <li class="uk-width-medium-1-4 uk-text-center">
+                        <h1 class="mobile-font">我的红包</h1>
+                    </li>
+                    <li class="uk-width-medium-1-4 uk-text-center">
+                        <h1 class="mobile-font">我的返现</h1>
+                    </li>
+                </ul>
 
-            <ul id="tab-content" class="uk-switcher">
-                <li class="uk-active">
-                    @{
-                        foreach (var item in Model)
-                        {
-                            <div uRemark="编辑" class="uk-grid">
-                                <div class="uk-width-1-1" style="height:25px;"></div>
-                                <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：@item.Key</div>
-                                <div class="uk-width-medium-1-2 uk-text-right mobile-font"><a href="javascript:;" onclick="EditShopCommodity('@item.ElementAt(0).StoreID')">编辑</a></div>
-                                <div class="uk-width-1-1" style="height:25px;"></div>
-                            </div>
-                            <br />
+                <br />
 
-                            foreach (var vItem in item)
+                <ul id="tab-content" class="uk-switcher">
+                    <li class="uk-active" id="lShopList">
+
+                        @{
+                            foreach (var item in Model)
                             {
-                                <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
-                                    <div class="item-check" uid="@vItem.StoreID" uType="commItem"></div>
-                                    <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-1-3 shoppList-img" style="width:300px;">
-                                    <p class="uk-width-medium-1-3 uk-text-break mobile-shopItem" style="padding:0 15px;">@vItem.Title</p>
-                                    <div class="uk-width-medium-1-3 mobile-font uk-text-align dCommCount" uid="@vItem.StoreID" uShopID="@vItem.ID">
-                                        <h1 style="color:red;">￥@(vItem.Count * vItem.RealPrice)</h1>
-                                        <h1 style="color:red;">×@vItem.Count</h1>
-                                        <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnSub('@vItem.ID')">-</button>
-                                        <button class="uk-button commodity-count-smile" disabled="disabled" style="display:none;">1</button>
-                                        <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnAdd('@vItem.ID')">+</button>
-                                    </div>
-                                    <a href="javascript:;" class="uk-close uk-close-alt item-close" onclick="btnDelete('@vItem.ID')" style="display:none;"></a>
+                                <div uRemark="编辑" class="uk-grid" style="border-top:3px solid #e5e5e5;">
+                                    <div class="uk-width-1-1" style="height:40px;"></div>
+                                    <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：@item.Key</div>
+                                    <div class="uk-width-medium-1-2 uk-text-right mobile-font"><a href="javascript:;" onclick="EditShopCommodity('@item.ElementAt(0).StoreID')">编辑</a></div>
+                                    <div class="uk-width-1-1" style="height:25px;"></div>
                                 </div>
+                                <br />
+
+                                foreach (var vItem in item)
+                                {
+                                    <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
+                                        <div class="item-check" uid="@vItem.StoreID" uType="commItem"></div>
+                                        <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-1-3 shoppList-img" style="width:300px;">
+                                        <p class="uk-width-medium-1-3 uk-text-break mobile-shopItem" style="padding:0 15px;">@vItem.Title</p>
+                                        <div class="uk-width-medium-1-3 mobile-font uk-text-align dCommCount" uid="@vItem.StoreID" uShopID="@vItem.ID">
+                                            <h1 style="color:red;">￥@(vItem.Count * vItem.RealPrice)</h1>
+                                            <h1 style="color:red;">×@vItem.Count</h1>
+                                            <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnSub('@vItem.ID')">-</button>
+                                            <button class="uk-button commodity-count-smile" disabled="disabled" style="display:none;">1</button>
+                                            <button class="uk-button commodity-count-smile" style="display:none;" onclick="btnAdd('@vItem.ID')">+</button>
+                                        </div>
+                                        <a href="javascript:;" class="uk-close uk-close-alt item-close" onclick="btnDelete('@vItem.ID')" style="display:none;"></a>
+                                    </div>
+                                }
                             }
                         }
-                    }
-                </li>
-                <li>
-                </li>
-                <li></li>
-                <li></li>
-            </ul>
+
+                    </li>
+                    <li>
+                    </li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
         </div>
+
         <div uRemark="购物车列表"></div>
+
+        <div id="pullUp" class="">
+            <div class="uk-align-center" style="width:35%">
+                <span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多</span>
+            </div>
+        </div>
     </div>
 </div>
+
 <input type="hidden" id="hCheckShopID" />
+<input type="hidden" id="hPageIndex" value="1" />
+
 @section LayoutShop{
     <script type="text/javascript">
         $(function () {
+            InitCss();
+
             BindEvent();
         });
 
         //自定义方法区
+
+        //css样式初始化
+        function InitCss() {
+            setTimeout(function () {
+                $('#wrapper').css('backgroundColor', 'white');
+            }, 1);
+        }
+
+        //事件绑定
         function BindEvent() {
             //Tab按钮事件
             $('.uk-tab li').click(function () {
@@ -326,5 +394,39 @@
             var vTxt = '合计：' + vPrice + ' 元';
             $('#hSumPrice').text(vTxt);
         }
+
+        //iScroll.js Init
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            //Deferred对象
+            var deferred = $.Deferred();
+
+            //底部上划数据加载方法
+            var vFunLoad = function (deferred) {
+                var vHItem = $('#hPageIndex');
+                var vIndex = vHItem.val();
+                vIndex = parseInt(vIndex) + 1;
+                vHItem.val(vIndex);
+
+                $.get('/RequestData/ShoppingListByPage', { r: Math.random(), par1: vIndex }, function (data) {
+                    if (data && data.List) {
+                        if (data.List.length == 0) { NotifyAlert('已加载完全部！'); }
+                        else {
+                            var vHtml = template('tplShop', data);
+                            $('#lShopList').append(vHtml);
+                        }
+                    }
+                    else {
+                        NotifyAlert('数据加载失败！');
+                    }
+                }, 'json');
+            };
+
+            //Load
+            loaded('up', deferred, null, vFunLoad);
+        }, false);
     </script>
 }

@@ -3,67 +3,104 @@
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
 
-<div class="uk-container">
-    <div uRemark="头部|图片滑动">
-        <!-- Swiper -->
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <a href="http://101.200.140.102:8123/zzwIntro.html">
-                        <img src="~/StaticContent/image/swiper/logoNc.jpg" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="http://101.200.140.102:8123/zzwIntro.html">
-                        <img src="~/StaticContent/image/swiper/logoNd.jpg" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="http://101.200.140.102:8123/zzwIntro.html">
-                        <img src="~/StaticContent/image/swiper/logoNe.jpg" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="http://101.200.140.102:8123/zzwIntro.html">
-                        <img src="~/StaticContent/image/swiper/logoNf.jpg" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="http://101.200.140.102:8123/zzwIntro.html">
-                        <img src="~/StaticContent/image/swiper/logoNg.jpg" alt="">
-                    </a>
-                </div>
-            </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-    <br />
+@section LayoutHead{
+    <link href="~/StaticContent/css/selfScroll.css" rel="stylesheet" />
 
-    @if (ViewBag.listNa != null)
-    {
-        <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#f8f8f8;">
-            <br />
-            <div uRemark="商品列表" class="uk-grid">
-                @foreach (var item in ViewBag.listNa)
-                {
-                    <div class="uk-width-medium-1-2">
-                        <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
-                            <a href="/WeShop/CommodityInfo/@item.ID">
-                                <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
-                                <p>
-                                    <h1>@item.Title</h1>
-                                </p>
-                                <h1 style="color:red;">￥@item.Price</h1>
-                            </a>
-                        </div>
-                    </div>
-                }
-                <div class="uk-width-1-1" style="height:25px;"></div>
+    <script src="~/StaticContent/js/iscroll.js"></script>
+    <script src="~/StaticContent/js/selfScroll.js" charset="UTF-8"></script>
+    <script src="~/StaticContent/js/template.js"></script>
+
+    <script id="tplCommodity" type="text/html">
+        {{each List as value index}}
+        <div class="uk-width-medium-1-2">
+            <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                <a href="/WeShop/CommodityInfo/{{value.ID}}">
+                    <img src="/{{value.Photo}}" alt="" class="uk-thumbnail uk-align-center shop-img">
+                    <p>
+                        <h1>{{value.Title}}</h1>
+                    </p>
+                    <h1 style="color:red;">￥{{value.Price}}</h1>
+                </a>
             </div>
         </div>
-    }
+        {{/each}}
+    </script>
+}
+
+<div class="uk-container" id='wrapper'>
+    <div id="scroller">
+
+        <div uRemark="头部|图片滑动">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="http://101.200.140.102:8123/zzwIntro.html">
+                            <img src="~/StaticContent/image/swiper/logoNc.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://101.200.140.102:8123/zzwIntro.html">
+                            <img src="~/StaticContent/image/swiper/logoNd.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://101.200.140.102:8123/zzwIntro.html">
+                            <img src="~/StaticContent/image/swiper/logoNe.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://101.200.140.102:8123/zzwIntro.html">
+                            <img src="~/StaticContent/image/swiper/logoNf.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://101.200.140.102:8123/zzwIntro.html">
+                            <img src="~/StaticContent/image/swiper/logoNg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <br />
+
+        @if (ViewBag.listNa != null)
+        {
+            <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#f8f8f8;">
+                <br />
+                <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
+                    @foreach (var item in ViewBag.listNa)
+                {
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                                <a href="/WeShop/CommodityInfo/@item.ID">
+                                    <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
+                                    <p>
+                                        <h1>@item.Title</h1>
+                                    </p>
+                                    <h1 style="color:red;">￥@item.Price</h1>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <div class="uk-width-1-1" style="height:25px;"></div>
+                </div>
+            </div>
+        }
+
+        <div id="pullUp" class="">
+            <div class="uk-align-center" style="width:35%">
+                <span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多</span>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+<input type="hidden" id="hPageIndex" value="1" />
 
 @section LayoutShop{
     <script>
@@ -78,5 +115,40 @@
             autoplayDisableOnInteraction: false,
             loop: true
         });
+
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            //Deferred对象
+            var deferred = $.Deferred();
+
+            //底部上划数据加载方法
+            var vFunLoad = function (deferred) {
+                var vHItem = $('#hPageIndex');
+                var vIndex = vHItem.val();
+                vIndex = parseInt(vIndex) + 1;
+                vHItem.val(vIndex);
+
+                $.get('/RequestData/CommodityInfoByPage', { r: Math.random(), par1: '@ViewBag.ModuleID', par2: vIndex, par3: '' }, function (data) {
+                    if (data && data.List) {
+
+                        if (data.List.length == 0) { NotifyAlert('已加载完全部！'); }
+                        else {
+                            var vHtml = template('tplCommodity', data);
+                            $('#dCommodityList').append(vHtml);
+                        }
+                        deferred.resolve();
+                    }
+                    else {
+                        NotifyAlert('数据加载失败！');
+                    }
+                }, 'json');
+            };
+
+            //Load
+            loaded('up', deferred, null, vFunLoad);
+        }, false);
     </script>
 }

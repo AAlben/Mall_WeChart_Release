@@ -59,6 +59,11 @@ a {
     line-height: 1.2;
 }
 
+.mobile-shopDiv {
+    background-color: white;
+    border-top: 3px solid #e5e5e5;
+}
+
 .zzw-color {
     color: #FF0000;
 }

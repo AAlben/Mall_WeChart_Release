@@ -40,7 +40,8 @@
                     <td>@item.Address</td>
                     <td>@item.OrderState</td>
                     <td>
-                        <a href="#" class="inner_btn">修改价格</a>
+                        <a href="javascript:;" class="inner_btn" onclick="ChangePrice('@item.ID')">修改价格</a>
+                        <a href="javascript:;" class="inner_btn" onclick="OrderClose('@item.ID')">关闭</a>
                     </td>
                 </tr>
             }
@@ -89,7 +90,7 @@
                     <td>@item.ExpressNum</td>
                     <td>@item.ExpressType</td>
                     <td>
-                        <a href="#" class="inner_btn">修改价格</a>
+                        <a href="javascript:;" class="inner_btn" onclick="WriteExpNum('@item.ID')">填写快递单号</a>
                     </td>
                 </tr>
             }

@@ -35,6 +35,18 @@
 
             });
         })(jQuery);
+
+        //自定义方法区
+
+        //加载动画开始
+        function LoadStart() {
+            $(".loading_area").fadeIn();
+        }
+
+        //加载动画结束
+        function LoadEnd() {
+            $(".loading_area").fadeOut();
+        }
     </script>
 </head>
 <body>
@@ -123,8 +135,13 @@
         @RenderBody()
     </section>
 
-
-
     @RenderSection("LayoutFoot", required: false)
+
+    <section class="loading_area">
+        <div class="loading_cont">
+            <div class="loading_icon"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="loading_txt"><mark>数据正在加载，请稍后！</mark></div>
+        </div>
+    </section>
 </body>
 </html>

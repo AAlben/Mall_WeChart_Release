@@ -77,6 +77,9 @@
 
             //Query 方法
             $('#btnQuery').on('click', function () {
+
+                LoadStart();
+
                 var state = $('#hState').val();
 
                 var startdate = Y.one("#startdate").get('value');
@@ -86,6 +89,7 @@
                 if (!enddate) { enddate = $('#enddate').prev('span').text(); }
 
                 $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
+                    LoadEnd();
                 });
             });
         });
@@ -93,6 +97,7 @@
 
     <script>
         $(function () {
+
             //初始化
             Init();
 
@@ -104,17 +109,6 @@
         });
 
         //自定义方法区
-
-        //查询
-        function query() {
-
-            var state = $('#hState').val();
-            var startdate = $("#startdate").val();
-            var enddate = $("#enddate").val();
-
-            $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
-            });
-        }
 
         //页面初始化
         function Init() {

@@ -88,7 +88,7 @@
                 if (!startdate) { startdate = $('#startdate').prev('span').text(); }
                 if (!enddate) { enddate = $('#enddate').prev('span').text(); }
 
-                $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
+                $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate, index: $('#hPageIndex').val() }, function () {
                     LoadEnd();
                 });
             });
@@ -154,6 +154,50 @@
             uom = uom.getFullYear() + "-" + (uom.getMonth() + 1) + "-" + uom.getDate();
             return uom;
         }
+
+        //----- 订单相关操作方法 -----
+
+        //1.修改价格
+        function ChangePrice(orderID) {
+            $('.pop_cont').load('/Admin/ChangeOrderPrice', { par1: orderID }, function () {
+                $(".pop_bg").fadeIn();
+            });
+        }
+
+        //2.关闭订单
+
+
+        //3.填写快递单号
+
+
+        //翻页相关
+
+        //1.上一页
+        function PreviousPage() {
+            var vItem = $('#hPageIndex');
+            var vIndex = parseInt(vItem.val());
+
+            if (vIndex == 1) {
+                alert('当前为第一页！');
+                return false;
+            }
+            else {
+                vIndex -= 1;
+                vItem.val(vIndex);
+                $('#btnQuery').click();
+            }
+        }
+
+        //2.下一页
+        function NextPage() {
+            var vItem = $('#hPageIndex');
+            var vIndex = parseInt($('#hPageIndex').val());
+
+            vIndex += 1;
+            vItem.val(vIndex);
+            $('#btnQuery').click();
+
+        }
     </script>
 }
 
@@ -184,3 +228,9 @@
     <div id="recordlist" class="br-margin"></div>
 </section>
 <input type="hidden" value="-1" id="hState" />
+<input type="hidden" value="1" id="hPageIndex" />
+
+<section class="pop_bg">
+    <div class="pop_cont">
+    </div>
+</section>

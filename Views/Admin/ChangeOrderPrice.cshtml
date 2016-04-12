@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "修改价格";
+}
+
+<table class="table">
+    <tr>
+        <th>订单编号</th>
+        <th>商品名称</th>
+        <th>商品规格</th>
+        <th>销售数量</th>
+        <th>单位价格</th>
+        <th>实际单位价格</th>
+        <th>价格改动</th>
+    </tr>
+
+    @{
+        foreach (var item in ViewBag.List)
+        {
+            <tr>
+                <td>@item.OrderNum</td>
+                <td>@item.Title</td>
+                <td>@item.OptionName</td>
+                <td>@item.Count</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.RealUnitPrice</td>
+                <td><input type="text" value="@item.RealUnitPrice" id="iptUnitPrice" /></td>
+            </tr>
+        }
+    }
+</table>

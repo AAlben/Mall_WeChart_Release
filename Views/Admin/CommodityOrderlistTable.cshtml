@@ -1,62 +1,102 @@
 ﻿@{
     Layout = null;
 }
-<table class="table">
-    <tr>
-        <th>商品名称</th>
-        <th>销售数量</th>
-        <th>价格</th>
-        <th>实际价格</th>
-        <th>用户</th>
-        <th>收获地址</th>
-        <th>电话</th>
-        <th>订单状态</th>
-    </tr>
-    @{
-        foreach (var item in ViewBag.list)
-        {
-            <tr>
-                <td>@item.CommodityName</td>
-                <td>@item.Count</td>
-                <td>@item.UnitPrice</td>
-                <td>@item.RealUnitPrice</td>
-                <td>@item.UserName</td>
-                <td>@item.Address</td>
-                <td>@item.PhoneNum</td>
-                @if (item.OrderState == 1)
-                {
-                    <td>待付款</td>
-                }
-                else if (item.OrderState == 2)
-                {
-                    <td>待发货</td>
-                }
-                else if (item.OrderState == 3)
-                {
-                    <td>已发货</td>
-                }
-                else if (item.OrderState == 4)
-                {
-                    <td>退款中</td>
-                }
-                else if (item.OrderState == 5)
-                {
-                    <td>已完成</td>
-                }
-                else if (item.OrderState == 6)
-                {
-                    <td>已关闭</td>
-                }
 
-                <td>
-                    <a href="#" class="inner_btn">修改价格</a>
-                    @if (item.OrderState == 2)
-                    {
-                        <a href="#">发货</a>
-                    }
-                </td>
+@{
+    if (ViewBag.OrderState == "1")
+    { //未全部
+        <table class="table">
+            <tr>
+                <th>订单编号</th>
+                <th>订单时间</th>
+                <th>店铺名称</th>
+                <th>商品名称</th>
+                <th>商品规格</th>
+                <th>销售数量</th>
+                <th>价格</th>
+                <th>实际价格</th>
+                <th>备注</th>
+                <th>用户姓名</th>
+                <th>用户电话</th>
+                <th>收货地址</th>
+                <th>订单状态</th>
+                <th>操作</th>
             </tr>
-        }
+
+            @foreach (var item in ViewBag.list)
+            {
+                <tr>
+                    <td>@item.OrderNum</td>
+                    <td>@item.OpeDate</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.Title</td>
+                    <td>@item.OptionName</td>
+                    <td>@item.Count</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.RealUnitPrice</td>
+                    <td>@item.Remark</td>
+                    <td>@item.UserName</td>
+                    <td>@item.PhoneNum</td>
+                    <td>@item.Address</td>
+                    <td>@item.OrderState</td>
+                    <td>
+                        <a href="#" class="inner_btn">修改价格</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
     }
-</table>
+    else { //已付款 + 全部
+        <table class="table">
+            <tr>
+                <th>订单编号</th>
+                <th>订单时间</th>
+                <th>店铺名称</th>
+                <th>商品名称</th>
+                <th>商品规格</th>
+                <th>销售数量</th>
+                <th>价格</th>
+                <th>实际价格</th>
+                <th>备注</th>
+                <th>用户姓名</th>
+                <th>用户电话</th>
+                <th>收货地址</th>
+                <th>订单状态</th>
+                <th>物流状态</th>
+                <th>物流单号</th>
+                <th>物流公司</th>
+                <th>操作</th>
+            </tr>
+
+            @foreach (var item in ViewBag.list)
+            {
+                <tr>
+                    <td>@item.OrderNum</td>
+                    <td>@item.OpeDate</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.Title</td>
+                    <td>@item.OptionName</td>
+                    <td>@item.Count</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.RealUnitPrice</td>
+                    <td>@item.Remark</td>
+                    <td>@item.UserName</td>
+                    <td>@item.PhoneNum</td>
+                    <td>@item.Address</td>
+                    <td>@item.OrderState</td>
+                    <td>@item.LogisticsState</td>
+                    <td>@item.ExpressNum</td>
+                    <td>@item.ExpressType</td>
+                    <td>
+                        <a href="#" class="inner_btn">修改价格</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+
+
 

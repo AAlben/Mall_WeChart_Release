@@ -3,20 +3,167 @@
 
 }
 
-
-<script>
-    $(function () {
-        query();
-    });
-    function query()
-    {
-        var state = $("#stateselect").val();
-        var startdate = $("#startdate").val();
-        var enddate = $("#enddate").val();
-        $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
-        });
+<style type="text/css">
+    .order-type > li {
+        display: inline-block;
+        padding: 0 30px;
+        line-height: 44px;
+        border-bottom: 1px solid #ededed;
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        cursor: pointer;
+        position: relative;
     }
-</script>
+
+        .order-type > li.cur {
+            height: 41px;
+            border-bottom: 4px solid #585858;
+            color: #111;
+        }
+
+    .br-margin {
+        margin-top: 13px;
+    }
+
+    .J_Item {
+        width: 200px;
+    }
+</style>
+
+@section LayoutFoot{
+
+    <script type="text/javascript">
+        //淘宝前端所写日历控件
+        YUI({
+            modules: {
+                'trip-calendar': {
+                    fullpath: '../../StaticContent/Admin/js/trip-calendar.js',
+                    type: 'js',
+                    requires: ['trip-calendar-css']
+                },
+                'trip-calendar-css': {
+                    fullpath: '../../StaticContent/Admin/css/trip-calendar.css',
+                    type: 'css'
+                }
+            }
+        }).use('trip-calendar', function (Y) {
+
+            /**
+             * 弹出式日历实例
+             * 将日历与指定的触发元素绑定
+             * 日历可根据浏览器窗口大小，自动调整显示位置
+             */
+            var oCal = new Y.TripCalendar({
+                //绑定日历的节点，支持选择器模式，可批量设置（必选）
+                triggerNode: '#startdate , #enddate'
+            });
+
+            oCal.on('dateclick', function (e) {
+                this.getCurrentNode().setAttribute('data-date', e.date);
+            });
+
+            //显示日历时自定义事件
+            oCal.on('show', function () {
+                var v = this.getCurrentNode().getAttribute('data-date');
+                this.set('date', v || new Date);
+                this.set('selectedDate', v).render();
+            });
+
+            //解决chrome的foucs事件bug
+            Y.on('click', function (e) {
+                e.currentTarget.focus();
+            }, 'button, .J_Link');
+
+            //Query 方法
+            $('#btnQuery').on('click', function () {
+                var state = $('#hState').val();
+
+                var startdate = Y.one("#startdate").get('value');
+                var enddate = Y.one("#enddate").get('value');
+
+                if (!startdate) { startdate = $('#startdate').prev('span').text(); }
+                if (!enddate) { enddate = $('#enddate').prev('span').text(); }
+
+                $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            //初始化
+            Init();
+
+            //默认查询
+            //query();
+
+            //事件绑定
+            BindEvent();
+        });
+
+        //自定义方法区
+
+        //查询
+        function query() {
+
+            var state = $('#hState').val();
+            var startdate = $("#startdate").val();
+            var enddate = $("#enddate").val();
+
+            $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate }, function () {
+            });
+        }
+
+        //页面初始化
+        function Init() {
+            //日期控件
+            var startDate = $('#startdate');
+            var endDate = $('#enddate');
+
+            //计算初始日期
+            var vDateNa = DateOperate(-7);
+            var vDateNb = DateOperate(0);
+
+            //给元素赋值属性
+            startDate.attr('data-date', vDateNa);
+            endDate.attr('data-date', vDateNb);
+
+            //定时器
+            setTimeout(function () {
+                //1.赋予指定日期
+                startDate.prev('span').text(vDateNa);
+                endDate.prev('span').text(vDateNb);
+            }, 500);
+
+        }
+
+        //绑定事件
+        function BindEvent() {
+            $('.order-type li').on('click', function () {
+                //样式变换
+                var vThis = $(this);
+                vThis.addClass('cur').siblings().removeClass('cur');
+
+                var vState = vThis.attr('uState');
+                $('#hState').val(vState);
+
+                //查询
+                $('#btnQuery').click();
+            });
+        }
+
+        //日期操作函数
+        function DateOperate(n) {
+            var uom = new Date(new Date() - 0 + n * 86400000);
+            uom = uom.getFullYear() + "-" + (uom.getMonth() + 1) + "-" + uom.getDate();
+            return uom;
+        }
+    </script>
+}
+
+
 <section>
     <div class="page_title">
         <h2 class="fl">订单详情</h2>
@@ -24,18 +171,22 @@
 </section>
 <section>
     <h2><strong style="color:grey;">查询条件</strong></h2>
-    订单状态：
-    <select class="select" id="stateselect">
-        <option value="0">全部</option>
-        <option value="1">待付款</option>
-        <option  value="2">待发货</option>
-        <option value="3">已发货</option>
-        <option value="4">退款中</option>
-        <option value="5">已完成</option>
-        <option value="6">已关闭</option>
-    </select>
-    &nbsp; &nbsp; &nbsp; &nbsp;订单时间：
-    <input type="text" class="textbox" id="startdate"/>至<input type="text" class="textbox" id="enddate" />
-    &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="查询" class="group_btn" onclick="query()" />
-    <div id="recordlist"></div>
+    <div>
+        <ul class="uk-tab order-type">
+            <li class="cur" uState="-1">全部</li>
+            <li uState="1">待付款</li>
+            <li uState="30">待发货</li>
+            <li uState="31">已发货</li>
+            <li uState="5">退款中</li>
+            <li uState="6">已完成</li>
+            <li uState="4">已关闭</li>
+        </ul>
+    </div>
+    <div style="padding-left:30px;" class="br-margin">
+        订单时间：
+        <input type="text" class="J_Item" autocomplete="off" id="startdate" />    至    <input type="text" class="J_Item" autocomplete="off" id="enddate" />
+        &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="查询" class="group_btn" id="btnQuery" />
+    </div>
+    <div id="recordlist" class="br-margin"></div>
 </section>
+<input type="hidden" value="-1" id="hState" />

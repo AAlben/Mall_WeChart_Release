@@ -103,7 +103,7 @@
                     foreach (var vItem in ViewBag.BeOrderLine)
                     {
                         <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv">
-                            <img src="image/info/infoNb.jpg" alt="" class="uk-thumbnail uk-width-medium-2-10">
+                            <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-2-10">
                             <h2 class="uk-width-medium-5-10 uk-text-break">@vItem.Title</h2>
                             <div class="uk-width-medium-2-10 mobile-font">
                                 <h1 style="color:red;">￥@vItem.RealUnitPrice</h1>
@@ -125,20 +125,12 @@
             <br />
             <div style="border-top:3px solid #e5e5e5"></div>
             <br />
-            <div class="uk-grid">
-                <br />
-                <div class="uk-width-medium-1-10"></div>
-                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:100px;font-size:24px;">
-                <div class="uk-width-medium-1-10"></div>
-                <br />
-            </div>
-            <br />
             <div style="border-top:3px solid #e5e5e5"></div>
             <br />
             <div class="uk-grid">
                 <br />
                 <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">合计</h1>
-                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px;color:red;">￥0.0</h1>
+                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px;color:red;">￥@ViewBag.TotalPrice</h1>
                 <br />
             </div>
             <br />
@@ -150,6 +142,14 @@
                 <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px">无可用优惠</h1>
                 <br />
                 <div class="uk-width-1-1" style="height:25px;"></div>
+            </div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <div class="uk-width-medium-1-10"></div>
+                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:100px;font-size:24px;">
+                <div class="uk-width-medium-1-10"></div>
+                <br />
             </div>
         </div>
     </div>

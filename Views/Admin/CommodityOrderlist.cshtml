@@ -97,7 +97,6 @@
 
     <script>
         $(function () {
-
             //初始化
             Init();
 
@@ -157,48 +156,95 @@
 
         //----- 订单相关操作方法 -----
 
-        //1.修改价格
-        function ChangePrice(orderID) {
-            $('#dialogTitle').text('修改价格');
+        function LoadDialog(title, funOK, funClose) {
+            $('#dialogTitle').text(title);
 
             //确定按钮
-            $('#btnOK').unbind().on('click', function () {
-                var vLineIDs = '';
-                var vRealUnitPrices = '';
-                var vCounts = '';
-
-                $.each($('.pop_cont_input input'), function (index, item) {
-                    var vItem = $(item);
-                    vLineIDs += vItem.attr('uLineID') + ',';
-                    vRealUnitPrices += vItem.val() + ',';
-                    vCounts += vItem.attr('uCount') + ',';
-                });
-
-                $.get('/Admin/ChangeOrderPriceOpe',
-                    { par1: vLineIDs, par2: vRealUnitPrices, par3: vCounts },
-                    function (data) {
-                        if (data && data.Flag) {
-                            alert('价格修改成功！');
-                        }
-                    },
-                    'json');
-            });
+            $('#btnOK').unbind().on('click', funOK);
 
             //关闭按钮
             $('#btnClose').unbind().on('click', function () {
                 $(".pop_bg").fadeOut();
-            });
 
+                if (funClose) { funClose(); }
+            });
+        }
+
+        //1.修改价格
+        function ChangePrice(orderID) {
+            LoadDialog('修改价格',
+                function () { //确定修改价格按钮
+                    var vLineIDs = '';
+                    var vRealUnitPrices = '';
+                    var vCounts = '';
+
+                    $.each($('.pop_cont_input input'), function (index, item) {
+                        var vItem = $(item);
+                        vLineIDs += vItem.attr('uLineID') + ',';
+                        vRealUnitPrices += vItem.val() + ',';
+                        vCounts += vItem.attr('uCount') + ',';
+                    });
+
+                    $.get('/Admin/ChangeOrderPriceOpe',
+                        { par1: vLineIDs, par2: vRealUnitPrices, par3: vCounts },
+                        function (data) {
+                            if (data && data.Flag) {
+                                alert('价格修改成功！');
+
+                                //数据刷新
+                                $('#btnQuery').click();
+                            }
+                        },
+                        'json');
+                });
+
+            //加载HTML
             $('.pop_cont_input').load('/Admin/ChangeOrderPrice', { par1: orderID }, function () {
                 $(".pop_bg").fadeIn();
             });
         }
 
         //2.关闭订单
+        function OrderClose(orderID) {
+            var vResult = confirm('确定要关闭改订单？');
 
+            if (vResult) {
+                $.get('/Admin/OrderClose',
+                    { par1: orderID },
+                    function (data) {
+                        if (data && data.Flag) {
+                            //数据刷新
+                            $('#btnQuery').click();
+                        }
+                        else {
+                            alert(data.Msg);
+                        }
+                    },
+                    'json');
+            }
+        }
 
         //3.填写快递单号
+        function WriteExpNum() {
+            LoadDialog('填写快递单号',
+                function () { //填写快递单号确定按钮
+                    //Init
+                    var vExpCode = $('#selExp').val();
+                    var vExpNum = $('#txtExpNum').val();
 
+                    $.get('/Admin/WriteExpNumOpe',
+                        { par1: $('#hOrderID').val(), par2: vExpCode, par3: vExpNum },
+                        function (data) {
+
+                        },
+                        'json');
+                });
+
+            //加载HTML
+            $('.pop_cont_input').load('/Admin/WriteExpNum', { par1: orderID }, function () {
+                $(".pop_bg").fadeIn();
+            });
+        }
 
         //翻页相关
 

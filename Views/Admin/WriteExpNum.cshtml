@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "填写快递单号";
+}
+
+<ul>
+    <li>
+        <span class="tt1">快递公司</span>
+        <select id="selExp">
+            <option value='ems'>EMS快递</option>
+
+            <option value='shentong'>申通快递</option>
+
+            <option value='shunfeng'>顺丰快递</option>
+
+            <option value='yuantong'>圆通快递</option>
+
+            <option value='yunda'>韵达快递</option>
+
+            <option value='huitong'>汇通快递</option>
+
+            <option value='tiantian'>天天快递</option>
+
+            <option value='zhongtong'>中通快递</option>
+
+            <option value='zhaijisong'>宅急送快递</option>
+
+            <option value='pingyou'>中国邮政</option>
+
+            <option value='quanfeng'>全峰快递</option>
+
+            <option value='guotong'>国通快递</option>
+
+            <option value='jingdong'>京东快递</option>
+
+            <option value='sure'>速尔快递</option>
+
+            <option value='kuaijie'>快捷快递</option>
+
+            <option value='ririshun'>日日顺物流</option>
+
+            <option value='zhongtie'>中铁快运</option>
+
+            <option value='yousu'>优速快递</option>
+
+            <option value='longbang'>龙邦快递</option>
+
+            <option value='debang'>德邦物流</option>
+
+            <option value='rufeng'>如风达快递</option>
+
+            <option value='lianhaotong'>联昊通快递</option>
+        </select>
+    </li>
+    <li>
+        <span>快递单号</span>
+        <input type="text" placeholder="请输入快递单号" class="textbox" id="txtExpNum">
+    </li>
+</ul>
+
+<input type="hidden" id="hOrderID" value="@ViewBag.OrderID" />

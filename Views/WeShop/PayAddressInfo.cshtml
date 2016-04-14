@@ -70,7 +70,8 @@
         var total_fee = '@ViewBag.TotalPrice';
 
         //1.带参数的页面跳转
-        window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}', [vOpenID, total_fee]);
+        window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}&ordernum={2}&title={3}&content={4}',
+                                            [vOpenID, total_fee, '@ViewBag.OrderNum', '@ViewBag.Title', '@ViewBag.Param']);
     }
 </script>
 
@@ -125,8 +126,6 @@
             <br />
             <div style="border-top:3px solid #e5e5e5"></div>
             <br />
-            <div style="border-top:3px solid #e5e5e5"></div>
-            <br />
             <div class="uk-grid">
                 <br />
                 <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">合计</h1>
@@ -144,10 +143,12 @@
                 <div class="uk-width-1-1" style="height:25px;"></div>
             </div>
             <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
             <div class="uk-grid">
                 <br />
                 <div class="uk-width-medium-1-10"></div>
-                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:100px;font-size:24px;">
+                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:100px;font-size:36px;">
                 <div class="uk-width-medium-1-10"></div>
                 <br />
             </div>

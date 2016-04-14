@@ -17,11 +17,14 @@
             }
             vWxJsApiParam = data;
         }).done(function () {
-
             WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 vWxJsApiParam,//josn串
                  function (res) {
+
+                     var vContent = JSON.stringify(res);
+                     $.get('/WeShop/PayApplyResultHandle', { par1: res }, function (data) { });
+
                      WeixinJSBridge.log(res.err_msg);
                      alert(res.err_code + res.err_desc + res.err_msg);
                  }
@@ -46,12 +49,30 @@
     }
 
     $(function () {
+        //初始化
+        InitData();
+
         callpay();
     });
+
+    //自定义方法区
+
+    //初始化
+    function InitData() {
+        var vFlag = '@ViewBag.Flag';
+        if (vFlag == 'False') {
+
+            NotifyAlert('@ViewBag.Msg');
+
+            setTimeout(function () {
+                window.location.href = '@ViewBag.RedirectUrl';
+            }, 1500);
+        }
+    }
 </script>
 
-<div align="center">
-    <br /><br /><br />
-    <input type="button" ID="submit" Text="立即支付" onclick="callpay();" style="width:210px; height:50px; border-radius: 15px;background-color:#00CD00; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px; display:none;" />
+<div class="uk-panel uk-panel-box uk-text-break">
+    <h1>订单详情：</h1>
+    @ViewBag.Content
 </div>
 

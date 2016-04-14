@@ -21,31 +21,13 @@
                 'getBrandWCPayRequest',
                 vWxJsApiParam,//josn串
                  function (res) {
-
-                     var vContent = JSON.stringify(res);
-                     $.get('/WeShop/PayApplyResultHandle', { par1: res }, function (data) { });
-
-                     alert('return_code:' + res.return_code);
-                     alert('return_msg:' + res.return_msg);
-                     alert('return_code:' + res.return_code);
-                     alert('appid:' + res.appid);
-                     alert('mch_id:' + res.mch_id);
-                     alert('device_info:' + res.device_info);
-                     alert('nonce_str:' + res.nonce_str);
-                     alert('sign:' + res.sign);
-                     alert('result_code:' + res.result_code);
-                     alert('err_code:' + res.err_code);
-                     alert('err_code_des:' + res.err_code_des);
-                     alert('trade_type:' + res.trade_type);
-                     alert('prepay_id:' + res.prepay_id);
-                     alert('code_url:' + res.code_url);
-
                      WeixinJSBridge.log(res.err_msg);
                      alert(res.err_code + res.err_desc + res.err_msg);
 
-                     alert('err_code:' + res.err_code);
-                     alert('err_desc:' + res.err_desc);
-                     alert('err_msg:' + res.err_msg);
+                     for (var item in res) {
+                         alert('res中' + item + '的值：' + res[item]);
+                     }
+
                  }
              );
 

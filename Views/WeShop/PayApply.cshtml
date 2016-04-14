@@ -22,12 +22,9 @@
                 vWxJsApiParam,//josn串
                  function (res) {
                      WeixinJSBridge.log(res.err_msg);
-                     alert(res.err_code + res.err_desc + res.err_msg);
+                     //alert(res.err_code + res.err_desc + res.err_msg);
 
-                     for (var item in res) {
-                         alert('res中' + item + '的值：' + res[item]);
-                     }
-
+                     //只有err_msg一个属性
                  }
              );
 

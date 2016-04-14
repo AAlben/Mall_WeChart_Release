@@ -25,6 +25,11 @@
                      //alert(res.err_code + res.err_desc + res.err_msg);
 
                      //只有err_msg一个属性
+                     var vMsg = res.err_msg;
+                     var vResultCode = vMsg.split(':')[1];
+
+                     alert(res.err_msg);
+                     alert(vResultCode);
                  }
              );
 
@@ -70,8 +75,33 @@
 </script>
 
 <div class="uk-panel uk-panel-box uk-text-break">
-    <h1>订单详情：</h1>
-    <br />
-    <h1>@ViewBag.Content</h1>
+    <div class="uk-grid uk-margin-remove">
+        @{
+            string strContent = ViewBag.Content.ToString();
+            string[] arrContent = strContent.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+            <hr />
+            <h1 class="uk-text-left">订单详情：</h1>
+
+            <br />
+
+            <h1>
+                <span class="uk-text-left">@arrContent[0].Split(':')[0] ：</span>
+                <span class="uk-text-left">@arrContent[0].Split(':')[1]</span>
+            </h1>
+            <br />
+            <h1>
+                <span class="uk-text-left">@arrContent[1].Split(':')[0] ：</span>
+                <span class="uk-text-left">@arrContent[1].Split(':')[1]</span>
+            </h1>
+            <br />
+            <h1>
+                <span class="uk-text-left">@arrContent[2].Split(':')[0] ：</span>
+                <span class="uk-text-left">@arrContent[2].Split(':')[1]</span>
+            </h1>
+            <br />
+        }
+    </div>
+
 </div>
 

@@ -64,6 +64,7 @@
     };
 
     //自定义方法区
+
     //立即支付按钮事件
     function btnPayApply() {
         var vOpenID = '@Session["openid"]';
@@ -72,6 +73,19 @@
         //1.带参数的页面跳转
         window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}&ordernum={2}&title={3}&content={4}',
                                             [vOpenID, total_fee, '@ViewBag.OrderNum', '@ViewBag.Title', '@ViewBag.Param']);
+    }
+
+    //订单相关地址快递信息操作
+    function OrderExpressOpe() {
+        var vOrderID = '@ViewBag.OrderID';
+
+        var vAddr = $('#hAddr').text().split('：')[1];
+        var vPhone = $('#hPhone').text().split('：')[1];
+        var vName = $('#hName').text().split('：')[1];
+
+        $.get('/WeShop/OrderExpressOpe',
+            { par1: vOrderID, par2: vAddr, par3: vPhone, par4: vName },
+            function (data) { });
     }
 </script>
 

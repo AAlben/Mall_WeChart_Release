@@ -80,14 +80,14 @@
 
     //订单相关地址快递信息操作
     function OrderExpressOpe(funNa) {
-        var vOrderID = '@ViewBag.OrderID';
+        var vOrderNum = '@ViewBag.OrderNum';
 
         var vAddr = $('#hAddr').text().split('：')[1];
         var vPhone = $('#hPhone').text().split('：')[1];
         var vName = $('#hName').text().split('：')[1];
 
         $.get('/WeShop/OrderExpressOpe',
-            { par1: vOrderID, par2: vAddr, par3: vPhone, par4: vName },
+            { par1: vOrderNum, par2: vAddr, par3: vPhone, par4: vName },
             function (data) { }).done(funNa);
     }
 </script>

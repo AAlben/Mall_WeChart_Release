@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "CustomerCenter";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="uk-container">
+    <div uRemark="图片" class="uk-thumbnail uk-thumbnail-expand">
+        <img src="image/swiper/logoNa.jpg" alt="">
+    </div>
+    <div uRemark="显示名字" class="uk-panel uk-panel-box" style="background-color:#FF0000">
+        <h1 class="mobile-font" style="color:white;">尊贵的会员：</h1>
+    </div>
+    <br />
+    <div uRemark="模块分类" class="uk-grid">
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="" class="uk-icon-shopping-cart order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">待付款</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="" class="uk-icon-truck order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">代发货</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="" class="uk-icon-sign-out order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">已发货</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="">
+                <a href="" class="uk-icon-inbox order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">已完成</a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="uk-width-1-1" style="height:0px;border:1px solid black;"></div>
+    <br />
+    <div uRemark="各功能" class="uk-grid">
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="" class="uk-icon-server order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">全部订单</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="" class="uk-icon-history order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">我的购物记录</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="" class="uk-icon-credit-card order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">我的返现</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+            <div class="uk-text-center" style="">
+                <a href="" class="uk-icon-group order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="" style="font-size:36px;" class="order-color">销售员中心</a>
+            </div>
+        </div>
+        <div class="uk-width-1-1" style="height:25px;"></div>
+    </div>
+    <div class="br-box">
+        <br />
+    </div>
+    <div uRemark="猜你喜欢" class="uk-block">
+        <h1 class="mobile-shopItem">猜你喜欢</h1>
+        <br />
+        <div class="uk-grid shop-img" onclick="InitEvent();">
+            <div class="uk-width-medium-1-2">
+                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
+                <br />
+            </div>
+            <div class="uk-width-medium-1-2 uk-vertical-align">
+                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
+                <h1 style="color:red;">￥1980</h1>
+            </div>
+        </div>
+        <div class="uk-grid shop-img" onclick="InitEvent();">
+            <div class="uk-width-medium-1-2">
+                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
+            </div>
+            <div class="uk-width-medium-1-2 uk-vertical-align">
+                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
+                <h1 style="color:red;">￥1980</h1>
+            </div>
+        </div>
+        <div class="uk-grid shop-img" onclick="InitEvent();">
+            <div class="uk-width-medium-1-2">
+                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
+            </div>
+            <div class="uk-width-medium-1-2 uk-vertical-align">
+                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
+                <h1 style="color:red;">￥1980</h1>
+            </div>
+        </div>
+        <div class="uk-grid shop-img" onclick="InitEvent();">
+            <div class="uk-width-medium-1-2">
+                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
+            </div>
+            <div class="uk-width-medium-1-2 uk-vertical-align">
+                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
+                <h1 style="color:red;">￥1980</h1>
+            </div>
+        </div>
+    </div>
+    <div uRemark="foot"></div>
+</div>
+
+@section LayoutShop{
+    <script type="text/javascript">
+        function InitEvent() {
+            window.location.href = '02CommodityInfo.html';
+        }
+    </script>
+}

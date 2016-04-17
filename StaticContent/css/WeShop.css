@@ -68,6 +68,10 @@ a {
     color: #FF0000;
 }
 
+.order-color {
+    color: #444;
+}
+
 .uk-panel-box-primary {
     background-color: #FFFFFF;
 }
@@ -101,6 +105,10 @@ a {
 .shop-img {
     min-height: 560px;
 }
+
+    .shop-img div {
+        border-bottom: 3px solid #e5e5e5;
+    }
 
 .shop-item {
     border: 3px solid #e5e5e5;

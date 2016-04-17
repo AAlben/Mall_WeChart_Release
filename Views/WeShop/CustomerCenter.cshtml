@@ -1,12 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "CustomerCenter";
+    ViewBag.Title = "我的商城";
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
 
 <div class="uk-container">
     <div uRemark="图片" class="uk-thumbnail uk-thumbnail-expand">
-        <img src="image/swiper/logoNa.jpg" alt="">
+        <img src="~/StaticContent/image/swiper/logoNa.jpg" alt="">
     </div>
     <div uRemark="显示名字" class="uk-panel uk-panel-box" style="background-color:#FF0000">
         <h1 class="mobile-font" style="color:white;">尊贵的会员：</h1>
@@ -15,30 +15,30 @@
     <div uRemark="模块分类" class="uk-grid">
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="" class="uk-icon-shopping-cart order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-shopping-cart order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">待付款</a>
+                <a href="/WeShop/ShoppingList" style="font-size:36px;" class="order-color">购物车</a>
             </div>
         </div>
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="" class="uk-icon-truck order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-truck order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">代发货</a>
+                <a href="javascript:;" style="font-size:36px;" class="order-color">待付款</a>
             </div>
         </div>
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="" class="uk-icon-sign-out order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-sign-out order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">已发货</a>
+                <a href="javascript:;" style="font-size:36px;" class="order-color">待发货</a>
             </div>
         </div>
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="">
-                <a href="" class="uk-icon-inbox order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-inbox order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">已完成</a>
+                <a href="javascript:;" style="font-size:36px;" class="order-color">待收货</a>
             </div>
         </div>
     </div>
@@ -48,30 +48,30 @@
     <div uRemark="各功能" class="uk-grid">
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="" class="uk-icon-server order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-server order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">全部订单</a>
+                <a href="/WeShop/OrderList" style="font-size:36px;" class="order-color">全部订单</a>
             </div>
         </div>
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="" class="uk-icon-history order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-history order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">我的购物记录</a>
+                <a href="javascript:;" style="font-size:36px;" class="order-color">待评价</a>
             </div>
         </div>
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="" class="uk-icon-credit-card order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-credit-card order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">我的返现</a>
+                <a href="javascript:;" style="font-size:36px;" class="order-color">优惠券</a>
             </div>
         </div>
         <div class="uk-width-medium-1-4" style="padding-left:0px;">
             <div class="uk-text-center" style="">
-                <a href="" class="uk-icon-group order-color" style="font-size:70px;height:97px;"></a>
+                <a href="javascript:;" class="uk-icon-group order-color" style="font-size:70px;height:97px;"></a>
                 <br />
-                <a href="" style="font-size:36px;" class="order-color">销售员中心</a>
+                <a href="javascript:;" style="font-size:36px;" class="order-color">退款/售后</a>
             </div>
         </div>
         <div class="uk-width-1-1" style="height:25px;"></div>
@@ -79,54 +79,51 @@
     <div class="br-box">
         <br />
     </div>
-    <div uRemark="猜你喜欢" class="uk-block">
+    <div uRemark="猜你喜欢" class="uk-block" id="dULike">
         <h1 class="mobile-shopItem">猜你喜欢</h1>
         <br />
-        <div class="uk-grid shop-img" onclick="InitEvent();">
-            <div class="uk-width-medium-1-2">
-                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
-                <br />
-            </div>
-            <div class="uk-width-medium-1-2 uk-vertical-align">
-                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
-                <h1 style="color:red;">￥1980</h1>
-            </div>
-        </div>
-        <div class="uk-grid shop-img" onclick="InitEvent();">
-            <div class="uk-width-medium-1-2">
-                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
-            </div>
-            <div class="uk-width-medium-1-2 uk-vertical-align">
-                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
-                <h1 style="color:red;">￥1980</h1>
-            </div>
-        </div>
-        <div class="uk-grid shop-img" onclick="InitEvent();">
-            <div class="uk-width-medium-1-2">
-                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
-            </div>
-            <div class="uk-width-medium-1-2 uk-vertical-align">
-                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
-                <h1 style="color:red;">￥1980</h1>
-            </div>
-        </div>
-        <div class="uk-grid shop-img" onclick="InitEvent();">
-            <div class="uk-width-medium-1-2">
-                <img src="image/info/infoNb.jpg" alt="" class="shop-img">
-            </div>
-            <div class="uk-width-medium-1-2 uk-vertical-align">
-                <h1 class="mobile-shopItem uk-vertical-align-middle">【第二批预售1月30日发货】最强大脑训练：《推理的迷宫》 + 《囚徒的困境》</h1>
-                <h1 style="color:red;">￥1980</h1>
-            </div>
-        </div>
     </div>
     <div uRemark="foot"></div>
 </div>
 
 @section LayoutShop{
+    <script type="text/html" id="tplCommodity">
+        {{each List as value index}}
+        <div class="uk-grid shop-img">
+            <div class="uk-width-medium-1-2">
+                <img src="/{{value.Photo}}" alt="" class="shop-img">
+                <br />
+            </div>
+            <div class="uk-width-medium-1-2 uk-vertical-align">
+                <h1 class="mobile-shopItem uk-vertical-align-middle">{{value.Title}}</h1>
+                <h1 style="color:red;">￥{{value.Price}}</h1>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
     <script type="text/javascript">
-        function InitEvent() {
-            window.location.href = '02CommodityInfo.html';
+        $(function () {
+
+            //数据加载
+            LoadULike();
+        });
+
+        //自定义方法区
+
+        //数据加载：猜你喜欢
+        function LoadULike() {
+            var vIndex = 1;
+
+            $.get('/RequestData/CommodityInfoByPage', { r: Math.random(), par1: '', par2: vIndex, par3: '' }, function (data) {
+                if (data && data.List) {
+                    if (data.List.length == 0) { }
+                    else {
+                        var vHtml = template('tplCommodity', data);
+                        $('#dULike').append(vHtml);
+                    }
+                }
+            }, 'json');
         }
     </script>
 }

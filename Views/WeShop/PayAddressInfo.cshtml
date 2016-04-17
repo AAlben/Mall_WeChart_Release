@@ -70,6 +70,9 @@
         var vOpenID = '@Session["openid"]';
         var total_fee = '@ViewBag.TotalPrice';
 
+        //订单运单消息Insert
+        OrderExpressOpe();
+
         //1.带参数的页面跳转
         window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}&ordernum={2}&title={3}&content={4}',
                                             [vOpenID, total_fee, '@ViewBag.OrderNum', '@ViewBag.Title', '@ViewBag.Param']);

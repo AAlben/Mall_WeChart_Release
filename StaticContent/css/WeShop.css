@@ -239,3 +239,37 @@ hr {
 .nav-li-font {
     font-size: 45px;
 }
+
+.right-btn {
+    margin-right: 15px;
+}
+
+.order-btn {
+    /*width: 100%;*/
+    color: #fff;
+    border-color: #f60;
+    background-color: #f60;
+    font-size: 36px;
+    height: 42px;
+    border-radius: 8px;
+}
+
+.dItemBtn {
+}
+
+    .dItemBtn > ul {
+        position: relative;
+        float: right;
+    }
+
+        .dItemBtn > ul li {
+            float: right;
+            padding: 0 .267rem;
+            margin: .133rem 0 .133rem .133rem;
+            height: .693rem;
+            line-height: .693rem;
+            text-align: center;
+            border: 1px solid #999;
+            border-radius: .053rem;
+            font-size: 36px;
+        }

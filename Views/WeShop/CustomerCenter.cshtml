@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
 
+@section LayoutHead{
+    <script src="~/StaticContent/js/template.js"></script>
+}
+
 <div class="uk-container">
     <div uRemark="图片" class="uk-thumbnail uk-thumbnail-expand">
         <img src="~/StaticContent/image/swiper/logoNa.jpg" alt="">
@@ -12,70 +16,79 @@
         <h1 class="mobile-font" style="color:white;">尊贵的会员：</h1>
     </div>
     <br />
-    <div uRemark="模块分类" class="uk-grid">
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+    <div uRemark="模块分类" class="uk-grid" id="dANa">
+        <div class="uk-width-medium-1-5" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="javascript:;" class="uk-icon-shopping-cart order-color" style="font-size:70px;height:97px;"></a>
+                <a href="/WeShop/ShoppingList" class="uk-icon-shopping-cart order-color" style="font-size:70px;height:97px;"></a>
                 <br />
                 <a href="/WeShop/ShoppingList" style="font-size:36px;" class="order-color">购物车</a>
             </div>
         </div>
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+        <div class="uk-width-medium-1-5" style="padding-left:0px;">
+            <div class="uk-text-center" style="border-right:1px solid black;">
+                <a href="/WeShop/OrderList" class="uk-icon-server order-color" style="font-size:70px;height:97px;"></a>
+                <br />
+                <a href="/WeShop/OrderList" style="font-size:36px;" class="order-color">全部订单</a>
+            </div>
+        </div>
+        <div class="uk-width-medium-1-5" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
                 <a href="javascript:;" class="uk-icon-truck order-color" style="font-size:70px;height:97px;"></a>
                 <br />
                 <a href="javascript:;" style="font-size:36px;" class="order-color">待付款</a>
             </div>
         </div>
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+        <div class="uk-width-medium-1-5" style="padding-left:0px;">
             <div class="uk-text-center" style="border-right:1px solid black;">
                 <a href="javascript:;" class="uk-icon-sign-out order-color" style="font-size:70px;height:97px;"></a>
                 <br />
                 <a href="javascript:;" style="font-size:36px;" class="order-color">待发货</a>
             </div>
         </div>
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
+        <div class="uk-width-medium-1-5" style="padding-left:0px;">
             <div class="uk-text-center" style="">
                 <a href="javascript:;" class="uk-icon-inbox order-color" style="font-size:70px;height:97px;"></a>
                 <br />
                 <a href="javascript:;" style="font-size:36px;" class="order-color">待收货</a>
             </div>
         </div>
+        <br />
     </div>
     <br />
-    <div class="uk-width-1-1" style="height:0px;border:1px solid black;"></div>
-    <br />
-    <div uRemark="各功能" class="uk-grid">
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
-            <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="javascript:;" class="uk-icon-server order-color" style="font-size:70px;height:97px;"></a>
-                <br />
-                <a href="/WeShop/OrderList" style="font-size:36px;" class="order-color">全部订单</a>
+    @*<div class="uk-width-1-1" style="height:0px;border:1px solid black;"></div>
+        <br />
+        <div uRemark="各功能" class="uk-grid" id="dANb">
+            <div class="uk-width-medium-1-4" style="padding-left:0px;">
+                <div class="uk-text-center" style="border-right:1px solid black;">
+                    <a href="/WeShop/OrderList" class="uk-icon-server order-color" style="font-size:70px;height:97px;"></a>
+                    <br />
+                    <a href="/WeShop/OrderList" style="font-size:36px;" class="order-color">全部订单</a>
+                </div>
             </div>
-        </div>
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
-            <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="javascript:;" class="uk-icon-history order-color" style="font-size:70px;height:97px;"></a>
-                <br />
-                <a href="javascript:;" style="font-size:36px;" class="order-color">待评价</a>
+            <div class="uk-width-medium-1-4" style="padding-left:0px;">
+                <div class="uk-text-center" style="border-right:1px solid black;">
+                    <a href="javascript:;" class="uk-icon-history order-color" style="font-size:70px;height:97px;"></a>
+                    <br />
+                    <a href="javascript:;" style="font-size:36px;" class="order-color">待评价</a>
+                </div>
             </div>
-        </div>
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
-            <div class="uk-text-center" style="border-right:1px solid black;">
-                <a href="javascript:;" class="uk-icon-credit-card order-color" style="font-size:70px;height:97px;"></a>
-                <br />
-                <a href="javascript:;" style="font-size:36px;" class="order-color">优惠券</a>
+            <div class="uk-width-medium-1-4" style="padding-left:0px;">
+                <div class="uk-text-center" style="border-right:1px solid black;">
+                    <a href="javascript:;" class="uk-icon-credit-card order-color" style="font-size:70px;height:97px;"></a>
+                    <br />
+                    <a href="javascript:;" style="font-size:36px;" class="order-color">优惠券</a>
+                </div>
             </div>
-        </div>
-        <div class="uk-width-medium-1-4" style="padding-left:0px;">
-            <div class="uk-text-center" style="">
-                <a href="javascript:;" class="uk-icon-group order-color" style="font-size:70px;height:97px;"></a>
-                <br />
-                <a href="javascript:;" style="font-size:36px;" class="order-color">退款/售后</a>
+            <div class="uk-width-medium-1-4" style="padding-left:0px;">
+                <div class="uk-text-center" style="">
+                    <a href="javascript:;" class="uk-icon-group order-color" style="font-size:70px;height:97px;"></a>
+                    <br />
+                    <a href="javascript:;" style="font-size:36px;" class="order-color">退款/售后</a>
+                </div>
             </div>
+            <div class="uk-width-1-1" style="height:25px;"></div>
         </div>
-        <div class="uk-width-1-1" style="height:25px;"></div>
-    </div>
+    *@
     <div class="br-box">
         <br />
     </div>
@@ -89,7 +102,7 @@
 @section LayoutShop{
     <script type="text/html" id="tplCommodity">
         {{each List as value index}}
-        <div class="uk-grid shop-img">
+        <div class="uk-grid shop-img" uId="{{value.ID}}">
             <div class="uk-width-medium-1-2">
                 <img src="/{{value.Photo}}" alt="" class="shop-img">
                 <br />
@@ -104,12 +117,40 @@
 
     <script type="text/javascript">
         $(function () {
-
             //数据加载
             LoadULike();
+
+            //事件绑定
+            BindEvent();
         });
 
         //自定义方法区
+
+        //事件绑定
+        function BindEvent() {
+            //第一行事件绑定
+            $('#dANa div').on('touchstart', function () {
+                FunctionRedirect($(this));
+            });
+        }
+
+        //猜你喜欢商品列表区域点击事件
+        function BindEventNa() {
+            //商品区域touchstart事件
+            $('.shop-img').on('touchstart', function () {
+                var vThis = $(this);
+                var vCommID = vThis.attr('uId');
+
+                window.location.href = '/WeShop/CommodityInfo/' + vCommID;
+            });
+        }
+
+        //功能列表icon点击事件逻辑封装
+        function FunctionRedirect(vThis) {
+            var vUrl = vThis.find('a').attr('href');
+
+            window.location.href = vUrl;
+        }
 
         //数据加载：猜你喜欢
         function LoadULike() {
@@ -123,7 +164,7 @@
                         $('#dULike').append(vHtml);
                     }
                 }
-            }, 'json');
+            }, 'json').done(BindEventNa);
         }
     </script>
 }

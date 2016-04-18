@@ -70,17 +70,20 @@
     <div class="uk-block">
         <div uRemark="导航">
             <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
-                <li class="uk-active uk-width-medium-1-4 active uk-text-center" uid="shoppingList">
-                    <h1 class="mobile-font">购物车</h1>
+                <li class="uk-active uk-width-medium-1-5 active uk-text-center" uid="shoppingList">
+                    <h1 class="nav-li-font">购物车</h1>
                 </li>
-                <li class="uk-width-medium-1-4 uk-text-center" uid="orderList">
-                    <h1 class="mobile-font">我的订单</h1>
+                <li class="uk-width-medium-1-5 uk-text-center" uid="orderList">
+                    <h1 class="nav-li-font">全部订单</h1>
                 </li>
-                <li class="uk-width-medium-1-4 uk-text-center">
-                    <h1 class="mobile-font">我的红包</h1>
+                <li class="uk-width-medium-1-5 uk-text-center">
+                    <h1 class="nav-li-font">待付款</h1>
                 </li>
-                <li class="uk-width-medium-1-4 uk-text-center">
-                    <h1 class="mobile-font">我的返现</h1>
+                <li class="uk-width-medium-1-5 uk-text-center">
+                    <h1 class="nav-li-font">待发货</h1>
+                </li>
+                <li class="uk-width-medium-1-5 uk-text-center">
+                    <h1 class="nav-li-font">待收货</h1>
                 </li>
             </ul>
 
@@ -88,7 +91,6 @@
 
             <ul id="tab-content" class="uk-switcher">
                 <li class="uk-active" id="lShopList">
-
                     @{
                         foreach (var item in Model)
                         {
@@ -122,6 +124,7 @@
                 </li>
                 <li>
                 </li>
+                <li></li>
                 <li></li>
                 <li></li>
             </ul>

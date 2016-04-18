@@ -88,6 +88,8 @@
                 if (!startdate) { startdate = $('#startdate').prev('span').text(); }
                 if (!enddate) { enddate = $('#enddate').prev('span').text(); }
 
+                $("#recordlist").empty();
+
                 $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate, index: $('#hPageIndex').val() }, function () {
                     LoadEnd();
                 });
@@ -164,7 +166,7 @@
 
             //关闭按钮
             $('#btnClose').unbind().on('click', function () {
-                $(".pop_bg").fadeOut();
+                DialogShowHide(false);
 
                 if (funClose) { funClose(); }
             });
@@ -200,7 +202,7 @@
 
             //加载HTML
             $('.pop_cont_input').load('/Admin/ChangeOrderPrice', { par1: orderID }, function () {
-                $(".pop_bg").fadeIn();
+                DialogShowHide(true);
             });
         }
 
@@ -225,25 +227,68 @@
         }
 
         //3.填写快递单号
-        function WriteExpNum() {
+        function WriteExpNum(orderID) {
             LoadDialog('填写快递单号',
                 function () { //填写快递单号确定按钮
                     //Init
-                    var vExpCode = $('#selExp').val();
-                    var vExpNum = $('#txtExpNum').val();
+                    var vSelExp = $('#selExp');
+                    var vExpCode = vSelExp.val();
+                    var vExpType = $('option:selected', vSelExp).text();
+                    var vInputExp = $('#txtExpNum');
+                    var vExpNum = vInputExp.val();
+
+                    //校验
+                    if (vExpNum == null || vExpNum == undefined || vExpNum.trim() == '') {
+                        ErrorTips(vInputExp, '请输入正确快递单号！');
+                        return false;
+                    }
+                    else { ErrorTips(vInputExp, '', 'hide'); }
 
                     $.get('/Admin/WriteExpNumOpe',
-                        { par1: $('#hOrderID').val(), par2: vExpCode, par3: vExpNum },
+                        { par1: $('#hOrderID').val(), par2: vExpCode, par3: vExpNum, par4: vExpType },
                         function (data) {
-
+                            if (data.Flag) {
+                                DialogShowHide(false);
+                            }
+                            else { //异常提示
+                                alert('快递单号填写失败！')
+                            }
                         },
                         'json');
                 });
 
             //加载HTML
             $('.pop_cont_input').load('/Admin/WriteExpNum', { par1: orderID }, function () {
-                $(".pop_bg").fadeIn();
+                DialogShowHide(true);
             });
+        }
+
+        //用户输入异常信息提示
+        function ErrorTips(vItem, vMsg, flag) {
+            //1.首先判断有没有提示
+            var vSpan = vItem.next('span');
+            $.each(vSpan, function (index, item) {
+                var vItem = $(item);
+                if (flag) { vItem.remove(); return false; } //隐藏
+                if (vItem.hasClass('errorTips')) {
+                    vItem.text(vMsg);
+                    return false;
+                }
+            });
+
+            //2.没有提示
+            if (!flag) {
+                var vHtml = '<span class="errorTips">';
+                vHtml += vMsg;
+                vHtml += '</span>';
+                vItem.after(vHtml);
+            }
+        }
+
+        //弹窗展示隐藏具体代码
+        function DialogShowHide(flag) {
+            if (flag) { $(".pop_bg").fadeIn(); } //展示
+            else { $(".pop_bg").fadeOut(); } //隐藏
         }
 
         //翻页相关
@@ -307,8 +352,8 @@
 <input type="hidden" value="1" id="hPageIndex" />
 
 <section class="pop_bg">
-    <h3 id="dialogTitle"></h3>
     <div class="pop_cont">
+        <h3 id="dialogTitle"></h3>
         <div class="pop_cont_input">
         </div>
         <div class="btm_btn">

@@ -249,9 +249,10 @@ hr {
     color: #fff;
     border-color: #f60;
     background-color: #f60;
-    font-size: 36px;
-    height: 42px;
+    font-size: 42px;
+    height: 60px;
     border-radius: 8px;
+    line-height: 60px;
 }
 
 .dItemBtn {

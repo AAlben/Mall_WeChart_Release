@@ -128,8 +128,9 @@
 
         //初始化
         function InitData() {
-            //初始化数据
-            $('.uk-tab li[uid=awaitPay]').trigger('click');
+            //初始化数据：待付款
+            var vType = 'awaitPay';
+            RequestAwaitData(vType, 'tplAwaitPay', $('#lAwaitPay'));
         }
 
         //事件绑定

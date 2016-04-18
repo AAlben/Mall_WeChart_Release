@@ -129,13 +129,13 @@
         //初始化
         function InitData() {
             //初始化数据
-            $('.uk-tab li[uid=awaitPay]').trigger('touchstart');
+            $('.uk-tab li[uid=awaitPay]').trigger('click');
         }
 
         //事件绑定
         function BindEvent() {
             //Tab按钮事件
-            $('.uk-tab li').on('touchstart', function () {
+            $('.uk-tab li').on('click', function () {
                 var vThis = event.currentTarget;
                 vThis = $(vThis);
 

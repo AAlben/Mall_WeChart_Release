@@ -129,15 +129,15 @@
         //事件绑定
         function BindEvent() {
             //第一行事件绑定
-            $('#dANa div').on('touchstart', function () {
+            $('#dANa div').on('click', function () {
                 FunctionRedirect($(this));
             });
         }
 
         //猜你喜欢商品列表区域点击事件
         function BindEventNa() {
-            //商品区域touchstart事件
-            $('.shop-img').on('touchstart', function () {
+            //商品区域click事件
+            $('.shop-img').on('click', function () {
                 var vThis = $(this);
                 var vCommID = vThis.attr('uId');
 

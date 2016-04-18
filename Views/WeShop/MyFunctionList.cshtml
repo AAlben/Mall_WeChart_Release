@@ -49,14 +49,14 @@
         {{each List as value index}}
         <div uRemark="编辑" class="uk-grid">
             <div class="uk-width-1-1" style="height:25px;"></div>
-            <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：{{value.Key}}</div>
+            <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：{{value.Content[0].StoreName}}</div>
             <div class="uk-width-medium-1-2 uk-text-right mobile-font"></div>
             <div class="uk-width-1-1" style="height:25px;"></div>
         </div>
         <br />
         <div class="uk-width-1-1">
-            <h1>订单号：<span class="">{{value.Content[0].OrderNum}}</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('{{value.Content[0].ID}}');">取消</a></h1>
-            <h1 style="display:none;">订单号：<span class="">{{List[0].OrderNum}}</span><span class="uk-float-right right-btn"></span></h1>
+            <h1>订单号：<span class="">{{value.Key}}</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('{{value.Content[0].ID}}');">取消</a></h1>
+            <h1 style="display:none;">订单号：<span class="">{{value.Key}}</span><span class="uk-float-right right-btn"></span></h1>
         </div>
         {{each value.Content as cValue vIndex}}
         <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">
@@ -84,13 +84,13 @@
         {{each List as value index}}
         <div uRemark="编辑" class="uk-grid">
             <div class="uk-width-1-1" style="height:25px;"></div>
-            <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：{{value.Key}}</div>
+            <div class="uk-width-medium-1-2 uk-text-left mobile-font">店铺：{{value.Content[0].StoreName}}</div>
             <div class="uk-width-medium-1-2 uk-text-right mobile-font"></div>
             <div class="uk-width-1-1" style="height:25px;"></div>
         </div>
         <br />
         <div class="uk-width-1-1">
-            <h1>订单号：<span class="">{{List[0].OrderNum}}</span><span class="uk-float-right right-btn"></span></h1>
+            <h1>订单号：<span class="">{{value.Key}}</span><span class="uk-float-right right-btn"></span></h1>
         </div>
         {{each value.Content as cValue vIndex}}
         <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv" for="shopItmeNa">

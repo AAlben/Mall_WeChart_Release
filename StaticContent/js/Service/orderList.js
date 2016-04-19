@@ -43,10 +43,7 @@ function btnPayApply(beOrderID) {
 
 //查询订单物流信息按钮事件
 function btnLogistics(beOrderID) {
-
-    NotifyAlert('可以跳转！');
-
-    window.location.href = '/WeShop/OrderExpressDetail';
+    window.location.href = '/WeShop/OrderExpressDetail/' + beOrderID;
 }
 
 //确认收货按钮事件

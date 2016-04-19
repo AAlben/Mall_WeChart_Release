@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "查看物流";
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
@@ -17,72 +16,111 @@
         }
     </style>
 }
+@{
+    if (ViewBag.OrderInfo != null)
+    {
+        <div id="J_oper_plugin">
+            <div class="logis-order">订单商品</div>
+            <div class="mb-ollr">
+                <div class="ol-l">
+                    <a class="fragment" data-fragment="!/awp/mtb/odetail.htm"><img src="/@ViewBag.OrderInfo.Photo"></a>
+                </div>
+                <div class="ol-r">
+                    <a class="fragment" data-fragment="!/awp/mtb/odetail.htm">
+                        <h3 style="font-size:36px;"><span>@ViewBag.OrderInfo.Title</span></h3>
+                        <p class="r-price"> </p>
+                        <p class="d-total"> 共 @ViewBag.OrderInfo.Count 件 </p>
+                    </a>
+                </div>
+            </div>
+            <div class="logis-info">
+                <p> 物流公司 @ViewBag.OrderInfo.ExpressType </p>
+                <p> 运单号码 @ViewBag.OrderInfo.ExpressNum </p>
+            </div>
+            <div class="logis-detail">
+                <ul style="list-style:none;">
+                    <li>
+                        <p class="logis-detail-date">昨天</p>
+                        <div class="logis-detail-d logis-detail-first">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 21:47 </p>
+                                <p class="logis-detail-content-detail"> 由【江苏南京公司】发往【辽宁沈阳中转部】 </p>
+                            </div>
+                        </div>
+                        <div class="logis-detail-d ">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 20:54 </p>
+                                <p class="logis-detail-content-detail"> 由【江苏南京江宁公司】发往【江苏南京公司】 </p>
+                            </div>
+                        </div>
+                        <div class="logis-detail-d ">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 20:51 </p>
+                                <p class="logis-detail-content-detail"> 由【江苏南京江宁公司】发往【江苏南京中转部】 </p>
+                            </div>
+                        </div>
+                        <div class="logis-detail-d ">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 19:15 </p>
+                                <p class="logis-detail-content-detail"> 【江苏南京江宁公司】的收件员【星翔运动】已收件 </p>
+                            </div>
+                        </div>
+                        <div class="logis-detail-d ">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 13:58 </p>
+                                <p class="logis-detail-content-detail"> 您的包裹已出库 </p>
+                            </div>
+                        </div>
+                        <div class="logis-detail-d ">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 12:36 </p>
+                                <p class="logis-detail-content-detail"> 您的订单待配货 </p>
+                            </div>
+                        </div>
+                        <div class="logis-detail-d ">
+                            <div class="logis-detail-content">
+                                <p class="logis-detail-content-time"> 11:24 </p>
+                                <p class="logis-detail-content-detail"> 您的订单开始处理 </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-<div id="J_oper_plugin">
-    <div class="logis-order">订单商品</div>
-    <div class="mb-ollr">
-        <div class="ol-l">
-            <a class="fragment" data-fragment="!/awp/mtb/odetail.htm" data-orderid="1816196968188225" data-archive="0"> <img src=" //gw.alicdn.com/bao/uploaded/i3/1751782584/TB2EI1nlXXXXXc9XXXXXXXXXXXX_!!1751782584.jpg"> </a>
-        </div>
-        <div class="ol-r">
-            <a class="fragment" data-fragment="!/awp/mtb/odetail.htm" data-orderid="1816196968188225" data-archive="0">
-                <h3 style="font-size:36px;"><span>WITESS正品羽毛球拍2支装超轻碳素进攻型单拍家庭ymqp双拍全包邮</span></h3>
-                <p class="r-price"> </p>
-                <p class="d-total"> 共2件 </p>
-            </a>
-        </div>
-    </div>
-    <div class="logis-info">
-        <p> 物流公司 申通快递 </p>
-        <p> 运单号码 3306961382301 </p>
-    </div>
-    <div class="logis-detail">
-        <ul>
-            <li>
-                <p class="logis-detail-date">昨天</p>
-                <div class="logis-detail-d logis-detail-first">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 21:47 </p>
-                        <p class="logis-detail-content-detail"> 由【江苏南京公司】发往【辽宁沈阳中转部】 </p>
-                    </div>
-                </div>
-                <div class="logis-detail-d ">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 20:54 </p>
-                        <p class="logis-detail-content-detail"> 由【江苏南京江宁公司】发往【江苏南京公司】 </p>
-                    </div>
-                </div>
-                <div class="logis-detail-d ">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 20:51 </p>
-                        <p class="logis-detail-content-detail"> 由【江苏南京江宁公司】发往【江苏南京中转部】 </p>
-                    </div>
-                </div>
-                <div class="logis-detail-d ">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 19:15 </p>
-                        <p class="logis-detail-content-detail"> 【江苏南京江宁公司】的收件员【星翔运动】已收件 </p>
-                    </div>
-                </div>
-                <div class="logis-detail-d ">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 13:58 </p>
-                        <p class="logis-detail-content-detail"> 您的包裹已出库 </p>
-                    </div>
-                </div>
-                <div class="logis-detail-d ">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 12:36 </p>
-                        <p class="logis-detail-content-detail"> 您的订单待配货 </p>
-                    </div>
-                </div>
-                <div class="logis-detail-d ">
-                    <div class="logis-detail-content">
-                        <p class="logis-detail-content-time"> 11:24 </p>
-                        <p class="logis-detail-content-detail"> 您的订单开始处理 </p>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+        <script type="text/javascript">
+            $(function () {
+                //Init
+                InitData();
+            });
+
+            //自定义方法区
+
+            //Init
+            function InitData() {
+                var vExpCode = '@ViewBag.OrderInfo.ExpressCode';
+                var vExpNum = '@ViewBag.OrderInfo.ExpressNum';
+
+                //查询快递物流信息
+                LoadLogisticsDetail(vExpCode, vExpNum);
+            }
+
+            //加载快递物流信息
+            function LoadLogisticsDetail(vExpCode, vExpNum) {
+                $.get('/RequestData/ExpressLogisticsDetail',
+                    { r: Math.random(), par1: vExpCode, par2: vExpNum },
+                    function (data) {
+
+                    },
+                    'json');
+            }
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.location.href = '/WeShop/OrderList';
+        </script>
+    }
+}
+

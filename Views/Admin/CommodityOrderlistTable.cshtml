@@ -40,8 +40,8 @@
                     <td>@item.Address</td>
                     <td>@item.OrderState</td>
                     <td>
-                        <a href="javascript:;" class="inner_btn" onclick="ChangePrice('@item.ID')">修改价格</a>
-                        <a href="javascript:;" class="inner_btn" onclick="OrderClose('@item.ID')">关闭</a>
+                        <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="ChangePrice('@item.ID')">修改价格</a>
+                        <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="OrderClose('@item.ID')">关闭</a>
                     </td>
                 </tr>
             }
@@ -90,7 +90,7 @@
                     <td>@item.ExpressNum</td>
                     <td>@item.ExpressType</td>
                     <td>
-                        <a href="javascript:;" class="inner_btn" onclick="WriteExpNum('@item.OrderNum')">填写快递单号</a>
+                        <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="WriteExpNum('@item.OrderNum','@item.ExpressCode','@item.ExpressNum')">填写快递单号</a>
                     </td>
                 </tr>
             }

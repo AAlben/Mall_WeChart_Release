@@ -26,6 +26,10 @@
         margin-top: 13px;
     }
 
+    .foot-margin {
+        margin-bottom: 100px;
+    }
+
     .J_Item {
         width: 200px;
     }
@@ -88,9 +92,10 @@
                 if (!startdate) { startdate = $('#startdate').prev('span').text(); }
                 if (!enddate) { enddate = $('#enddate').prev('span').text(); }
 
-                $("#recordlist").empty();
+                var vContainer = $("#recordlist");
 
-                $("#recordlist").load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate, index: $('#hPageIndex').val() }, function () {
+                vContainer.empty();
+                vContainer.load("/Admin/CommodityOrderlistTable", { state: state, st: startdate, ed: enddate, index: $('#hPageIndex').val() }, function () {
                     LoadEnd();
                 });
             });
@@ -174,6 +179,12 @@
 
         //1.修改价格
         function ChangePrice(orderID) {
+            //Init Check
+            var vEvent = event;
+            var vArguments = arguments;
+
+            if (!FuncCanOpeCheck(vEvent, vArguments)) { alert('无权进行此操作！'); return false; }
+
             LoadDialog('修改价格',
                 function () { //确定修改价格按钮
                     var vLineIDs = '';
@@ -208,6 +219,12 @@
 
         //2.关闭订单
         function OrderClose(orderID) {
+            //Init Check
+            var vEvent = event;
+            var vArguments = arguments;
+
+            if (!FuncCanOpeCheck(vEvent, vArguments)) { alert('无权进行此操作！'); return false; }
+
             var vResult = confirm('确定要关闭改订单？');
 
             if (vResult) {
@@ -227,7 +244,13 @@
         }
 
         //3.填写快递单号
-        function WriteExpNum(orderID) {
+        function WriteExpNum(orderID, expCode, expNum) {
+            //Init Check
+            var vEvent = event;
+            var vArguments = arguments;
+
+            if (!FuncCanOpeCheck(vEvent, vArguments)) { alert('无权进行此操作！'); return false; }
+
             LoadDialog('填写快递单号',
                 function () { //填写快递单号确定按钮
                     //Init
@@ -259,6 +282,9 @@
 
             //加载HTML
             $('.pop_cont_input').load('/Admin/WriteExpNum', { par1: orderID }, function () {
+                //初始化快递信息
+                if (expCode) { $('#selExp').val(expCode); $('#txtExpNum').val(expNum); }
+
                 DialogShowHide(true);
             });
         }
@@ -319,6 +345,23 @@
             $('#btnQuery').click();
 
         }
+
+        //OrderState + 可执行方法的配置信息
+        var vStateFunctionConfig = { '0': [], '1': ['ChangePrice', 'OrderClose'], '3': ['WriteExpNum'] };
+
+        //功能方法能否执行验证
+        function FuncCanOpeCheck(vEvent, vArguments) {
+            //当前State
+            var vState = $(vEvent.currentTarget).attr('uState');
+            //当前方法名
+            var vFunName = vArguments.callee.name;
+
+            //校验
+            if (vStateFunctionConfig[vState].indexOf(vFunName) != -1) {
+                return true;
+            }
+            return false;
+        }
     </script>
 }
 
@@ -346,7 +389,7 @@
         <input type="text" class="J_Item" autocomplete="off" id="startdate" />    至    <input type="text" class="J_Item" autocomplete="off" id="enddate" />
         &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="查询" class="group_btn" id="btnQuery" />
     </div>
-    <div id="recordlist" class="br-margin"></div>
+    <div id="recordlist" class="br-margin foot-margin"></div>
 </section>
 <input type="hidden" value="-1" id="hState" />
 <input type="hidden" value="1" id="hPageIndex" />

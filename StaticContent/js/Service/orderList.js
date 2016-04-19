@@ -42,8 +42,9 @@ function btnPayApply(beOrderID) {
 }
 
 //查询订单物流信息按钮事件
-function btnLogistics(beOrderID) {
-    window.location.href = '/WeShop/OrderExpressDetail/' + beOrderID;
+function btnLogistics(vExpCode, vExpNum) {
+    //window.location.href = '/WeShop/OrderExpressDetail/' + beOrderID;
+    window.location.href = TxtFormat('http://m.kuaidi100.com/index_all.html?type={0}&postid={1}&callbackurl={2}', [vExpCode, vExpNum, 'inovoseed.com/WeShop/MyFunctionList']);
 }
 
 //确认收货按钮事件

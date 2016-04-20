@@ -109,7 +109,9 @@
             }
         }
         <div class="uk-article">
-            <h1 class="uk-article-title">@Model.SCommodityInfo.Intro</h1>
+            @*<h1 class="uk-article-title">@Model.SCommodityInfo.Intro</h1>*@
+
+            @Html.Raw(Model.SCommodityInfo.Intro)
             <br />
         </div>
         <br />
@@ -124,11 +126,11 @@
             <div class="uk-width-2-6">
                 @if (Model.SDicPhoto.ContainsKey(4))
                 {
-                <img class="uk-thumbnail" src="~/@Model.SDicPhoto[4]" alt="">
+                    <img class="uk-thumbnail" src="~/@Model.SDicPhoto[4]" alt="">
                 }
                 else
                 {
-                <img class="uk-thumbnail" src="" alt="">
+                    <img class="uk-thumbnail" src="" alt="">
                 }
             </div>
             <div class="uk-width-3-6">
@@ -144,20 +146,20 @@
         </div>
         @if (Model.SCommdityOptionInfo.Count() > 0)
         {
-        <div class="uk-width-1-1">
-            <br />
-            <h1>规格：</h1>
-        </div>
-        <div class="uk-flex" id="dCommoOptionBeOrder" uid="" uPrice="0">
-            @foreach (var vItem in Model.SCommdityOptionInfo)
+            <div class="uk-width-1-1">
+                <br />
+                <h1>规格：</h1>
+            </div>
+            <div class="uk-flex" id="dCommoOptionBeOrder" uid="" uPrice="0">
+                @foreach (var vItem in Model.SCommdityOptionInfo)
                 {
-                <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
+                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
                 }
-        </div>
-        <br />
-        <div class="br-box">
+            </div>
             <br />
-        </div>
+            <div class="br-box">
+                <br />
+            </div>
         }
         <br />
         <div class="uk-grid">
@@ -239,8 +241,10 @@
         </div>
     </div>
 </div>
+
 <div class="spc" id="dShopCart" style="background-image: url('/StaticContent/image/public/shopping-cart.png');height:100px;width:100px;background-position:800px -200px;">
 </div>
+
 <input type="hidden" value="@Model.SCommodityInfo.StoreID" id="hStoreID" />
 
 @section LayoutShop{

@@ -1,58 +1,55 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
-    }
-    
- 
+}
+
+
 <script>
-    function Delete(commodityid)
-    {
-        $.post("/Admin/DeleteCommodity", { ID: commodityid}, function (data) {
-            alert(data);
+    function Delete(commodityid) {
+        $.post("/Admin/DeleteCommodity", { ID: commodityid }, function (data) {
+            if (data && data.Msg) {
+                alert(data.Msg);
+                if (data.Flag) {
+                    window.location.href = window.location.href;
+                }
+            }
         });
     }
 </script>
-    <section>
-      <h2><strong style="color:grey;">商品列表</strong></h2>
-      <div class="page_title">
-       <h2 class="fl">商品详情</h2>
-       <a class="fr top_rt_btn" href="/Admin/CommodityOperation">添加商品</a>
-      </div>
-      <table class="table">
-       <tr>
-           <th>商品名称</th>
-           <th>类别</th>
-           <th>库存</th>
-           <th>价格</th>
-           <th>销售数量</th>
-           <th>日期</th>
-           <th>操作</th>
-       </tr>
-          @{
-              foreach (var item in ViewBag.list)
-              {
-                  <tr>
-                      <td>@item.Title</td>
-                      <td>@item.LEIBIE</td>
-                      <td>@item.Title</td>
-                      <td>@item.Price</td>
-                      <td>@item.iCount</td>
-                      <td>@item.OpeDate</td>
-                      <td>
-                          <a href="/Admin/CommodityOperation?ID=@item.ID">修改</a>
-                          <a href="#" class="inner_btn" onclick="Delete('@item.ID')">删除</a>
-                      </td>
-                  </tr>
-                  }
-              }
-      </table>
-      @*<aside class="paging">
-       <a>第一页</a>
-       <a>1</a>
-       <a>2</a>
-       <a>3</a>
-       <a>…</a>
-       <a>1004</a>
-       <a>最后一页</a>
-      </aside>*@
-     </section>
+<section>
+    <h2><strong style="color:grey;">商品列表</strong></h2>
+    <div class="page_title">
+        <h2 class="fl">商品详情</h2>
+        <a class="fr top_rt_btn" href="/Admin/CommodityOperation">添加商品</a>
+    </div>
+    <table class="table">
+        <tr>
+            <th>商品名称</th>
+            <th>类别</th>
+            <th>价格</th>
+            <th>排序</th>
+            <th>销售数量</th>
+            <th>库存</th>
+            <th>创建日期</th>
+            <th>操作</th>
+        </tr>
+        @{
+            foreach (dynamic item in ViewBag.list)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.LEIBIE</td>
+                    <td>@item.Price</td>
+                    <td>@item.iOrder</td>
+                    <td>@item.iCount</td>
+                    <td>@item.Stock</td>
+                    <td>@item.OpeDate.ToString()</td>
+                    <td>
+                        <a href="/Admin/CommodityOperation?ID=@item.ID">修改</a>
+                        <a href="#" class="inner_btn" onclick="Delete('@item.ID')">删除</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</section>

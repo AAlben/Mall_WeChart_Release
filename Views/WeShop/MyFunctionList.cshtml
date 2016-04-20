@@ -1,6 +1,5 @@
 ﻿
 @{
-    ViewBag.Title = "待收货";
     Layout = "~/Views/Shared/_LayoutShop.cshtml";
 }
 
@@ -107,7 +106,7 @@
             <h1>
                 总价：<span>￥{{value.Content[0].RealPrice}}</span>
                 <a class="uk-float-right right-btn order-btn uk-width-1-5 uk-text-center" href="javascript:;" onclick="btnAffirmReceive('{{value.Content[0].ID}}');">确认收货</a>
-                <a class="uk-float-right right-btn order-btn uk-width-1-5 uk-text-center" href="javascript:;" onclick="btnLogistics('{{value.Content[0].ID}}','{{value.Content[0].ExpressCode}}','{{value.Content[0].ExpressNum}}');">查看物流</a>
+                <a class="uk-float-right right-btn order-btn uk-width-1-5 uk-text-center" href="javascript:;" onclick="btnLogistics('{{value.Content[0].ID}}','{{value.Content[0].ExpressCode}}','{{value.Content[0].ExpressNum}}','@ViewBag.FunctionName');">查看物流</a>
             </h1>
             <br />
         </div>
@@ -126,11 +125,21 @@
 
         //自定义方法区
 
+        //配置Config
+        var vFunctionConfig = {
+            'awaitPay': [2, 'tplAwaitPay', '#lAwaitPay'],
+            'awaitDelivery': [3, 'tplAwaitLogistics', '#lAwaitDelivery'],
+            'awaitReceive': [4, 'tplAwaitLogistics', '#lAwaitReceive']
+        };
+
         //初始化
         function InitData() {
             //初始化数据：待付款
-            var vType = 'awaitPay';
-            RequestAwaitData(vType, 'tplAwaitPay', $('#lAwaitPay'));
+            var vType = '@ViewBag.FunctionName';
+            //css样式
+            TabLiClickOpe($('.uk-tab li').eq(vFunctionConfig[vType][0]));
+            //数据查询
+            RequestAwaitData(vType, vFunctionConfig[vType][1], $(vFunctionConfig[vType][2]));
         }
 
         //事件绑定
@@ -170,6 +179,17 @@
                         break;
                 }
             });
+        }
+
+        //Tab li标签点击事件中样式变动封装
+        function TabLiClickOpe(vThis) {
+            vThis = $(vThis);
+            vThis.addClass('active');
+            vThis.siblings('li').removeClass('active');
+
+            var vType = vThis.attr('uid');
+            //内容展示区域li标签的css控制
+            $(vFunctionConfig[vType][2]).addClass('uk-active').siblings('li').removeClass('uk-active');
         }
 
         //封装查询待发货 + 待收货数据方法

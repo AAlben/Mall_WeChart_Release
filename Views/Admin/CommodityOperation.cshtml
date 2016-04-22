@@ -351,6 +351,7 @@ else
         var state = $("input[name='state']:checked").val();
 
         //当前操作状态：增加/编辑
+        var vCommID = '@Request["ID"]';
         var vOpeType = '@Request["ID"]' == null || '@Request["ID"]' == '';
 
         if (vOpeType) {
@@ -390,16 +391,26 @@ else
                 GdImg = GdImg + $("#GdTxt" + i).val() + ";";
                 GdImgID = GdImgID + $("#GdIDTxt" + i).val() + ";";
             }
-            $.post("/Admin/EditCommodity", { commodityname: commodityname, Price: Price, SltImg: SltImg, GdImg: GdImg, category: category, Quantity: Quantity, introduce: introduce, iOrder: iOrder, state: state, spec: spec, specprice: specprice, specid: specid, GdImgID: GdImgID }, function (data) {
-                if (data) {
-                    alert("保存成功！");
-                    window.location.href = '/Admin/CommodityList';
-                    return false;
-                }
-                else {
-                    alert("保存失败！");
-                }
-            });
+            $.post("/Admin/EditCommodity",
+                {
+                    commodityname: commodityname, Price: Price,
+                    SltImg: SltImg, GdImg: GdImg,
+                    category: category, Quantity: Quantity,
+                    introduce: introduce, iOrder: iOrder,
+                    state: state, spec: spec,
+                    specprice: specprice, specid: specid,
+                    GdImgID: GdImgID, ID: vCommID
+                },
+                function (data) {
+                    if (data) {
+                        alert("保存成功！");
+                        window.location.href = '/Admin/CommodityList';
+                        return false;
+                    }
+                    else {
+                        alert("保存失败！");
+                    }
+                });
         }
     }
 </script>

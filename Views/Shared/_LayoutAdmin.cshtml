@@ -51,6 +51,25 @@
             $(".loading_area").fadeOut();
             $("#recordlist").mCustomScrollbar();
         }
+
+        //左侧菜单选中状态样式控制
+        function InitLeftNavMenu(nowUrl) {
+            //Init
+            nowUrl = nowUrl ? nowUrl : '/Admin/CommodityList';
+
+            var vItem = $('.lt_aside_nav a');
+
+            $.each(vItem, function (index, item) {
+                var vCItem = $(item);
+
+                if (vCItem.attr('href') == nowUrl) {
+                    vCItem.addClass('active');
+                }
+                else {
+                    vCItem.removeClass('active');
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -84,7 +103,7 @@
             <li>
                 <dl>
                     <dt>订单信息</dt>
-                    <dd><a href="/Admin/CommodityOrderlist">订单列表</a></dd>
+                    <dd><a href="/Admin/CommodityOrderList">订单列表</a></dd>
                     @*<dd><a href="#">添加订单</a></dd>
                         <dd><a href="#">缺货登记</a></dd>*@
                 </dl>

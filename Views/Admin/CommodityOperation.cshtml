@@ -341,6 +341,9 @@ else
             // editor准备好之后才可以使用
             ue.setContent('@Html.Raw(editorstr)');
         });
+
+        //菜单初始化
+        InitLeftNavMenu('/Admin/CommodityList');
     });
 
     //自定义方法区

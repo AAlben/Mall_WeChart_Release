@@ -366,7 +366,7 @@ else
                 GdImg = GdImg + $("#GdTxt" + i).val() + ";";
             }
             $.post("/Admin/AddCommodity", { commodityname: commodityname, Price: Price, SltImg: SltImg, GdImg: GdImg, category: category, Quantity: Quantity, introduce: introduce, iOrder: iOrder, state: state, spec: spec, specprice: specprice }, function (data) {
-                if (data) {
+                if (data == 'True') {
                     alert("保存成功！");
                     window.location.href = '/Admin/CommodityList';
                     return false;
@@ -402,7 +402,7 @@ else
                     GdImgID: GdImgID, ID: vCommID
                 },
                 function (data) {
-                    if (data) {
+                    if (data == 'True') {
                         alert("保存成功！");
                         window.location.href = '/Admin/CommodityList';
                         return false;

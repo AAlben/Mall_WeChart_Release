@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<section>
+    <div class="page_title">
+        <h2 class="fl">限时折扣</h2>
+    </div>
+</section>
+<section>
+    <h2><strong style="color:grey;">查询条件</strong></h2>
+    <div>
+        <ul class="uk-tab order-type">
+            <li class="cur" uState="-1">进行中</li>
+            <li uState="1">未开始</li>
+            <li uState="30">已结束</li>
+            <li uState="31">全部</li>
+        </ul>
+    </div>
+    <div style="padding-left:30px;" class="br-margin">
+        订单时间：
+        <input type="text" class="J_Item" autocomplete="off" id="startdate" />    至    <input type="text" class="J_Item" autocomplete="off" id="enddate" />
+        &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="查询" class="group_btn" id="btnQuery" />
+    </div>
+    <div id="recordlist" class="br-margin foot-margin"></div>
+</section>

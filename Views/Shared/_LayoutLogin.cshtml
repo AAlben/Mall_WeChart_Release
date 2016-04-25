@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@ViewBag.Title</title>
+
+    <link href="~/StaticContent/Admin/css/style.css" rel="stylesheet" />
+
+    <style>
+        body {
+            height: 100%;
+            background: #16a085;
+            overflow: hidden;
+        }
+
+        canvas {
+            z-index: -1;
+            position: absolute;
+        }
+    </style>
+
+    <script src="~/StaticContent/Admin/js/jquery.js"></script>
+    <script src="~/StaticContent/Admin/js/verificationNumbers.js"></script>
+    <script src="~/StaticContent/Admin/js/Particleground.js"></script>
+    <script src="~/StaticContent/js/md5.js"></script>
+    <script src="~/StaticContent/js/Service/shop.js"></script>
+    <script src="~/StaticContent/js/Service/inputValidate.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //粒子背景特效
+            $('body').particleground({
+                dotColor: '#5cbdaa',
+                lineColor: '#5cbdaa'
+            });
+        });
+    </script>
+
+    @RenderSection("LayoutHead", required: false)
+
+</head>
+<body>
+    <dl class="admin_login">
+        <dt>
+            <strong>智种网后台管理系统</strong>
+            <em>ZZSC Management System</em>
+        </dt>
+
+        @RenderBody()
+
+        <dd>
+            <p>© 2015-2016 智种商城 版权所有</p>
+        </dd>
+    </dl>
+
+    @RenderSection("LayoutFoot", required: false)
+</body>
+</html>

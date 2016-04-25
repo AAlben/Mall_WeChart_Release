@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "后台登录";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@section LayoutHead{
+    <script>
+        $(document).ready(function () {
+            //验证码
+            CreateCodeOpe();
+
+            //事件绑定
+            BindEvent();
+        });
+
+        //自定义方法区
+
+        //事件绑定方法
+        function BindEvent() {
+            //登录按钮事件
+            $("#btnLogin").click(function () {
+                //验证码验证
+                var vFlag = ValidateOpe();
+
+                //校验结果
+                if (vFlag) {
+                    LoginOpe();
+                }
+            });
+
+            //注册按钮事件
+            $('#btnSigin').click(function () {
+                window.location.href = '/Admin/Sigin';
+            });
+        }
+
+        //用户名、密码提交方法
+        function LoginOpe() {
+            var vUserName = $('#txtUserName').val();
+            var vPwd = $('#txtPwd').val();
+
+            vPwd = hex_md5(vPwd);
+
+            $.post('/Admin/LoginOpe',
+                { r: Math.random(), par1: vUserName, par2: vPwd },
+                function (data) {
+                    if (data && data.Flag) { //登录成功
+                        window.location.href = data.Url;
+                    }
+                    else { //登录失败
+                        alert(data.Msg);
+                        return false;
+                    }
+                },
+                'json');
+        }
+
+        //验证码校验方法
+        function ValidateOpe() {
+            var vLoginValidateItem = new LoginValidateNa();
+            var vFlag = vLoginValidateItem.validate();
+
+            return vFlag;
+        }
+
+        //验证码生成方法
+        function CreateCodeOpe() {
+            var vLoginValidateItem = new LoginValidateNa();
+            vLoginValidateItem.createCode();
+        }
+    </script>
+}
+
+<dd class="user_icon">
+    <input type="text" placeholder="账号" class="login_txtbx" id="txtUserName" />
+</dd>
+<dd class="pwd_icon">
+    <input type="password" placeholder="密码" class="login_txtbx" id="txtPwd" />
+</dd>
+<dd class="val_icon">
+    <div class="checkcode">
+        <input type="text" id="J_codetext" placeholder="验证码" maxlength="4" class="login_txtbx">
+        <canvas class="J_codeimg" id="myCanvas" onclick="CreateCodeOpe();">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
+    </div>
+    <input type="button" value="验证码核验" class="ver_btn" onClick="ValidateOpe();">
+</dd>
+<dd>
+    <input type="button" value="立即登陆" class="submit_btn" id="btnLogin" />
+</dd>
+<dd>
+    <input type="button" value="注册" class="submit_btn" id="btnSigin" />
+</dd>

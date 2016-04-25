@@ -166,20 +166,6 @@
 
         //----- 订单相关操作方法 -----
 
-        function LoadDialog(title, funOK, funClose) {
-            $('#dialogTitle').text(title);
-
-            //确定按钮
-            $('#btnOK').unbind().on('click', funOK);
-
-            //关闭按钮
-            $('#btnClose').unbind().on('click', function () {
-                DialogShowHide(false);
-
-                if (funClose) { funClose(); }
-            });
-        }
-
         //1.修改价格
         function ChangePrice(orderID) {
             //Init Check
@@ -292,34 +278,6 @@
             });
         }
 
-        //用户输入异常信息提示
-        function ErrorTips(vItem, vMsg, flag) {
-            //1.首先判断有没有提示
-            var vSpan = vItem.next('span');
-            $.each(vSpan, function (index, item) {
-                var vItem = $(item);
-                if (flag) { vItem.remove(); return false; } //隐藏
-                if (vItem.hasClass('errorTips')) {
-                    vItem.text(vMsg);
-                    return false;
-                }
-            });
-
-            //2.没有提示
-            if (!flag) {
-                var vHtml = '<span class="errorTips">';
-                vHtml += vMsg;
-                vHtml += '</span>';
-                vItem.after(vHtml);
-            }
-        }
-
-        //弹窗展示隐藏具体代码
-        function DialogShowHide(flag) {
-            if (flag) { $(".pop_bg").fadeIn(); } //展示
-            else { $(".pop_bg").fadeOut(); } //隐藏
-        }
-
         //翻页相关
 
         //1.上一页
@@ -396,15 +354,3 @@
 </section>
 <input type="hidden" value="-1" id="hState" />
 <input type="hidden" value="1" id="hPageIndex" />
-
-<section class="pop_bg">
-    <div class="pop_cont">
-        <h3 id="dialogTitle"></h3>
-        <div class="pop_cont_input">
-        </div>
-        <div class="btm_btn">
-            <input type="button" value="确认" class="input_btn trueBtn" id="btnOK">
-            <input type="button" value="关闭" class="input_btn falseBtn" id="btnClose">
-        </div>
-    </div>
-</section>

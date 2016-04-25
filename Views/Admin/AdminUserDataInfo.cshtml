@@ -1,0 +1,46 @@
+﻿@model ZZSCModel.WX_ZZSCUserInfo
+@{
+    ViewBag.Title = "账号设置";
+}
+
+<script src="~/StaticContent/js/md5.js"></script>
+<style>
+    .span-lineHeight {
+        line-height: 36px;
+    }
+</style>
+
+<ul>
+    <li>
+        <span class="span-lineHeight">用户名：</span>
+        @Html.TextBoxFor(x => x.LoginName, new { id = "txtLoginName", @class = "textbox uk-float-right", @disabled = "disabled" })
+    </li>
+    <li>
+        <span class="span-lineHeight">密码：</span>
+        <input type="password" class="textbox uk-float-right" placeholder="请输入密码" id="txtPwd" />
+
+    </li>
+    <li>
+        <span class="span-lineHeight">再次确认密码：</span>
+        <input type="password" class="textbox uk-float-right" placeholder="请再次输入密码" id="txtPwdCheck" />
+
+    </li>
+    <li>
+        <span class="span-lineHeight">真实姓名：</span>
+        @Html.TextBoxFor(x => x.Name, new { id = "txtUserName", @class = "textbox uk-float-right" })
+    </li>
+    <li>
+        <span class="span-lineHeight">手机号码：</span>
+        @Html.TextBoxFor(x => x.PhoneNum, new { id = "txtPhone", @class = "textbox uk-float-right" })
+    </li>
+</ul>
+
+
+<script type="text/javascript">
+    var AdminUserConfig = {
+        'txtPwd': { require: true, equals: 'txtPwdCheck', name: '密码' },
+        'txtPwdCheck': { require: true, name: '再次输入密码' },
+        'txtUserName': { require: true, name: '姓名' },
+        'txtPhone': { require: true, length: 11, name: '手机号码' }
+    };
+</script>

@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "后台注册";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<dd class="user_icon">
+    <input type="text" placeholder="请填写用户名" class="login_txtbx" id="txtLoginName" />
+</dd>
+<dd class="pwd_icon">
+    <input type="password" placeholder="请填写密码" class="login_txtbx" id="txtPwd" />
+</dd>
+<dd class="val_icon">
+    <input type="password" placeholder="请再次输入密码" class="login_txtbx" id="txtPwdCheck" />
+</dd>
+
+<dd class="errorTips">
+    <input type="text" placeholder="用户真实姓名" class="login_txtbx" id="txtUserName" />
+</dd>
+<dd class="errorTips">
+    <input type="text" placeholder="手机号码" class="login_txtbx" id="txtPhone" />
+</dd>
+<dd class="errorTips">
+    <input type="text" placeholder="推荐人电话号码" class="login_txtbx" id="txtReferrerPhone" />
+</dd>
+
+<dd>
+    <input type="button" value="注册" class="submit_btn" id="btnOK" />
+</dd>
+<dd>
+    <input type="button" value="取消" class="submit_btn" id="btnCancel" />
+</dd>
+
+@section LayoutFoot{
+    <script type="text/javascript">
+        $(function () {
+            //事件绑定
+            BindEvent();
+        });
+
+        //自定义方法区
+
+        //事件绑定
+        function BindEvent() {
+            //注册按钮事件
+            $('#btnOK').click(function () {
+                //验证
+                var inputValidate = new InputValidateCNa();
+                if (!inputValidate.CheckInput(InputConfig, inputValidate)) {
+                    return false;
+                }
+
+                var vPar = {};
+                vPar.LoginName = $('#txtLoginName').val();
+
+                var vPwd = $('#txtPwd');
+                var vMd5 = hex_md5(vPwd.val());
+                vPar.PassWord = vMd5;
+
+                vPar.Name = $('#txtUserName').val();
+                vPar.PhoneNum = $('#txtPhone').val();
+
+                //提交
+                $.post('/Admin/SiginOpe',
+                    { r: Math.random(), par1: vPar, par2: $('#txtReferrerPhone').val() },
+                    function (data) {
+                        if (data && data.Flag) {
+                            alert('注册成功！');
+                            window.location.href = '/Admin/Login';
+                            return false;
+                        }
+                        else {
+                            alert(data.Msg);
+                            inputValidate.ClearInput(InputConfig);
+                            return false;
+                        }
+                    },
+                    'json');
+            });
+
+            //取消按钮事件
+            $('#btnCancel').click(function () {
+                window.location.href = '/Admin/Login';
+            });
+        }
+
+        //输入项相关配置
+        var InputConfig = {
+            'txtLoginName': { require: true, name: '用户名' },
+            'txtPwd': { require: true, equals: 'txtPwdCheck', name: '密码' },
+            'txtPwdCheck': { require: true, name: '再次输入密码' },
+            'txtUserName': { require: true, name: '姓名' },
+            'txtPhone': { require: true, length: 11, name: '手机号码' },
+            'txtReferrerPhone': { require: true, length: 12, name: '推荐人电话号码' }
+        };
+    </script>
+}

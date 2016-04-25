@@ -14,6 +14,8 @@
     <script src="~/StaticContent/Admin/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="~/StaticContent/Admin/js/yui-min.js"></script>
     <script type="text/javascript" src="~/StaticContent/js/uikit.min.js"></script>
+    <script src="~/StaticContent/js/Service/shop.js"></script>
+    <script src="~/StaticContent/js/Service/inputValidate.js"></script>
     <script>
         (function ($) {
             $(window).load(function () {
@@ -36,10 +38,54 @@
                 //    $(".content").mCustomScrollbar("scrollTo", $(this).attr("href"));
                 //});
 
+                //事件绑定
+                ParentBindEvent();
+
             });
         })(jQuery);
 
         //自定义方法区
+
+        //事件绑定
+        function ParentBindEvent() {
+            //账号设置按钮事件绑定
+            $('#aUserDataOpe').click(function () {
+                LoadDialog('账号设置', function () {
+                    //1.验证输入信息
+                    var inputValidate = new InputValidate();
+                    if (!inputValidate.CheckInput(AdminUserConfig)) {
+                        return false;
+                    }
+
+                    //确定按钮方法体：用户信息提交
+                    var vPar = {};
+                    var vPwd = $('#txtPwd');
+                    var vMd5 = hex_md5(vPwd.val());
+                    vPar.PassWord = vMd5;
+                    vPar.Name = $('#txtUserName').val();
+                    vPar.PhoneNum = $('#txtPhone').val();
+
+                    $.post('/Admin/AdminUserDataOpe',
+                        { r: Math.random(), par1: vPar },
+                        function (data) {
+                            if (data && data.Flag) {
+                                alert(data.Msg);
+                                DialogShowHide(false);
+                            }
+                            else {
+                                alert(data.Msg);
+                                return false;
+                            }
+                        },
+                        'json');
+                });
+
+                //加载HTML
+                $('.pop_cont_input').load('/Admin/AdminUserDataInfo', null, function () {
+                    DialogShowHide(true);
+                });
+            });
+        }
 
         //加载动画开始
         function LoadStart() {
@@ -70,17 +116,38 @@
                 }
             });
         }
+
+        //Dialog弹窗初始化方法
+        function LoadDialog(title, funOK, funClose) {
+            $('#dialogTitle').text(title);
+
+            //确定按钮
+            $('#btnOK').unbind().on('click', funOK);
+
+            //关闭按钮
+            $('#btnClose').unbind().on('click', function () {
+                DialogShowHide(false);
+
+                if (funClose) { funClose(); }
+            });
+        }
+
+        //弹窗展示隐藏具体代码
+        function DialogShowHide(flag) {
+            if (flag) { $(".pop_bg").fadeIn(); } //展示
+            else { $(".pop_bg").fadeOut(); } //隐藏
+        }
     </script>
 </head>
 <body>
     <!--header-->
     <header>
-        <h1><img src="images/admin_logo.png" /></h1>
+        <h1><img src="~/StaticContent/Admin/images/admin_logo.png" /></h1>
         <ul class="rt_nav">
-            <li><a href="http://www.baidu.com" target="_blank" class="website_icon">站点首页</a></li>
+            <li><a href="/Admin/CommodityList" target="_blank" class="website_icon">站点首页</a></li>
             <li><a href="#" class="admin_icon">DeathGhost</a></li>
-            <li><a href="#" class="set_icon">账号设置</a></li>
-            <li><a href="login.php" class="quit_icon">安全退出</a></li>
+            <li><a href="javascript:;" class="set_icon" id="aUserDataOpe">账号设置</a></li>
+            <li><a href="/Admin/LogOut" class="quit_icon">安全退出</a></li>
         </ul>
     </header>
 
@@ -164,6 +231,18 @@
         <div class="loading_cont">
             <div class="loading_icon"><i></i><i></i><i></i><i></i><i></i></div>
             <div class="loading_txt"><mark>数据正在加载，请稍后！</mark></div>
+        </div>
+    </section>
+
+    <section class="pop_bg">
+        <div class="pop_cont">
+            <h3 id="dialogTitle"></h3>
+            <div class="pop_cont_input">
+            </div>
+            <div class="btm_btn">
+                <input type="button" value="确认" class="input_btn trueBtn" id="btnOK">
+                <input type="button" value="关闭" class="input_btn falseBtn" id="btnClose">
+            </div>
         </div>
     </section>
 </body>

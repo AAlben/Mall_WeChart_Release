@@ -54,6 +54,9 @@
 
             //事件绑定公共方法
             BindEventCommon();
+
+            //初始化加载数据
+            InitData();
         });
 
         //自定义方法区
@@ -144,6 +147,25 @@
                         }
                     }, 'json');
             });
+
+            //商品模块选中事件方法
+            $('#selModule').on('change', function () {
+                var vThis = $(this);
+                var vVal = vThis.val();
+
+                if (!vVal) { return false; }
+
+                var vOrder = $('#txtIOrder');
+
+                $.get('/Admin/GetCommodityOrder',
+                    { r: Math.random(), par1: vVal },
+                    function (data) {
+                        if (data && data.iOrder) {
+                            vOrder.val(data.iOrder);
+                        }
+                    },
+                    'json');
+            });
         }
 
         //上传控件需要Config
@@ -194,19 +216,8 @@
 
         //初始化展示数据
         function InitData() {
-            //1.商品类别数据加载
-            $.get('/RequestData/ShopModuleList',
-                { r: Math.random() },
-                function (data) {
-                    if (data) {
-                        var vHtml = '';
-                        $.each(data, function (index, item) {
-                            vHtml += TxtFormat('<option value="{1}">{0}</option>', [item.Text, item.Value]);
-                        });
-                        $('#selModule').append(vHtml);
-                    }
-                },
-                'json');
+            //默认调用获取最大iOrder方法
+            setTimeout(function () { $('#selModule').trigger('change'); }, 1000);
         }
 
     </script>

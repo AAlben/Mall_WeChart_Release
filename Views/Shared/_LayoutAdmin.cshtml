@@ -5,17 +5,21 @@
     <meta charset="utf-8" />
     <title>后台管理系统</title>
     <meta name="author" content="DeathGhost" />
+
     <link rel="stylesheet" type="text/css" href="~/StaticContent/css/uikit.min.css" />
     <link href="~/StaticContent/Admin/css/style.css" rel="stylesheet" />
+
     <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
     <![endif]-->
+
     <script src="~/StaticContent/Admin/js/jquery.js"></script>
     <script src="~/StaticContent/Admin/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="~/StaticContent/Admin/js/yui-min.js"></script>
     <script type="text/javascript" src="~/StaticContent/js/uikit.min.js"></script>
     <script src="~/StaticContent/js/Service/shop.js"></script>
     <script src="~/StaticContent/js/Service/inputValidate.js"></script>
+
     <script>
         (function ($) {
             $(window).load(function () {
@@ -138,6 +142,8 @@
             else { $(".pop_bg").fadeOut(); } //隐藏
         }
     </script>
+
+    @RenderSection("LayoutHead", required: false)
 </head>
 <body>
     <!--header-->
@@ -160,7 +166,7 @@
                     <dt>基础管理</dt>
                     <!--当前链接则添加class:active-->
                     <dd><a href="/Admin/CommodityList" class="active">商品列表</a></dd>
-                    <dd><a href="/Admin/CommodityList">限时折扣</a></dd>
+                    <dd><a href="/Admin/CommodityDiscountList">限时折扣</a></dd>
                     @*<dd><a href="#">商品分类</a></dd>
                         <dd><a href="#">商品属性</a></dd>
                         <dd><a href="#">品牌管理</a></dd>*@

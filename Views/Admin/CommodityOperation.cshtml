@@ -20,10 +20,15 @@
 <script type="text/javascript">
     var imagecount = 2;
     var speccount = 2;
-    $(function () {
-        $("#file_upload").uploadify({
+
+    //自定义方法区
+
+    function UploadInfoConfig(vType) {
+        //上传文件默认配置：单文件上传
+        var vConfig = {
             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
             uploader: '/Admin/Upload?type=1',    // 服务器端处理地址
+
             //显示参数
             width: 80,                   // 按钮的宽度
             height: 24,                  // 按钮的高度
@@ -31,13 +36,35 @@
             buttonCursor: "hand",        // 按钮的鼠标图标
             buttonClass: "up_button2",
             fileObjName: 'Filedata',     // 上传参数名称
+
             //规则参数
-            fileSizeLimit: "5000KB",
             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
-            fileSizeLimit: "2MB",         //允许上传的文件大小
-            multi: true,                 // 是否支持同时上传多个文件
-            removeTimeout: 1,
+            fileSizeLimit: "1MB",         //允许上传的文件大小
+            multi: false,                 // 是否支持同时上传多个文件
+            simUploadLimit: 1,
+            removeTimeout: 1
+        };
+
+        //扩展验证
+        switch (vType) {
+            case 'multi':
+                break;
+
+            case 'single':
+                vConfig.multi = false;
+                vConfig.simUploadLimit = 10;
+                break;
+
+            default:
+                break;
+        }
+
+        return vConfig;
+    }
+
+    $(function () {
+        $("#file_upload").uploadify({
             onUploadSuccess: function (file, data, respose) {
                 var obj = jQuery.parseJSON(data); //把返回的数据序列化为Obj对象
                 if (obj.ret) {
@@ -46,7 +73,6 @@
                 else {
                     alert(obj.message);
                 }
-
             }
         });
         $("#file_upload1").uploadify({
@@ -60,7 +86,6 @@
             buttonClass: "up_button2",
             fileObjName: 'Filedata',     // 上传参数名称
             //规则参数
-            fileSizeLimit: "5000KB",
             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
             fileSizeLimit: "2MB",         //允许上传的文件大小
@@ -92,7 +117,6 @@
                     buttonClass: "up_button2",
                     fileObjName: 'Filedata',     // 上传参数名称
                     //规则参数
-                    fileSizeLimit: "5000KB",
                     fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
                     fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
                     fileSizeLimit: "1MB",         //允许上传的文件大小
@@ -114,6 +138,7 @@
     })
     function addimage() {
         $('#Imagelist').append('<span class="item_name" style="width:120px;">滚动图' + imagecount + '：</span>  <input type="text" class="textbox textbox_295" disabled="disabled" id="GdTxt' + imagecount + '" /><input id="file_upload' + imagecount + '" style="float:left" type="' + imagecount + '" />');
+
         $("#file_upload" + imagecount).uploadify({
             swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
             uploader: '/Admin/Upload?type=2',    // 服务器端处理地址
@@ -125,7 +150,6 @@
             buttonClass: "up_button2",
             fileObjName: 'Filedata',     // 上传参数名称
             //规则参数
-            fileSizeLimit: "5000KB",
             fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
             fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
             fileSizeLimit: "1MB",         //允许上传的文件大小
@@ -235,6 +259,33 @@ else
                     <input type="text" class="textbox textbox_295" id="SltTxt" disabled="disabled" value="@item.Photo" />
                     <input id="file_upload" style="float:left" />
                 </li>
+                <li id="Imagelist">
+                    @{
+                        int photolistcount = 0;
+                        foreach (var vItem in ViewBag.Photolist)
+                        {
+                            photolistcount++;
+                            string photovalue = "GdTxt" + photolistcount;
+                            string uploadid = "file_upload" + photolistcount;
+                            string photoid = "GdIDTxt" + photolistcount;
+                            <span class="item_name" style="width:120px;">滚动图 @photolistcount：</span>
+                            <input type="text" class="textbox textbox_295" disabled="disabled" id="@photovalue" value="@vItem.Value" />
+                            <input type="text" style="display:none;" id="@photoid" value="@vItem.ID" />
+                            <input id="@uploadid" style="float:left" />
+                        }
+                        if (photolistcount == 0)
+                        {
+                            <span class="item_name" style="width:120px;">滚动图1：</span>
+                            <input type="text" class="textbox textbox_295" disabled="disabled" id="GdTxt1" />
+                            <input type="text" style="display:none;" id="GdIDTxt1" />
+                            <input id="file_upload1" style="float:left" />
+                        }
+                    }
+                </li>
+                <li>
+                    <input type="button" value="追加图片" class="link_btn" onclick="addimage()" />
+                    <span style="display:none;" id="GdTxt"></span>
+                </li>
                 <li>
                     <span class="item_name" style="width:120px;">类别：</span>
                     @Html.DropDownList("ddlcategory", ViewData["ddlcategory"] as SelectList, new { @class = "select" })
@@ -252,7 +303,37 @@ else
                         <label class="single_selection"><input type="radio" name="state" value="0" checked="checked" />下架</label>
                     }
                 </li>
-
+                <li id="speclist">
+                    @{
+                        int speccount = 0;
+                        foreach (var vItemNa in ViewBag.OPtionlist)
+                        {
+                            speccount++;
+                            string specvalue = "spec" + speccount;
+                            string specpriceid = "specprice" + speccount;
+                            string specid = "specIDTxt" + speccount;
+                            <div>
+                                <span class="item_name" style="width:120px;">规格 @speccount：</span>
+                                <input type="text" class="textbox textbox_225" id="@specvalue" value="@vItemNa.Name" />
+                                价格<input type="number" class="textbox textbox_225" id="@specpriceid" value="@vItemNa.Price" />
+                                <input type="text" id="@specid" style="display:none;" value="@vItemNa.ID" />
+                            </div>
+                        }
+                        if (speccount == 0)
+                        {
+                            <div>
+                                <span class="item_name" style="width:120px;">规格1：</span>
+                                <input type="text" class="textbox textbox_225" id="spec1" />
+                                价格<input type="number" class="textbox textbox_225" id="specprice1" />
+                                <input type="text" value="specIDTxt1" style="display:none;" />
+                            </div>
+                        }
+                    }
+                </li>
+                <li>
+                    <input type="button" value="追加规格" class="link_btn" onclick="addspec()" />
+                    <span style="display:none;" id="spec"></span>
+                </li>
                 <li>
                     <span class="item_name" style="width:120px;">库存：</span>
                     <input type="number" id="txtQuantity" class="textbox textbox_295" value="@item.Stock" />
@@ -266,69 +347,10 @@ else
                     <script id="editor" type="text/plain" style="width:600px;height:300px;">
                     </script>
                 </li>
-            }
-            <li id="speclist">
-                @{
-                    int speccount = 0;
-                    foreach (var item in ViewBag.OPtionlist)
-                    {
-                        speccount++;
-                        string specvalue = "spec" + speccount;
-                        string specpriceid = "specprice" + speccount;
-                        string specid = "specIDTxt" + speccount;
-                        <div>
-                            <span class="item_name" style="width:120px;">规格 @speccount：</span>
-                            <input type="text" class="textbox textbox_225" id="@specvalue" value="@item.Name" />
-                            价格<input type="number" class="textbox textbox_225" id="@specpriceid" value="@item.Price" />
-                            <input type="text" id="@specid" style="display:none;" value="@item.ID" />
-                        </div>
-                    }
-                    if (speccount == 0)
-                    {
-                        <div>
-                            <span class="item_name" style="width:120px;">规格1：</span>
-                            <input type="text" class="textbox textbox_225" id="spec1" />
-                            价格<input type="number" class="textbox textbox_225" id="specprice1" />
-                            <input type="text" value="specIDTxt1" style="display:none;" />
-                        </div>
-                    }
-                }
-
-            </li>
-            <li>
-                <input type="button" value="追加规格" class="link_btn" onclick="addspec()" />
-                <span style="display:none;" id="spec"></span>
-            </li>
-            <li id="Imagelist">
-                @{
-                    int photolistcount = 0;
-                    foreach (var item in ViewBag.Photolist)
-                    {
-                        photolistcount++;
-                        string photovalue = "GdTxt" + photolistcount;
-                        string uploadid = "file_upload" + photolistcount;
-                        string photoid = "GdIDTxt" + photolistcount;
-                        <span class="item_name" style="width:120px;">滚动图 @photolistcount：</span>
-                        <input type="text" class="textbox textbox_295" disabled="disabled" id="@photovalue" value="@item.Value" />
-                        <input type="text" style="display:none;" id="@photoid" value="@item.ID" />
-                        <input id="@uploadid" style="float:left" />
-                    }
-                    if (photolistcount == 0)
-                    {
-                        <span class="item_name" style="width:120px;">滚动图1：</span>
-                        <input type="text" class="textbox textbox_295" disabled="disabled" id="GdTxt1" />
-                        <input type="text" style="display:none;" id="GdIDTxt1" />
-                        <input id="file_upload1" style="float:left" />
-                    }
-                }
-            </li>
-            <li>
-                <input type="button" value="追加图片" class="link_btn" onclick="addimage()" />
-                <span style="display:none;" id="GdTxt"></span>
-            </li>
+                        }
         </ul>
     </section>
-                    }
+                        }
 
 <section style="margin-bottom:100px;"><input type="submit" onclick="FunSubmit();" value="保存" class="link_btn" /></section>
 

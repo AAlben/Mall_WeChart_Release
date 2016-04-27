@@ -1,0 +1,256 @@
+﻿
+@{
+    ViewBag.Title = "CommodityOperationNb";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section LayoutHead{
+    <link href="~/StaticContent/js/uploadify/uploadify.css" rel="stylesheet" />
+    <link href="~/StaticContent/css/sortable.min.css" rel="stylesheet" />
+    <link href="~/StaticContent/css/sticky.min.css" rel="stylesheet" />
+    <link href="~/StaticContent/Admin/css/commOpe.css" rel="stylesheet" />
+
+    <script src="~/StaticContent/js/uploadify/jquery.uploadify.min.js"></script>
+    <script src="~/StaticContent/js/sortable.min.js"></script>
+    <script src="~/StaticContent/js/sticky.min.js"></script>
+    <script src="~/StaticContent/Admin/js/commOpe.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="~/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+    <style type="text/css">
+        .uk-thumbnav > li > img, span {
+            width: 130px;
+            height: 130px;
+            position: relative;
+        }
+
+        .uk-overlay > img {
+            width: 130px;
+            height: 130px;
+            position: relative;
+        }
+
+        .uk-overlay-panel > h2 {
+            font-weight: bold;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+        var ue = UE.getEditor('editor');
+
+        $(function () {
+            //初始化上传控件
+            InitUploadControl();
+
+            //初始化数据绑定公共方法
+            InitDataCommon();
+
+            //事件绑定
+            BindEvent();
+
+            //事件绑定公共方法
+            BindEventCommon();
+
+            //初始化该商品数据
+            InitData();
+        });
+
+        //自定义方法区
+
+        //初始化数据绑定
+        function InitData() {
+            //1.查询该商品相关数据
+            $.get('/Admin/CommodityOperatioNbContent',
+                { r: Math.random(), par1: $('#hCommID').val() },
+                function (data) {
+                    if (data) {
+                        var vCommInfo = data.Commodity;
+                        var vPhotoList = data.PhotoList;
+                        var vOptionList = data.OptionList;
+
+                        //图片
+                        $('#txtTitle').val(vCommInfo.Title);
+                        $('#txtPrice').val(vCommInfo.Price);
+                        $('#txtStock').val(vCommInfo.Stock);
+                        $('#selModule').val(vCommInfo.MID);
+                        $('#txtIOrder').val(vCommInfo.iOrder);
+                        $('#txtRemark').val(vCommInfo.Remark);
+                        $('#hPostFlag').val(vCommInfo.PostType);
+                        //Ready函数
+                        ue.addListener("ready", function () {
+                            // editor准备好之后才可以使用
+                            ue.setContent(vCommInfo.Intro);
+                        });
+
+                        //邮递费用相关
+                        if (vCommInfo.PostType == '1') {
+                            $('#ckPostType').click();
+                            $('#txtPostPrice').val(vCommInfo.PostPrice);
+                        }
+
+                        //上架、下架相关
+                        var vCommState = parseInt(vCommInfo.State);
+                        var vCommStateIndex = vCommState == 1 ? 0 : 1;
+                        $("input[name='rdCommState']").eq(vCommStateIndex).attr('checked', 'checked');
+
+                        //商品规格相关
+                        InitOptionData(vOptionList);
+                        if (vOptionList.length > 0) { $('#hCommOptionFlag').val('1'); }
+
+                        //图片相关
+                        $('#hLPhotoIndex').val('0');
+                        UploadImgAppend(vCommInfo.Photo);
+                        $.each(vPhotoList, function (index, item) {
+                            UploadImgAppend(item.Value);
+                        });
+                    }
+                },
+                'json');
+        }
+
+        //事件绑定方法
+        function BindEvent() {
+            //1.保存按钮事件
+            $('#btnSave').click(function () {
+                //Init
+                var vCommID = $('#hCommID').val();
+
+                //额外验证
+                var vIntro = ue.getContent();
+                $('#hCommIntro').val(vIntro);
+
+                //获取Config
+                var vInputConfig = GetInputConfig();
+
+                //数据验证JS类
+                var vIValidate = new InputValidateCNb();
+                if (!vIValidate.CheckInput(vInputConfig, vIValidate)) {
+                    return false;
+                }
+
+                //数据准备
+                var vPar = {};
+                vPar.ID = vCommID;
+                vPar.commodityname = $('#txtTitle').val();
+                vPar.Price = $('#txtPrice').val();
+                vPar.Quantity = $('#txtStock').val();
+                vPar.category = $('#selModule').val();
+                vPar.introduce = vIntro;
+                vPar.iOrder = $('#txtIOrder').val();
+                vPar.state = $("input[name='rdCommState']:checked").val();
+                vPar.Remark = $('#txtRemark').val();
+                //运费相关
+                vPar.PostType = $('#hPostFlag').val();
+                if (vPar.PostType == '1') { vPar.PostPrice = $('#txtPostPrice').val(); }
+
+                //图片准备
+                var vInfoPhoto = '';
+                var vSwiperPhoto = '';
+
+                var vPhotoLi = $('#uPhotoList li');
+                $.each(vPhotoLi, function (index, item) {
+                    if (index == 0) {
+                        vInfoPhoto += $(item).attr('uPath');
+                    }
+                    else {
+                        vSwiperPhoto += $(item).attr('uPath') + ';';
+                    }
+                });
+
+                vPar.SltImg = vInfoPhoto;
+                vPar.GdImg = vSwiperPhoto;
+
+                //规格准备
+                var vOptionNames = '';
+                var vOptionPrices = '';
+                var vOptionID = '';
+
+                if ($('#hCommOptionFlag').val() == '1') { //有规格
+                    var vOptionList = $('#sku_ul li');
+
+                    $.each(vOptionList, function (index, item) {
+                        var vInptList = $('input', item);
+
+                        if (vInptList && vInptList.length > 0) {
+                            vOptionID += $(item).attr('uId') + ';';
+                            vOptionNames += $(vInptList[0]).val() + ';';
+                            vOptionPrices += $(vInptList[1]).val() + ';';
+                        }
+                    });
+                }
+
+                vPar.spec = vOptionNames;
+                vPar.specprice = vOptionPrices;
+                vPar.specid = vOptionID;
+
+                //数据提交
+                $.post("/Admin/EditCommodity",
+                    vPar,
+                    function (data) {
+                        if (data && data.Flag) {
+                            alert("保存成功！");
+                            window.location.href = '/Admin/CommodityList';
+                            return false;
+                        }
+                        else {
+                            var vMsg = data.Msg ? data.Msg : '保存失败！';
+                            alert(vMsg);
+                        }
+                    }, 'json');
+            });
+        }
+
+        //上传控件需要Config
+        function UploadInfoConfig(vType) {
+
+            var vHtml = '';
+            vHtml += '<em id=\'img_add_a\' class=\'abs over_hidden\'>&nbsp;</em>';
+            vHtml += '<em id=\'img_add_b\' class=\'abs over_hidden\'>&nbsp;</em>';
+
+            //上传文件默认配置：单文件上传
+            var vConfig = {
+                swf: '@Url.Content("~/StaticContent/js/uploadify/uploadify.swf")',// 上传使用的 Flash
+                uploader: '/Admin/Upload?type=1',    // 服务器端处理地址
+
+                //显示参数
+                width: 130,                   // 按钮的宽度
+                height: 130,                  // 按钮的高度
+                buttonText: vHtml,      // 按钮上的文字
+                buttonCursor: "hand",        // 按钮的鼠标图标
+                buttonClass: "css-none",
+                fileObjName: 'Filedata',     // 上传参数名称
+
+                //规则参数
+                fileTypeExts: "*.jpg;*.jpeg;*.png;*.gif",//允许上传的文件扩展名 和下面一起配合使用
+                fileTypeDesc: "请选择 jpg、jpeg、png、gif 文件",// 文件说明
+                fileSizeLimit: "1MB",         //允许上传的文件大小
+                multi: false,                 // 是否支持同时上传多个文件
+                simUploadLimit: 1,
+                removeTimeout: 1
+            };
+
+            //扩展验证
+            switch (vType) {
+                case 'single':
+                    break;
+
+                case 'multi':
+                    vConfig.multi = true;
+                    vConfig.simUploadLimit = 10;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return vConfig;
+        }
+    </script>
+}
+
+@Html.Partial("CommodityOperationCommonPage")
+
+<input type="hidden" value="@ViewBag.CommID" id="hCommID" />

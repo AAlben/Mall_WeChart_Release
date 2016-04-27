@@ -1,0 +1,121 @@
+﻿<div id="right-content">
+    <div>
+        <div data-uk-sticky="{top:110}">
+            <button class="uk-width-1-3 btns" id="btnSave">保存</button>
+            <button class="uk-width-1-3 btns" id="btnCancel">取消</button>
+        </div>
+        <div class="dInterval uk-width-1-1"></div>
+        <div class="dInterval uk-width-1-1"></div>
+
+        <div class="uk-grid">
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品图片：
+            </p>
+            <ul class="uk-thumbnav uk-sortable uk-width-8-10" data-uk-sortable id="uPhotoList"></ul>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 uk-text-left" style="color:red;">
+                <span>*拖拽图片可更换顺序</span>
+                <br />
+                <span>
+                    *每件商品封面图只能为一个
+                </span>
+                <br />
+                <span>*每件商品滚动图可以为多个</span>
+            </p>
+            <ul class="uk-thumbnav uk-width-8-10">
+                <li id="lUpload">
+                    <span id="img_add">
+                        <em id="img_add_a" class="abs over_hidden">&nbsp;</em>
+                        <em id="img_add_b" class="abs over_hidden">&nbsp;</em>
+                    </span>
+                </li>
+            </ul>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品名称：
+            </p>
+            <input type="text" class="uk-width-5-10" id="txtTitle" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品价格：
+            </p>
+            <input type="text" class="uk-width-5-10" id="txtPrice" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                类别：
+            </p>
+            <select class="uk-width-3-10" id="selModule"></select>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                库存：
+            </p>
+            <input type="text" class="uk-width-5-10" id="txtStock" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                排序：
+            </p>
+            <input type="text" class="uk-width-5-10" id="txtIOrder" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                邮递费用：
+            </p>
+            <input type="checkbox" checked="checked" id="ckPostType" /><span class="uk-width-1-10" style="height:auto;">免邮</span>
+            <span style="height:auto;">指定费用：</span><input type="text" class="uk-width-2-10" id="txtPostPrice" disabled="disabled" style="height:25px;" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品状态：
+            </p>
+            <input type="radio" checked="checked" name="rdCommState" value="1" /><span class="uk-width-1-10" style="height:auto;">上架</span>
+            <input type="radio" name="rdCommState" value="0" /><span class="uk-width-1-10" style="height:auto;">下架</span>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品规格(可不填写)：
+            </p>
+            <div class="uk-width-8-10" style="padding-left:0px;">
+                <ul id="sku_ul" class="c_txt font14">
+                    <li id="sku_hd">
+                        <div class="sku_item_c">名称</div> <div class="sku_item_b">价格</div><div class="sku_item_d">操作</div>
+                    </li>
+                </ul>
+                <div class="dInterval uk-width-1-1"></div>
+                <button class="uk-width-1-3 btns" style="background-color:#fff;color:black;" onclick="btnAddOption();">添加规格</button>
+            </div>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                备注：
+            </p>
+            <textarea class="uk-width-5-10" style="height:40px;" id="txtRemark"></textarea>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品介绍：
+            </p>
+            <script id="editor" type="text/plain" style="width:600px;height:300px;padding-left:0px;">
+            </script>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+            <div class="dInterval uk-width-1-1"></div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hLPhotoIndex" value="0" />
+
+<input type="hidden" id="hPostFlag" value="0" />
+<input type="hidden" id="hCommOptionFlag" />
+<input type="hidden" id="hCommIntro" />

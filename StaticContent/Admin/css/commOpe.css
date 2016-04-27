@@ -1,0 +1,120 @@
+﻿#right-content {
+    padding-top: 40px;
+    padding-left: 20px;
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: top;
+    width: 100%;
+}
+
+#img_add {
+    border: 1px dashed #ccc;
+}
+
+#img_add_a, #img_add_b {
+    background-color: #eaeaf1;
+}
+
+#img_add_a {
+    width: 6px;
+    height: 50px;
+    top: 40px;
+    /*left: 62px;*/
+}
+
+#img_add_b {
+    width: 50px;
+    height: 6px;
+    top: 62px;
+    left: -22px;
+}
+
+.abs {
+    position: absolute;
+}
+
+.css-none {
+    position: relative;
+}
+
+.font-white {
+    color: white;
+}
+
+.txt-nowrap {
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap;
+}
+
+.i_do_div {
+    line-height: 44px;
+    padding-left: 145px;
+    margin-bottom: 20px;
+    clear: both;
+}
+
+.dInterval {
+    margin-top: 20px;
+}
+
+#sku_ul {
+    width: 600px;
+    border-right: 1px solid #9f9f9f;
+    border-top: 1px solid #9f9f9f;
+    border-left: 1px solid #9f9f9f;
+    overflow: hidden;
+}
+
+    #sku_ul .input {
+        border: none;
+    }
+
+    #sku_hd, .sku_li, #sku_ul .input {
+        height: 35px;
+        line-height: 35px;
+        width: 100%;
+        text-align: center;
+    }
+
+#sku_hd, .sku_li {
+    border-bottom: 1px solid #9f9f9f;
+    padding-bottom: 2px;
+}
+
+.sku_item_a, .sku_item_b, .sku_item_c {
+    position: relative;
+    border-right: 1px solid #9f9f9f;
+}
+
+.sku_item_a, .sku_item_b, .sku_item_c, .sku_item_d {
+    float: left;
+    display: block;
+    height: 100%;
+}
+
+.sku_item_a {
+    width: 140px;
+}
+
+.sku_item_b {
+    width: 120px;
+}
+
+.sku_item_c {
+    width: 120px;
+}
+
+.sku_item_d {
+    width: 80px;
+}
+
+.btns {
+    width: 175px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #19a97b;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}

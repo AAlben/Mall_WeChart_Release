@@ -20,6 +20,8 @@
         function BindEvent() {
             //默认提供查询数据按钮事件
             $('#btnQuery').click(function () {
+                LoadStart();
+
                 //Init
                 var vHtml = '';
 
@@ -57,6 +59,8 @@
                             });
 
                             $('.table').html(vHtml);
+
+                            LoadEnd();
                         }
                     },
                     'json');

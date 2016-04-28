@@ -192,3 +192,8 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 .loading_icon i:nth-child(4){-webkit-animation:loading_icon 1s ease-in .4s infinite;-moz-animation:loading_icon 1s ease-in .4s infinite;animation:loading_icon 1s ease-in .4s infinite}
 .loading_icon i:nth-child(5){-webkit-animation:loading_icon 1s ease-in .5s infinite;-moz-animation:loading_icon 1s ease-in .5s infinite;animation:loading_icon 1s ease-in .5s infinite}
 .loading_txt mark{background:none;font-size:12px;color:red;}
+.order-type > li {display: inline-block;padding: 0 30px;line-height: 44px;border-bottom: 1px solid #ededed;text-align: center;font-size: 14px;color: #666;cursor: pointer;position: relative;}
+.order-type > li.cur {height: 41px;border-bottom: 4px solid #585858;color: #111;}
+.br-margin {margin-top: 13px;}
+.foot-margin {margin-bottom: 100px;}
+.J_Item {width: 200px;}

@@ -1,33 +1,92 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
 }
 
+@section LayoutHead{
+    <script src="~/StaticContent/Admin/js/queryList.js"></script>
 
-<script>
-    function Delete(commodityid) {
-        $.post("/Admin/DeleteCommodity", { ID: commodityid }, function (data) {
-            if (data && data.Msg) {
-                alert(data.Msg);
-                if (data.Flag) {
-                    window.location.href = window.location.href;
-                }
-            }
+    <script>
+        $(function () {
+            //菜单初始化
+            InitLeftNavMenu('/Admin/CommodityList');
+
+            //事件绑定
+            BindEvent();
         });
-    }
 
-    $(function () {
-        //菜单初始化
-        InitLeftNavMenu('/Admin/CommodityList');
-    });
-</script>
-<section>
+        //自定义方法区
+
+        //控件事件绑定
+        function BindEvent() {
+            //默认提供查询数据按钮事件
+            $('#btnQuery').click(function () {
+                //Init
+                var vHtml = '';
+
+                var vTrNa = $('.table tr').eq(0).html();
+
+                vHtml += TxtFormat('<tr>{0}</tr>', [vTrNa]);
+
+                $.get('/Admin/CommodityListByPageContent',
+                    { r: Math.random(), par1: $('#hPageIndex').val() },
+                    function (data) {
+                        if (data && data.List) {
+                            //验证
+                            if (data.IsLast == 'True') {
+                                LastPageFlag(true);
+                            }
+                            else {
+                                LastPageFlag(false);
+                            }
+
+                            $.each(data.List, function (index, item) {
+                                var vTrNb = '';
+                                vTrNb += '<tr>';
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.Title]);
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.LEIBIE]);
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.Price]);
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.iOrder]);
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.iCount]);
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.Stock]);
+                                vTrNb += TxtFormat('<td>{0}</td>', [item.OpeDate]);
+                                vTrNb += TxtFormat('<td><a href="/Admin/CommodityOperationNb/{0}">修改</a>', [item.ID]);
+                                vTrNb += TxtFormat('<a href="javascript:;" class="inner_btn" onclick="Delete(\'{0}\')">删除</a></td>', [item.ID]);
+                                vTrNb += '</tr>';
+
+                                vHtml += vTrNb;
+                            });
+
+                            $('.table').html(vHtml);
+                        }
+                    },
+                    'json');
+            });
+        }
+
+        //删除商品方法
+        function Delete(commodityid) {
+            $.post("/Admin/DeleteCommodity", { ID: commodityid }, function (data) {
+                if (data) {
+                    if (data.Flag) {
+                        alert(data.Msg);
+                        window.location.href = window.location.href;
+                    }
+                    else {
+                        alert(data.Msg);
+                    }
+                }
+            }, 'json');
+        }
+    </script>
+}
+
+<section class="foot-margin">
     <h2><strong style="color:grey;">商品列表</strong></h2>
     <div class="page_title">
         <h2 class="fl">商品详情</h2>
         <a class="fr top_rt_btn" href="/Admin/CommodityOperationNa">添加商品</a>
     </div>
-    <table class="table">
+    <table class="table br-margin">
         <tr>
             <th>商品名称</th>
             <th>类别</th>
@@ -57,4 +116,12 @@
             }
         }
     </table>
+
+    <aside class="paging">
+        <a href="javascript:;" onclick="PreviousPage();">上一页</a>
+        <a href="javascript:;" onclick="NextPage();">下一页</a>
+    </aside>
 </section>
+
+<input type="button" id="btnQuery" style="display:none;" />
+<input type="hidden" id="hPageIndex" value="1" />

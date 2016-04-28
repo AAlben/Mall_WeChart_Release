@@ -1,39 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
 }
 
-<style type="text/css">
-    .order-type > li {
-        display: inline-block;
-        padding: 0 30px;
-        line-height: 44px;
-        border-bottom: 1px solid #ededed;
-        text-align: center;
-        font-size: 14px;
-        color: #666;
-        cursor: pointer;
-        position: relative;
-    }
-
-        .order-type > li.cur {
-            height: 41px;
-            border-bottom: 4px solid #585858;
-            color: #111;
-        }
-
-    .br-margin {
-        margin-top: 13px;
-    }
-
-    .foot-margin {
-        margin-bottom: 100px;
-    }
-
-    .J_Item {
-        width: 200px;
-    }
-</style>
+@section LayoutHead{
+    <script src="~/StaticContent/Admin/js/queryList.js"></script>
+}
 
 @section LayoutFoot{
 
@@ -105,64 +76,19 @@
     <script>
         $(function () {
             //初始化
-            Init();
+            InitCommon_QueryList();
 
             //默认查询
             //query();
 
             //事件绑定
-            BindEvent();
+            BindEventCommon_QueryList();
 
             //菜单初始化
             InitLeftNavMenu('/Admin/CommodityOrderList');
         });
 
         //自定义方法区
-
-        //页面初始化
-        function Init() {
-            //日期控件
-            var startDate = $('#startdate');
-            var endDate = $('#enddate');
-
-            //计算初始日期
-            var vDateNa = DateOperate(-7);
-            var vDateNb = DateOperate(0);
-
-            //给元素赋值属性
-            startDate.attr('data-date', vDateNa);
-            endDate.attr('data-date', vDateNb);
-
-            //定时器
-            setTimeout(function () {
-                //1.赋予指定日期
-                startDate.prev('span').text(vDateNa);
-                endDate.prev('span').text(vDateNb);
-            }, 500);
-
-        }
-
-        //绑定事件
-        function BindEvent() {
-            $('.order-type li').on('click', function () {
-                //样式变换
-                var vThis = $(this);
-                vThis.addClass('cur').siblings().removeClass('cur');
-
-                var vState = vThis.attr('uState');
-                $('#hState').val(vState);
-
-                //查询
-                $('#btnQuery').click();
-            });
-        }
-
-        //日期操作函数
-        function DateOperate(n) {
-            var uom = new Date(new Date() - 0 + n * 86400000);
-            uom = uom.getFullYear() + "-" + (uom.getMonth() + 1) + "-" + uom.getDate();
-            return uom;
-        }
 
         //----- 订单相关操作方法 -----
 
@@ -278,51 +204,8 @@
             });
         }
 
-        //翻页相关
-
-        //1.上一页
-        function PreviousPage() {
-            var vItem = $('#hPageIndex');
-            var vIndex = parseInt(vItem.val());
-
-            if (vIndex == 1) {
-                alert('当前为第一页！');
-                return false;
-            }
-            else {
-                vIndex -= 1;
-                vItem.val(vIndex);
-                $('#btnQuery').click();
-            }
-        }
-
-        //2.下一页
-        function NextPage() {
-            var vItem = $('#hPageIndex');
-            var vIndex = parseInt($('#hPageIndex').val());
-
-            vIndex += 1;
-            vItem.val(vIndex);
-            $('#btnQuery').click();
-
-        }
-
         //OrderState + 可执行方法的配置信息
         var vStateFunctionConfig = { '0': [], '1': ['ChangePrice', 'OrderClose'], '3': ['WriteExpNum'] };
-
-        //功能方法能否执行验证
-        function FuncCanOpeCheck(vEvent, vArguments) {
-            //当前State
-            var vState = $(vEvent.currentTarget).attr('uState');
-            //当前方法名
-            var vFunName = vArguments.callee.name;
-
-            //校验
-            if (vStateFunctionConfig[vState].indexOf(vFunName) != -1) {
-                return true;
-            }
-            return false;
-        }
     </script>
 }
 

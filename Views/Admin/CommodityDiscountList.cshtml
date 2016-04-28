@@ -4,11 +4,27 @@
 
 }
 
+@section LayoutHead{
+    <script type="text/javascript">
+        $(function () {
+            //初始化
+            InitCommon_QueryList();
+
+            //事件绑定
+            BindEventCommon_QueryList();
+
+            //菜单初始化
+            InitLeftNavMenu('/Admin/CommodityDiscountList');
+        });
+    </script>
+}
+
 <section>
     <div class="page_title">
         <h2 class="fl">限时折扣</h2>
     </div>
 </section>
+
 <section>
     <h2><strong style="color:grey;">查询条件</strong></h2>
     <div>
@@ -26,3 +42,6 @@
     </div>
     <div id="recordlist" class="br-margin foot-margin"></div>
 </section>
+
+<input type="hidden" value="-1" id="hState" />
+<input type="hidden" value="1" id="hPageIndex" />

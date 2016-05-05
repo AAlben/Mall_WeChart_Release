@@ -1,0 +1,60 @@
+﻿@model IEnumerable<dynamic>
+@{
+    Layout = null;
+}
+
+@{
+    <style type="text/css">
+        .td-img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+
+    <table class="table">
+        <tr>
+            <th>折扣名称</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>商品名称</th>
+            <th>商品图片</th>
+            <th>原始价格</th>
+            <th>折后价格</th>
+            <th>折扣</th>
+            <th>限购数量</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ToString()</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.EndTime</td>
+                    <td>@item.CommTitle</td>
+                    <td><img src="/@item.Photo" class="td-img" /></td>
+                    <td>@item.Price</td>
+                    <td>@item.DiscountPrice</td>
+                    <td>@item.DiscountValue</td>
+                    <td>@item.DiscountCount</td>
+                    <td>@item.State</td>
+                    <td>
+                        <a href="javascript:;" class="inner_btn">编辑</a>
+                        <a href="javascript:;" class="inner_btn">删除</a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
+    <aside class="paging">
+        <a href="javascript:;" onclick="PreviousPage();">上一页</a>
+        <a href="javascript:;" onclick="NextPage();">下一页</a>
+    </aside>
+
+    <input type="hidden" id="hIsLast" value="@ViewBag.IsLast" />
+}

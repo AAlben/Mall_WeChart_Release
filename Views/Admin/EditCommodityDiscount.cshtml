@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "EditCommodityDiscount";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section LayoutHead{
+    <script type="text/javascript">
+        //淘宝前端所写日历控件
+        YUI({
+            modules: {
+                'trip-calendar': {
+                    fullpath: '../../StaticContent/Admin/js/trip-calendar.js',
+                    type: 'js',
+                    requires: ['trip-calendar-css']
+                },
+                'trip-calendar-css': {
+                    fullpath: '../../StaticContent/Admin/css/trip-calendar.css',
+                    type: 'css'
+                }
+            }
+        }).use('trip-calendar', function (Y) {
+
+            /**
+             * 弹出式日历实例
+             * 将日历与指定的触发元素绑定
+             * 日历可根据浏览器窗口大小，自动调整显示位置
+             */
+            var oCal = new Y.TripCalendar({
+                //绑定日历的节点，支持选择器模式，可批量设置（必选）
+                triggerNode: '#startdate , #enddate'
+            });
+
+            oCal.on('dateclick', function (e) {
+                this.getCurrentNode().setAttribute('data-date', e.date);
+            });
+
+            //显示日历时自定义事件
+            oCal.on('show', function () {
+                var v = this.getCurrentNode().getAttribute('data-date');
+                this.set('date', v || new Date);
+                this.set('selectedDate', v).render();
+            });
+
+            //解决chrome的foucs事件bug
+            Y.on('click', function (e) {
+                e.currentTarget.focus();
+            }, 'button, .J_Link');
+
+            //Query 方法
+            $('#btnSave').on('click', function () {
+                var startdate = Y.one("#startdate").get('value');
+                var enddate = Y.one("#enddate").get('value');
+
+                if (!startdate) { startdate = $('#startdate').prev('span').text(); }
+                if (!enddate) { enddate = $('#enddate').prev('span').text(); }
+
+                //数据验证JS类
+                var vIValidate = new InputValidateCNb();
+                if (!vIValidate.CheckInput(InputConfig, vIValidate)) {
+                    return false;
+                }
+
+                var vPar = {};
+
+                vPar.Title = $('#txtTitle').val();
+                vPar.PostType = '1';//包邮否
+                vPar.IsEndCommodity = '0';//下架否
+                vPar.DiscountID = $('#hDiscountID').val();
+
+                var vChecked = $('#right-content input:checked');
+                $.each(vChecked, function (index, item) {
+                    if ($(item).attr('id') == 'ckPostType') { vPar.PostType = '0'; }
+                    if ($(item).attr('id') == 'ckIsEnd') { vPar.IsEndCommodity = '1'; }
+                });
+
+                vPar.StartTime = TxtFormat('{0} {1}:{2}:00', [startdate, $('#selStartHour').val(), $('#txtStartMinute').val()]);
+                vPar.EndTime = TxtFormat('{0} {1}:{2}:00', [enddate, $('#selEndHour').val(), $('#txtEndMinute').val()]);
+
+                vPar.Flag = 1;
+                vPar.DiscountCount = 0;
+                vPar.DiscountPrice = 0;
+                vPar.DiscountValue = 0;
+
+                var vIDs = '';
+                var vPrices = '';
+                var vCounts = '';
+                var vValues = '';
+
+                $.each($('.sku_li'), function (index, item) {
+                    var vItem = $(item);
+                    var vDiv = $('div', vItem);
+
+                    vIDs += vItem.attr('uId') + ';';
+                    vValues += vDiv.eq(2).find('label').text() + ';';
+                    vPrices += vDiv.eq(3).find('input').val() + ';';
+                    vCounts += vDiv.eq(4).find('input').val() + ';';
+                });
+
+                var IDs = vIDs;
+                var Prices = vPrices;
+                var Counts = vCounts;
+                var Values = vValues;
+
+                var vStr = JSON.stringify(vPar);
+
+                $.post('/Admin/EditCommodityDiscountOpe',
+                    { r: Math.random(), par1: vStr, par2: IDs, par3: Prices, par4: Counts, par5: Values },
+                    function (data) {
+                        if (data && data.Flag == 'True') {
+                            alert(data.Msg);
+                            window.location.href = '/Admin/CommodityDiscountList';
+                        }
+                        else {
+                            alert(data.Msg);
+                        }
+                    },
+                    'json');
+            });
+        });
+    </script>
+}
+
+@section LayoutFoot{
+    <script type="text/javascript">
+        $(function () {
+            //事件绑定
+            BindEvent();
+
+            //菜单初始化
+            InitLeftNavMenu('/Admin/CommodityDiscountList');
+
+            //待编辑数据加载
+            InitData();
+        });
+
+        //自定义方法区
+
+        //待编辑数据加载
+        function InitData() {
+            //Init
+            var vDiscountID = $('#hDiscountID').val();
+
+            //查询该限时折扣相关数据
+            $.get('/Admin/EditCommodityDiscountContent',
+                { r: Math.random(), par1: vDiscountID },
+                function (data) {
+                    if (data && data.List) {
+                        //表头数据
+                        var vItem = data.List[0];
+
+                        $('#txtTitle').val(vItem.DiscountTitle);
+                        if (vItem.PostType == '0') { $('#ckPostType').attr('checked', 'checked'); }
+                        if (vItem.IsEndCommodity == '1') { $('#ckIsEnd').attr('checked', 'checked'); }
+
+                        //时间部分处理
+                        var vStartTime = vItem.StartTime;
+                        var vEndTime = vItem.EndTime;
+
+                        vStartTime = ConvertDateTime(vStartTime);
+                        vEndTime = ConvertDateTime(vEndTime);
+
+                        var arrStartTime = DateTimeSplitOpe(vStartTime);
+                        var arrEndTime = DateTimeSplitOpe(vEndTime);
+
+                        InitDateTimeController(vStartTime, vEndTime);
+                        $('#selStartHour').val(arrStartTime[1]);
+                        $('#selEndHour').val(arrEndTime[1]);
+                        $('#txtStartMinute').val(arrStartTime[2]);
+                        $('#txtEndMinute').val(arrEndTime[2]);
+
+                        //折扣商品数据处理
+                        LoadAddDiscountCommodity(data.List);
+                    }
+                },
+                'json');
+        }
+
+        //字符串转日期类型变量
+        function ConvertDateTime(vStr) {
+            vStr = vStr.replace(/-/g, "/");
+            var date = new Date(vStr);
+            return date;
+        }
+
+        //日期变量分解 日期 + 时 + 分
+        function DateTimeSplitOpe(date) {
+            var vDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+            var vHour = date.getHours().toString();
+            var vMinute = date.getMinutes().toString();
+
+            vHour = vHour.length == 1 ? '0' + vHour : vHour;
+            vMinute = vMinute.length == 1 ? '0' + vMinute : vMinute;
+
+            return [vDate, vHour, vMinute];
+        }
+
+        //页面初始化
+        function InitDateTimeController(startTime, endTime) {
+            //日期控件
+            var startDate = $('#startdate');
+            var endDate = $('#enddate');
+
+            startTime = startTime.getFullYear() + '-' + (startTime.getMonth() + 1) + '-' + startTime.getDate();
+            endTime = endTime.getFullYear() + '-' + (endTime.getMonth() + 1) + '-' + endTime.getDate();
+
+            //给元素赋值属性
+            startDate.attr('data-date', startTime);
+            endDate.attr('data-date', endTime);
+
+            //1.赋予指定日期
+            setTimeout(function () {
+                startDate.prev('span').text(startTime);
+                endDate.prev('span').text(endTime);
+            }, 500);
+        }
+    </script>
+}
+
+@Html.Partial("CommodityDiscountCommonPage")
+
+<input type="hidden" id="hDiscountID" value="@ViewBag.DiscountID" />

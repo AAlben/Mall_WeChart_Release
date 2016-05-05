@@ -1,0 +1,82 @@
+﻿@model IEnumerable<dynamic>
+
+
+<style type="text/css">
+    .li-flex {
+        display: inline-flex;
+    }
+
+        .li-flex input {
+            float: left;
+        }
+
+        .li-flex img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .li-flex p {
+            background-image: url(/StaticContent/image/public/iuncheck.png);
+            background-repeat: no-repeat;
+            background-size: 20px;
+            padding-left: 25px;
+            background-position-y: 40%;
+        }
+
+        .li-flex .comCheck {
+            background-image: url(/StaticContent/image/public/icheck.png);
+        }
+
+    .re {
+        position: relative;
+    }
+
+        .re span {
+            position: absolute;
+            min-width: 100px;
+        }
+
+    .p-span1 {
+        top: 15px;
+    }
+
+    .p-span2 {
+        bottom: 10px;
+    }
+
+    .p-span3 {
+        bottom: 10px;
+        right: 0px;
+    }
+</style>
+
+<ul class="uk-grid" id="DiscountCommUl">
+    <li class="uk-width-1-1">
+        <input type="text" class="uk-width-1-2" placeholder="请输入商品名搜索" id="txtSearch" />
+        <input type="button" class="group_btn" value="搜索" style="margin-left:50px;" onclick="btnSearchQuery();" />
+    </li>
+
+    @{
+        foreach (var item in Model)
+        {
+            <li class="li-flex uk-width-1-2">
+                <div style="width: 100%;">
+                    <p class="re" onclick="CommUlClickOpe();" uId="@item.ID">
+                        <img src="/@item.Photo" />
+                        <span class="p-span1">@item.Title</span>
+                        <span class="p-span2">￥@item.Price</span>
+                        <span class="p-span3">@item.DISCOUNTVALUE 折</span>
+                    </p>
+                </div>
+            </li>
+        }
+    }
+</ul>
+
+<aside class="paging">
+    <a href="javascript:;" onclick="PreviousPage();">上一页</a>
+    <a href="javascript:;" onclick="NextPage();">下一页</a>
+</aside>
+
+<input type="hidden" id="hPageIndex" value="1" />
+<input type="hidden" id="hQueryType" value="list" />

@@ -18,7 +18,6 @@ function InitCommon_QueryList() {
         startDate.prev('span').text(vDateNa);
         endDate.prev('span').text(vDateNb);
     }, 500);
-
 }
 
 //日期操作函数

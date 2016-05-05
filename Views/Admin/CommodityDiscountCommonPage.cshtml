@@ -1,0 +1,375 @@
+﻿<link href="~/StaticContent/Admin/css/commOpe.css" rel="stylesheet" />
+
+<script src="~/StaticContent/Admin/js/commOpe.js"></script>
+<script src="~/StaticContent/Admin/js/queryList.js"></script>
+
+<style type="text/css">
+    .selHour-width {
+        width: 50px;
+    }
+
+    .sku_item_a img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .sku_li, .sku_li input {
+        height: 100px;
+        line-height: 100px;
+    }
+
+    .input-border {
+        border: 0.5px solid #9f9f9f;
+    }
+
+    .pop_cont {
+        top: 10%;
+        left: 35%;
+        right: 10%;
+    }
+</style>
+
+<div id="right-content">
+    <div>
+        <div class="uk-grid">
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                限时折扣名称：
+            </p>
+            <input type="text" class="uk-width-5-10" id="txtTitle" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                折扣持续时间：
+            </p>
+            <div class="uk-width-8-10" style="padding-left:0px;">
+                从
+                <input type="text" class="J_Item" autocomplete="off" id="startdate" />日
+
+                <select id="selStartHour" class="selHour-width">
+                    <option value="00">00</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>时
+
+                <input type="text" id="txtStartMinute" value="00" />分
+                至
+                <input type="text" class="J_Item" autocomplete="off" id="enddate" />日
+
+                <select id="selEndHour" class="selHour-width">
+                    <option value="00">00</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>时
+
+                <input type="text" id="txtEndMinute" value="00" />分
+            </div>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                包邮：
+            </p>
+            <input type="checkbox" id="ckPostType" />包邮
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                限购结束时下架商品：
+            </p>
+            <input type="checkbox" id="ckIsEnd" />下架
+            <div class="dInterval uk-width-1-1"></div>
+
+            <p class="uk-width-2-10 txt-nowrap uk-text-left">
+                商品列表：
+            </p>
+            <div class="uk-width-8-10">
+                <ul id="sku_ul" class="c_txt font14" style="width:705px;">
+                    <li id="sku_hd">
+                        <div class="sku_item_a">商品</div>
+                        <div class="sku_item_c">原价</div>
+                        <div class="sku_item_b">折扣</div>
+                        <div class="sku_item_c">折后价</div>
+                        <div class="sku_item_c">限购件数</div>
+                        <div class="sku_item_d">操作</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="dInterval uk-width-1-1"></div>
+
+            <input type="button" value="添加打折商品" class="uk-width-2-10 group_btn" id="btnAddCommodity" />
+            <div class="dInterval uk-width-1-1"></div>
+
+            <input type="button" value="确定" class="uk-width-2-10 group_btn" id="btnSave" />
+            <input type="button" value="取消" class="uk-width-2-10 group_btn" id="btnCancel" />
+            <div class="dInterval uk-width-1-1"></div>
+        </div>
+    </div>
+</div>
+
+<input type="button" id="btnQuery" style="display:none" />
+
+<script type="text/javascript">
+    //自定义方法区
+
+    //输入项相关配置
+    var InputConfig = {
+        '#sku_ul li': { itemLength: { '>=': 2 }, name: '打折商品' },
+        '#txtTitle': { require: true, name: '限时折扣名称' },
+        '#txtStartMinute': { require: true, name: '折扣开始时间分钟' },
+        '#txtEndMinute': { require: true, name: '折扣结束时间分钟' },
+        '.dis-val': { dataType: 'list', require: true, name: '打折商品折后价' }
+    };
+
+    //时间控件初始化方法
+    function InitDateController() {
+        //日期控件
+        var startDate = $('#startdate');
+        var endDate = $('#enddate');
+
+        //计算初始日期
+        var vDateNa = DateOperate(1);
+        var vDateNb = DateOperate(7);
+
+        //给元素赋值属性
+        startDate.attr('data-date', vDateNa);
+        endDate.attr('data-date', vDateNb);
+
+        //定时器
+        setTimeout(function () {
+            //1.赋予指定日期
+            startDate.prev('span').text(vDateNa);
+            endDate.prev('span').text(vDateNb);
+        }, 500);
+    }
+
+    //事件绑定方法
+    function BindEvent() {
+        //1.添加折扣商品按钮事件方法
+        $('#btnAddCommodity').click(function () {
+            //1.弹窗，并展示商品图片+价格+是否具有折扣+分页+搜索
+            LoadStart();
+            //页数
+            var vPageIndex = '1';
+
+            //弹窗
+            LoadDialog('添加商品',
+                function () { //确定按钮事件
+
+                    //获取选中商品ID
+                    var vDatas = new Array();
+
+                    $.each($('.comCheck'), function (index, item) {
+                        var vItem = $(item);
+                        var vSpan = $('span', vItem);
+
+                        var vPar = {};
+                        vPar.ID = vItem.attr('uId');
+                        vPar.Photo = $('img', vItem).attr('src');
+                        vPar.Title = vSpan.eq(0).text();
+                        vPar.Price = vSpan.eq(1).text();
+                        vPar.DiscountValue = vSpan.eq(2).text().replace('折', '');
+                        vPar.DiscountPrice = vPar.DiscountValue != '' ? parseFloat(vPar.Price.substr(1)) * parseFloat(vPar.DiscountValue) * 0.1 : '';
+
+                        vDatas[index] = vPar;
+                    });
+
+                    //使用vPar再次展现
+                    LoadAddDiscountCommodity(vDatas);
+
+                    DialogShowHide(false);
+                });
+
+            //加载HTML
+            $('.pop_cont_input').load('/Admin/DiscountCommodityInfo', { par1: 'list', par2: vPageIndex, par3: '' }, function () {
+                DialogShowHide(true);
+                LoadEnd();
+            });
+        });
+
+        //2.添加折扣商品上一页、下一页用到查询方法
+        $('#btnQuery').click(function () {
+            //Init
+            var vOpeType = $('#hQueryType').val();
+            var vPage = $('#hPageIndex').val();
+            var vItem = $('#txtSearch');
+            var vSearchValue = vItem.val();
+
+            $.get('/Admin/DiscountCommodityInfoContent',
+                { par1: vOpeType, par2: vPage, par3: '', par4: vSearchValue },
+                function (data) {
+                    if (data && data.List) {
+                        //验证
+                        if (data.IsLast == 'True') {
+                            LastPageFlag(true);
+                        }
+                        else {
+                            LastPageFlag(false);
+                        }
+
+                        //调用
+                        LoadDiscountCommodity(data.List);
+                    }
+                },
+                'json');
+        });
+
+        //4.取消按钮事件方法
+        $('#btnCancel').click(function () {
+            window.location.href = '/Admin/CommodityDiscountList';
+        });
+    }
+
+    //-------------------------弹窗里元素相关事件方法-------------------------//
+
+    //Li -> Div -> p元素点击事件
+    function CommUlClickOpe() {
+        var vItem = event.currentTarget;
+        vItem = $(vItem);
+
+        //元素样式变换
+        vItem.toggleClass('comCheck');
+    }
+
+    //搜索按钮事件方法
+    function btnSearchQuery() {
+        var vOpeType = 'search';
+        var vPage = '1';
+        var vItem = $('#txtSearch');
+        var vSearchValue = vItem.val();
+
+        $('#hPageIndex').val(vPage);
+        $('#hQueryType').val(vOpeType);
+
+        $.get('/Admin/DiscountCommodityInfoContent',
+            { par1: vOpeType, par2: vPage, par3: '', par4: vSearchValue },
+            function (data) {
+                if (data && data.List) {
+                    //验证
+                    if (data.IsLast == 'True') {
+                        LastPageFlag(true);
+                    }
+                    else {
+                        LastPageFlag(false);
+                    }
+
+                    //调用
+                    LoadDiscountCommodity(data.List);
+                }
+            },
+            'json');
+    }
+
+    //根据获取到的ListJSON数据，进行数据绑定展示
+    function LoadDiscountCommodity(vList) {
+        var vUl = $('#DiscountCommUl');
+        var vHtml = '';
+
+        $.each(vList, function (index, item) {
+            vHtml += '<li class="li-flex uk-width-1-2">';
+            vHtml += '<div style="width: 100%;">';
+            vHtml += TxtFormat('<p class="re" onclick="CommUlClickOpe();" uId="{0}">', [item.ID]);
+            vHtml += TxtFormat('<img src="/{0}" />', [item.Photo]);
+            vHtml += TxtFormat('<span class="p-span1">{0}</span><span class="p-span2">￥{1}</span><span class="p-span3">{2}折</span>', [item.Title, item.Price, item.DISCOUNTVALUE]);
+            vHtml += '</p></div></li>';
+        });
+
+        $('li:gt(0)', vUl).remove();
+        $('li', vUl).eq(0).after(vHtml);
+    }
+
+    //-------------------------添加折扣页面事件方法-------------------------//
+
+    //在弹窗点击确定按钮后，将选中的商品加载过来
+    function LoadAddDiscountCommodity(vDatas) {
+        var vHtml = '';
+
+        $.each(vDatas, function (index, item) {
+            item.DiscountValue = item.DiscountValue ? item.DiscountValue : '';
+            item.DiscountPrice = item.DiscountPrice ? item.DiscountPrice : '';
+            item.DiscountCount = item.DiscountCount ? item.DiscountCount : '';
+            item.Photo = item.Photo[0] != '/' ? '/' + item.Photo : item.Photo;
+            item.Price = item.Price[0] != '￥' ? '￥' + item.Price : item.Price;
+
+            vHtml += TxtFormat('<li class="sku_li" uId="{0}">', [item.ID]);
+            vHtml += '<div class="sku_item_a">';
+            vHtml += TxtFormat('<img src="{0}" />', [item.Photo]);
+            vHtml += '</div><div class="sku_item_b">';
+            vHtml += TxtFormat('<label>{0}</label>', [item.Price]);
+            vHtml += TxtFormat('</div><div class="sku_item_b"><label>{0}</label>折</div>', [item.DiscountValue]);
+            vHtml += TxtFormat('<div class="sku_item_c"><input type="text" class="sku_item_c_input input input_y block wrap c_txt dis-val" style="border: 0.5px solid #9f9f9f;" onblur="DiscountPriceChange();" value="{0}"></div>', [item.DiscountPrice]);
+            vHtml += TxtFormat('<div class="sku_item_c"><input type="text" class="sku_item_c_input input input_y block wrap c_txt" style="border: 0.5px solid #9f9f9f;" placeholder="不填写则不进行限制" value="{0}"></div>', [item.DiscountCount]);
+            vHtml += '<div class="sku_item_d"><a class="del_sku red_txt pointer block" href="javascript:;" onclick="DelDiscountCommodity();">删除</a></div></li>';
+        });
+
+        $('#sku_ul').append(vHtml);
+    }
+
+    //加载过来的商品删除方法
+    function DelDiscountCommodity() {
+        var vItem = $(event.currentTarget);
+        vItem.parentsUntil('li').parent().remove();
+    }
+
+    //加载过来的商品赋予折扣价时事件
+    function DiscountPriceChange() {
+        var vItem = $(event.currentTarget);
+        var vCommDiv = vItem.parentsUntil('li').parent().find('div')
+        var vDiscountValue = vCommDiv.eq(2).find('label');
+
+        var vPrice = vCommDiv.eq(1).find('label').text().toString().substr(1);
+        var vVal = vItem.val();
+
+        if (vVal == undefined || vVal == '') {
+            return false;
+        }
+
+        vPrice = parseFloat(vPrice);
+        vVal = parseFloat(vVal);
+
+        var vResult = vVal / vPrice * 10;
+        vResult = vResult.toString();
+        var vLength = vResult.length >= 3 ? 3 : vResult.length;
+
+        vDiscountValue.text(vResult.substr(0, vLength));
+    }
+</script>

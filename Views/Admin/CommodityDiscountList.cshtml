@@ -1,10 +1,18 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
 }
 
 @section LayoutHead{
+    <style type="text/css">
+        .td-img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+
+    <script src="~/StaticContent/Admin/js/queryList.js"></script>
+
     <script type="text/javascript">
         $(function () {
             //初始化
@@ -15,7 +23,134 @@
 
             //菜单初始化
             InitLeftNavMenu('/Admin/CommodityDiscountList');
+
+            //事件绑定
+            BindEvent();
+
+            //默认加载数据
+            $('#btnQuery').click();
         });
+
+        //自定义方法区
+
+        //事件绑定方法
+        function BindEvent() {
+            //1.查询按钮事件方法
+            $('#btnQuery').click(function () {
+                LoadStart();
+
+                //Init
+                var vQueryType = $('#hState').val();
+                var vPage = $('#hPageIndex').val();
+
+                var vHtml = '';
+                vHtml += '<table class="table">';
+                vHtml += '<tr>';
+                vHtml += '<th>折扣名称</th>';
+                vHtml += '<th>开始时间</th>';
+                vHtml += '<th>结束时间</th>';
+                vHtml += '<th>商品名称</th>';
+                vHtml += '<th>商品图片</th>';
+                vHtml += '<th>原始价格</th>';
+                vHtml += '<th>折后价格</th>';
+                vHtml += '<th>折扣</th>';
+                vHtml += '<th>限购数量</th>';
+                vHtml += '<th>状态</th>';
+                vHtml += '<th>操作</th>';
+                vHtml += '</tr>';
+
+                $.get('/Admin/CommodityDiscountListContent',
+                    { r: Math.random(), par1: vQueryType, par2: vPage },
+                    function (data) {
+                        if (data && data.List) {
+                            if (data.IsLast == 'True') { LastPageFlag(true); }
+                            else { LastPageFlag(false); }
+
+                            $.each(data.List, function (index, item) {
+                                vHtml += '<tr>';
+                                vHtml += TxtFormat('<td>{0}</td>', [item.DiscountTitle]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.StartTime]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.EndTime]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.CommTitle]);
+                                vHtml += TxtFormat('<td><img src="/{0}"class="td-img" /></td>', [item.Photo]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.Price]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.DiscountPrice]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.DiscountValue]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.DiscountCount]);
+                                vHtml += TxtFormat('<td>{0}</td>', [item.State]);
+                                vHtml += TxtFormat('<td><a href="javascript:;" class="inner_btn" onclick="EditDiscount(\'{0}\');" uState="{2}">编辑</a><a href="javascript:;" class="inner_btn" onclick="DeleteDiscount(\'{1}\');" uState="{3}">删除</a></td>', [item.DiscountID, item.DiscountID, item.State, item.State]);
+                                vHtml += '</tr>';
+                            });
+                        }
+                        else {
+                            LastPageFlag(true);
+                        }
+
+                        vHtml += '</table>';
+
+                        $('#recordlist').html(vHtml);
+
+                        LoadEnd();
+                    },
+                    'json');
+
+                //$('#recordlist').load('/Admin/CommodityDiscountListTable', { par1: vQueryType, par2: vPage }, function (data) {
+                //    LoadEnd();
+
+                //    var vIsLast = $('#hIsLast').val();
+                //    if (vIsLast == 'True') { LastPageFlag(true); }
+                //    else { LastPageFlag(false); }
+                //});
+            });
+
+            //2.新增折扣事件方法
+            $('#btnAdd').click(function () {
+                window.location.href = '/Admin/AddCommodityDiscount';
+            });
+        }
+
+        //数据列表业务方法
+
+        //1.编辑折扣事件方法
+        function EditDiscount(vDiscountID) {
+            //Init Check
+            var vEvent = event;
+            var vArguments = arguments;
+
+            if (!FuncCanOpeCheck(vEvent, vArguments)) { alert('无权进行此操作！'); return false; }
+
+            window.location.href = '/Admin/EditCommodityDiscount/' + vDiscountID;
+        }
+
+        //2.删除折扣事件方法
+        function DeleteDiscount(vDiscountID) {
+            //Init Check
+            var vEvent = event;
+            var vArguments = arguments;
+
+            if (!FuncCanOpeCheck(vEvent, vArguments)) { alert('无权进行此操作！'); return false; }
+
+            if (confirm('确定要删除该折扣吗？')) {
+                $.get('/Admin/DeleteCommodityDiscount',
+                    { par1: vDiscountID },
+                    function (data) {
+                        if (data && data.Flag == 'True') {
+                            alert(data.Msg);
+
+                            $('#btnQuery').click();
+
+                            return false;
+                        }
+                        else {
+                            alert(data.Msg);
+                        }
+                    },
+                    'json');
+            }
+        }
+
+        //State + 可执行方法的配置信息
+        var vStateFunctionConfig = { '进行中': ['EditDiscount', 'DeleteDiscount'], '未开始': ['EditDiscount', 'DeleteDiscount'], '已结束': ['DeleteDiscount'] };
     </script>
 }
 
@@ -25,23 +160,29 @@
     </div>
 </section>
 
-<section>
+<section class="foot-margin">
     <h2><strong style="color:grey;">查询条件</strong></h2>
     <div>
         <ul class="uk-tab order-type">
-            <li class="cur" uState="-1">进行中</li>
-            <li uState="1">未开始</li>
-            <li uState="30">已结束</li>
-            <li uState="31">全部</li>
+            <li class="cur" uState="1">进行中</li>
+            <li uState="2">未开始</li>
+            <li uState="3">已结束</li>
+            <li uState="-1">全部</li>
         </ul>
     </div>
     <div style="padding-left:30px;" class="br-margin">
-        订单时间：
-        <input type="text" class="J_Item" autocomplete="off" id="startdate" />    至    <input type="text" class="J_Item" autocomplete="off" id="enddate" />
-        &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="查询" class="group_btn" id="btnQuery" />
+        <input type="button" value="新增" class="group_btn" id="btnAdd" />
     </div>
+
     <div id="recordlist" class="br-margin foot-margin"></div>
+
+    <aside class="paging">
+        <a href="javascript:;" onclick="PreviousPage();">上一页</a>
+        <a href="javascript:;" onclick="NextPage();">下一页</a>
+    </aside>
 </section>
 
-<input type="hidden" value="-1" id="hState" />
+<input type="hidden" value="1" id="hState" />
 <input type="hidden" value="1" id="hPageIndex" />
+
+<input type="button" id="btnQuery" style="display:none" />

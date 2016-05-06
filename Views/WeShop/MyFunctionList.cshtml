@@ -42,6 +42,8 @@
     </div>
 </div>
 
+<input type="hidden" id="hFunctionName" value="@ViewBag.FunctionName" />
+
 @section LayoutShop{
 
     <script type="text/html" id="tplAwaitPay">
@@ -106,7 +108,7 @@
             <h1>
                 总价：<span>￥{{value.Content[0].RealPrice}}</span>
                 <a class="uk-float-right right-btn order-btn uk-width-1-5 uk-text-center" href="javascript:;" onclick="btnAffirmReceive('{{value.Content[0].ID}}');">确认收货</a>
-                <a class="uk-float-right right-btn order-btn uk-width-1-5 uk-text-center" href="javascript:;" onclick="btnLogistics('{{value.Content[0].ID}}','{{value.Content[0].ExpressCode}}','{{value.Content[0].ExpressNum}}','@ViewBag.FunctionName');">查看物流</a>
+                <a class="uk-float-right right-btn order-btn uk-width-1-5 uk-text-center" href="javascript:;" onclick="btnLogistics('{{value.Content[0].ID}}','{{value.Content[0].ExpressCode}}','{{value.Content[0].ExpressNum}}');">查看物流</a>
             </h1>
             <br />
         </div>
@@ -135,7 +137,7 @@
         //初始化
         function InitData() {
             //初始化数据：待付款
-            var vType = '@ViewBag.FunctionName';
+            var vType = $('#hFunctionName').val();
             //css样式
             TabLiClickOpe($('.uk-tab li').eq(vFunctionConfig[vType][0]));
             //数据查询
@@ -194,6 +196,9 @@
 
         //封装查询待发货 + 待收货数据方法
         function RequestAwaitData(vType, vTplName, vLi) {
+            //更改标识
+            $('hFunctionName').val(vType);
+
             $.get('/RequestData/AwaitOrderList',
                 { r: Math.random(), par1: vType },
                 function (data) {

@@ -67,7 +67,7 @@ function SetInfoPhoto() {
     var vLi = $(vEvent).parentsUntil('li');
     vLi = vLi.parent('li');
 
-    $('li:first h2', vUl).text('商品滚动图');
+    $('li h2', vUl).text('商品滚动图');
 
     //变动
     $('h2', vLi).text('商品封面图');

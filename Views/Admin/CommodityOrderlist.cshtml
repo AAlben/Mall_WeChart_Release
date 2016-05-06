@@ -190,6 +190,9 @@
                         function (data) {
                             if (data.Flag) {
                                 DialogShowHide(false);
+
+                                //数据刷新
+                                $('#btnQuery').click();
                             }
                             else { //异常提示
                                 alert('快递单号填写失败！')
@@ -208,7 +211,12 @@
         }
 
         //OrderState + 可执行方法的配置信息
-        var vStateFunctionConfig = { '0': [], '1': ['ChangePrice', 'OrderClose'], '3': ['WriteExpNum'] };
+        var vStateFunctionConfig = { '0': [], '1': ['ChangePrice', 'OrderClose'], '3': ['WriteExpNum'], '4': [] };
+
+        //异常提示方法封装
+        function ErrorTips(vItem, vMsg, flag) {
+            return new InputValidate().ErrorTips(vItem, vMsg, flag);
+        }
     </script>
 }
 

@@ -1,5 +1,10 @@
 ﻿@{
     Layout = null;
+
+    //Code Change Func
+    Func<string, string> _funStateConvert = new Mall_WeChart_Nf.Operator.CodeChange.AdminControllerCodeChange().OrderStateConvert;
+
+    Func<object, string> _funLogisticsStateConvert = new Mall_WeChart_Nf.Operator.CodeChange.AdminControllerCodeChange().LogisticsStateConvert;
 }
 
 @{
@@ -25,25 +30,25 @@
 
             @foreach (var item in ViewBag.list)
             {
-            <tr>
-                <td>@item.OrderNum</td>
-                <td>@item.OpeDate.ToString()</td>
-                <td>@item.StoreName</td>
-                <td>@item.Title</td>
-                <td>@item.OptionName</td>
-                <td>@item.Count</td>
-                <td>@item.UnitPrice</td>
-                <td>@item.RealUnitPrice</td>
-                <td>@item.Remark</td>
-                <td>@item.UserName</td>
-                <td>@item.PhoneNum</td>
-                <td>@item.Address</td>
-                <td>@item.OrderState</td>
-                <td>
-                    <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="ChangePrice('@item.ID')">修改价格</a>
-                    <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="OrderClose('@item.ID')">关闭</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@item.OrderNum</td>
+                    <td>@item.OpeDate.ToString()</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.Title</td>
+                    <td>@item.OptionName</td>
+                    <td>@item.Count</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.RealUnitPrice</td>
+                    <td>@item.Remark</td>
+                    <td>@item.UserName</td>
+                    <td>@item.PhoneNum</td>
+                    <td>@item.Address</td>
+                    <td>@_funStateConvert(item.OrderState.ToString())</td>
+                    <td>
+                        <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="ChangePrice('@item.ID')">修改价格</a>
+                        <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="OrderClose('@item.ID')">关闭</a>
+                    </td>
+                </tr>
             }
 
         </table>
@@ -72,27 +77,27 @@
 
             @foreach (var item in ViewBag.list)
             {
-            <tr>
-                <td>@item.OrderNum</td>
-                <td>@item.OpeDate.ToString()</td>
-                <td>@item.StoreName</td>
-                <td>@item.Title</td>
-                <td>@item.OptionName</td>
-                <td>@item.Count</td>
-                <td>@item.UnitPrice</td>
-                <td>@item.RealUnitPrice</td>
-                <td>@item.Remark</td>
-                <td>@item.UserName</td>
-                <td>@item.PhoneNum</td>
-                <td>@item.Address</td>
-                <td>@item.OrderState</td>
-                <td>@item.LogisticsState</td>
-                <td>@item.ExpressNum</td>
-                <td>@item.ExpressType</td>
-                <td>
-                    <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="WriteExpNum('@item.OrderNum','@item.ExpressCode','@item.ExpressNum')">填写快递单号</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@item.OrderNum</td>
+                    <td>@item.OpeDate.ToString()</td>
+                    <td>@item.StoreName</td>
+                    <td>@item.Title</td>
+                    <td>@item.OptionName</td>
+                    <td>@item.Count</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.RealUnitPrice</td>
+                    <td>@item.Remark</td>
+                    <td>@item.UserName</td>
+                    <td>@item.PhoneNum</td>
+                    <td>@item.Address</td>
+                    <td>@_funStateConvert(item.OrderState.ToString())</td>
+                    <td>@_funLogisticsStateConvert(item.LogisticsState)</td>
+                    <td>@item.ExpressNum</td>
+                    <td>@item.ExpressType</td>
+                    <td>
+                        <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="WriteExpNum('@item.OrderNum','@item.ExpressCode','@item.ExpressNum')">填写快递单号</a>
+                    </td>
+                </tr>
             }
 
         </table>

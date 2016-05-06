@@ -69,11 +69,14 @@
 
         //删除商品方法
         function Delete(commodityid) {
+            if (!confirm('确定要删除该商品吗？')) { return false;}
+
             $.post("/Admin/DeleteCommodity", { ID: commodityid }, function (data) {
                 if (data) {
                     if (data.Flag) {
                         alert(data.Msg);
                         window.location.href = window.location.href;
+                        return false;
                     }
                     else {
                         alert(data.Msg);
@@ -114,7 +117,7 @@
                     <td>@item.OpeDate.ToString()</td>
                     <td>
                         <a href="/Admin/CommodityOperationNb/@item.ID">修改</a>
-                        <a href="#" class="inner_btn" onclick="Delete('@item.ID')">删除</a>
+                        <a href="javascript:;" class="inner_btn" onclick="Delete('@item.ID')">删除</a>
                     </td>
                 </tr>
             }

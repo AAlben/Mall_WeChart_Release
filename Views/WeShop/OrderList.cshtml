@@ -46,7 +46,7 @@
                             <div class="uk-width-1-1">
                                 @if (item.ElementAt(0).OrderState == 1)
                                 {
-                                    <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('@item.ElementAt(0).ID');">取消</a></h1>
+                                    <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><a class="uk-float-right right-btn uk-width-1-5 cancel-btn" href="javascript:;" onclick="btnCancel('@item.ElementAt(0).ID');">取消</a></h1>
                                     <h1 style="display:none;">订单号：<span class="">@item.ElementAt(0).OrderNum</span><span class="uk-float-right right-btn"></span></h1>
                                 }
                                 else

@@ -54,7 +54,7 @@
         </div>
         <br />
         <div class="uk-width-1-1">
-            <h1>订单号：<span class="">{{value.Key}}</span><a class="uk-float-right right-btn" href="javascript:;" onclick="btnCancel('{{value.Content[0].ID}}');">取消</a></h1>
+            <h1>订单号：<span class="">{{value.Key}}</span><a class="uk-float-right right-btn uk-width-1-5 cancel-btn" href="javascript:;" onclick="btnCancel('{{value.Content[0].ID}}');">取消</a></h1>
             <h1 style="display:none;">订单号：<span class="">{{value.Key}}</span><span class="uk-float-right right-btn"></span></h1>
         </div>
         {{each value.Content as cValue vIndex}}

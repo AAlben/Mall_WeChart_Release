@@ -20,6 +20,7 @@
                         <h1>{{value.Title}}</h1>
                     </p>
                     <h1 style="color:red;">￥{{value.Price}}</h1>
+                    <span class="child-pos main-cart"></span>
                 </a>
             </div>
         </div>
@@ -69,7 +70,7 @@
 
         @if (ViewBag.listNa != null)
         {
-            <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#f8f8f8;">
+            <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#FBF9F5;">
                 <br />
                 <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
                     @foreach (var item in ViewBag.listNa)
@@ -82,6 +83,7 @@
                                         <h1>@item.Title</h1>
                                     </p>
                                     <h1 style="color:red;">￥@item.Price</h1>
+                                    <span class="child-pos main-cart"></span>
                                 </a>
                             </div>
                         </div>

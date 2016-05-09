@@ -70,10 +70,10 @@
 
         @if (ViewBag.listNa != null)
         {
-            <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#FBF9F5;">
-                <br />
-                <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
-                    @foreach (var item in ViewBag.listNa)
+        <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#FBF9F5;">
+            <br />
+            <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
+                @foreach (var item in ViewBag.listNa)
                 {
                     <div class="uk-width-medium-1-2">
                         <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
@@ -88,9 +88,9 @@
                         </div>
                     </div>
                     }
-                    <div class="uk-width-1-1" style="height:25px;"></div>
-                </div>
+                <div class="uk-width-1-1" style="height:25px;"></div>
             </div>
+        </div>
         }
 
         <div id="pullUp" class="">
@@ -99,58 +99,58 @@
             </div>
         </div>
 
-        <div id="modalAddShop" class="uk-modal">
-            <div class="uk-modal-dialog">
-                <div class="uk-modal-header uk-grid">
-                    <div class="uk-width-2-6">
-                        <img class="uk-thumbnail mini-photo" src="" alt="" id="modalCommImg">
-                    </div>
-                    <div class="uk-width-3-6">
-                        <h1 style="font-size:36px;" id="modalCommTitle"></h1>
-                        <h1 style="color:red;font-size:36px;" id="showShopPrice">￥</h1>
-                    </div>
-                    <div class="uk-width-1-6">
-                        <a href="" class="uk-icon-hover uk-icon-close uk-modal-close uk-float-right" style="font-size:100px;"></a>
-                    </div>
-                </div>
+    </div>
 
-                <div id="dModalCommOption" uFlag="HasOption">
-                    <div class="br-box">
-                        <br />
-                    </div>
-                    <div class="uk-width-1-1">
-                        <br />
-                        <h1>规格：</h1>
-                    </div>
-                    <div class="uk-flex" id="dCommoOptionShop" uid="" uPrice="0">
-                    </div>
-                    <br />
+    <div id="modalAddShop" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <div class="uk-modal-header uk-grid">
+                <div class="uk-width-2-6">
+                    <img class="uk-thumbnail mini-photo" src="" alt="" id="modalCommImg">
                 </div>
-
-                <div class="br-box">
-                    <br />
+                <div class="uk-width-3-6">
+                    <h1 style="font-size:36px;" id="modalCommTitle"></h1>
+                    <h1 style="color:red;font-size:36px;" id="showShopPrice">￥</h1>
                 </div>
-                <br />
-                <div class="uk-grid">
-                    <h1 class="uk-width-1-4">数量:</h1>
-                    <div class="uk-width-1-4"></div>
-                    <div class="uk-width-2-4 uk-float-right">
-                        <button class="uk-button commodity-count" id="btnShopCountSub">-</button>
-                        <button class="uk-button commodity-count" disabled="disabled" id="btnShopCount">1</button>
-                        <button class="uk-button commodity-count" id="btnShopCountPlus">+</button>
-                    </div>
-                </div>
-                <br />
-                <div class="br-box">
-                    <br />
-                </div>
-
-                <div class="uk-modal-footer">
-                    <button type="button" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#ff5000;" id="btnAddShop">加入购物车</button>
+                <div class="uk-width-1-6">
+                    <a href="" class="uk-icon-hover uk-icon-close uk-modal-close uk-float-right" style="font-size:100px;"></a>
                 </div>
             </div>
-        </div>
 
+            <div id="dModalCommOption" uFlag="HasOption">
+                <div class="br-box">
+                    <br />
+                </div>
+                <div class="uk-width-1-1">
+                    <br />
+                    <h1>规格：</h1>
+                </div>
+                <div class="uk-flex" id="dCommoOptionShop" uid="" uPrice="0">
+                </div>
+                <br />
+            </div>
+
+            <div class="br-box">
+                <br />
+            </div>
+            <br />
+            <div class="uk-grid">
+                <h1 class="uk-width-1-4">数量:</h1>
+                <div class="uk-width-1-4"></div>
+                <div class="uk-width-2-4 uk-float-right">
+                    <button class="uk-button commodity-count" id="btnShopCountSub">-</button>
+                    <button class="uk-button commodity-count" disabled="disabled" id="btnShopCount">1</button>
+                    <button class="uk-button commodity-count" id="btnShopCountPlus">+</button>
+                </div>
+            </div>
+            <br />
+            <div class="br-box">
+                <br />
+            </div>
+
+            <div class="uk-modal-footer">
+                <button type="button" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#ff5000;" id="btnAddShop">加入购物车</button>
+            </div>
+        </div>
     </div>
 </div>
 

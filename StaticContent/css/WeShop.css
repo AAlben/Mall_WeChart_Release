@@ -150,6 +150,7 @@ hr {
     position: inherit;
     bottom: 0px;
     top: 50%;
+    margin: 0;
 }
 
 .commodity-type {

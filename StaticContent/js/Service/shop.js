@@ -149,6 +149,57 @@ function btnCountChangeBindEvent() {
                 window.location.href = '/WeShop/Main';
             });
     });
+
+    //购物车按钮事件绑定
+    $('.main-cart').click(function () {
+        //1.数据加载
+        var vItem = $(event.currentTarget);
+        var vID = vItem.attr('uId');
+        vCommodityID = vID;
+
+        //历史数据初始化
+        $('#btnShopCount').text('1');
+
+        $.get('/WeShop/CommodityInfoContent',
+            { r: Math.random(), par1: vID },
+            function (data) {
+                if (data && data.Item) {
+                    //Init
+                    var vItem = data.Item;
+                    var vDCommOption = $('#dModalCommOption');
+
+                    $('#modalCommImg').attr('src', '/' + vItem.SCommodityInfo.Photo);
+                    $('#modalCommTitle').text(vItem.SCommodityInfo.Title);
+                    $('#showShopPrice').text('￥' + vItem.SCommodityPriceInterVal);
+
+                    if (vItem.SCommdityOptionInfo.length > 0) { //有规格
+                        var vHtml = '';
+                        $.each(vItem.SCommdityOptionInfo, function (index, item) {
+                            vHtml += TxtFormat('<button class="uk-button commodity-type" uId="{0}" uPrice="{1}" onclick="btnOptionClick(\'shop\');" >{2}</button>', [item.ID, item.Price, item.Name])
+                        });
+                        $('#dCommoOptionShop').html(vHtml);
+                        vDCommOption.show().css('display', 'block').attr('uFlag', 'HasOption');
+                    }
+                    else { //无规格
+                        $('#dCommoOptionShop').empty();
+                        vDCommOption.hide().attr('uFlag', 'NoOption');
+                    }
+
+                    //赋值StoreID
+                    $('#hStoreID').val(vItem.SCommodityInfo.StoreID);
+
+                    //2.modal 初始化
+                    var modal = UIkit.modal("#modalAddShop");
+                    modal.show();
+                }
+                else {
+                    NotifyAlert('加入购物车失败！请您稍后再试！');
+
+                    window.location.href = '/WeShop/Main';
+                }
+            },
+            'json');
+    });
 }
 
 //封装 立即购买 + 加入购物车 校验方法

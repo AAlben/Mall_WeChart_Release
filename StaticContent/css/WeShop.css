@@ -181,7 +181,7 @@ hr {
 }
 
 .option-cur {
-    border: 4px solid #ff5000;
+    border: 1px solid #ff5000;
     background-color: white;
     color: #ff5000;
 }

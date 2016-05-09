@@ -39,7 +39,6 @@ function RequestZZSCToken(opeType, fnNa, fnNb) {
     return false;
 }
 
-
 //1.立即购买
 function TakeOrderOpe(type, model, funNa) {
     var par1 = type;
@@ -51,9 +50,157 @@ function TakeOrderOpe(type, model, funNa) {
     }, 'json');
 }
 
+//规格按钮事件绑定
+function btnOptionClick(type) {
+    var vItem = $(event.target);
 
-//2.加入购物车
+    //样式操作
+    vItem.addClass('option-cur');
+    vItem.siblings('button').removeClass('option-cur');
+    //数据赋值操作
+    if (type == 'beOrder') { $('#dCommoOptionBeOrder').attr('uid', vItem.attr('uid')).attr('uPrice', vItem.attr('uPrice')); $('#showOrderPrice').text('￥' + vItem.attr('uPrice')); }
+    else { $('#dCommoOptionShop').attr('uid', vItem.attr('uid')).attr('uPrice', vItem.attr('uPrice')); $('#showShopPrice').text('￥' + vItem.attr('uPrice')); }
+}
 
+//商品个数增减按钮事件实现
+function btnCountChangeOpe(opeType, btnCount, showPrice) {
+    var orderCount = btnCount.text();
+
+    if (opeType == 'sub' && orderCount == '1') {
+        return false;
+    }
+
+    var count = parseInt(orderCount);
+    var price = parseFloat(showPrice.text().substr(1));
+    var orgPrice = price / count;
+
+    if (opeType == 'sub') { count = count - 1; }
+    else { count = count + 1; }
+    btnCount.text(count);
+
+    price = orgPrice * count;
+    showPrice.text('￥' + price);
+}
+
+//商品数量增减按钮事件绑定
+function btnCountChangeBindEvent() {
+    //加入购物车 - Count相关按钮事件
+    $('#btnShopCountSub').click(function () {
+        var btnCount = $('#btnShopCount');
+        var showPrice = $('#showShopPrice');
+
+        btnCountChangeOpe('sub', btnCount, showPrice);
+    });
+
+    //加入购物车 - Count相关按钮事件
+    $('#btnShopCountPlus').click(function () {
+        var btnCount = $('#btnShopCount');
+        var showPrice = $('#showShopPrice');
+
+        btnCountChangeOpe('plus', btnCount, showPrice);
+    });
+
+    //加入购物车 - 业务提交按钮事件
+    $('#btnAddShop').click(function () {
+        //Check Post Value
+        var vCheckOpeC = new CommotidtyShopOpeNa();
+        if (!vCheckOpeC.CheckOpeBtn($('#dCommoOptionShop'))) { return false; }
+
+        var token = '';
+        var tokenResult = RequestZZSCToken('shopOrder',
+            function (token) { //校验成功
+                var par = {};
+                par.Count = $('#btnShopCount').text();
+                par.CommodityID = vCommodityID;
+                par.StoreID = $('#hStoreID').val();
+
+                var vdCommodityOption = $('#dCommoOptionShop');
+                if (vdCommodityOption && vdCommodityOption.find('button').length > 0) {
+                    par.CommodityOptionID = vdCommodityOption.attr('uid');
+                    par.Price = vdCommodityOption.attr('uPrice');
+                    par.RealPrice = vdCommodityOption.attr('uPrice');
+                }
+                else {
+                    par.Price = $('#showShopPrice').text().substr(1);
+                    par.RealPrice = par.Price;
+                }
+
+                TakeOrderOpe('addShop', par, function (vResult) {
+                    if (vResult && vResult.Flag) {
+
+                        NotifyAlert('加入购物车成功！');
+
+                        var modal = UIkit.modal("#modalAddShop");
+                        modal.hide();
+
+                        //var vBeOrderID = vResult.BeOrderID;
+                        //window.location.href = '/WeShop/PayAddressInfo/' + vBeOrderID;
+                        return false;
+                    }
+                    else {
+                        NotifyAlert('提交失败！请重新操作！');
+                        //alert();
+                    }
+                });
+            },
+            function () { //失败
+                NotifyAlert('提交失败！请重新操作！');
+                //alert('提交失败！请重新操作！');
+                window.location.href = '/WeShop/Main';
+            });
+    });
+}
+
+//封装 立即购买 + 加入购物车 校验方法
+function CommotidtyShopOpe() {
+    //校验 - 立即购买按钮，内容
+    this.CheckOpeBtn = function (itemOptionBtn) {
+        if (itemOptionBtn.length != 0) { //存在商品规格
+            var uid = itemOptionBtn.attr('uid');
+            if (uid) {
+                return uid;
+            }
+            else {
+                NotifyAlert('请选择规格！');
+                //alert('请选择规格！');
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+//继承上面类，进行重写
+function CommotidtyShopOpeNa() {
+    //继承
+    CommotidtyShopOpe.apply(this, arguments);
+
+    //校验 - 立即购买按钮，内容
+    this.CheckOpeBtn = function (itemOptionBtn) {
+        //添加一层判断语句：Main页面使用
+        var vItem = $('#dModalCommOption');
+
+        if (vItem) {
+            var vFlag = vItem.attr('uFlag') == 'HasOption';
+
+            if (vFlag && itemOptionBtn.length != 0) { //存在商品规格
+                var uid = itemOptionBtn.attr('uid');
+                if (uid) {
+                    return uid;
+                }
+                else {
+                    NotifyAlert('请选择规格！');
+                    //alert('请选择规格！');
+                    return false;
+                }
+            }
+        }
+        else { //需要调用原版本
+            return new CommotidtyShopOpe().CheckOpeBtn(itemOptionBtn);
+        }
+        return true;
+    }
+}
 /*
 *************************************公共工具方法*************************************
 */

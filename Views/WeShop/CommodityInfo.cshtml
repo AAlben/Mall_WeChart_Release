@@ -298,9 +298,9 @@
 
             //立即购买 - 下一步按钮事件
             $('#btnOrderNext').click(function () {
-
                 //Check Post Value
-                if (!CheckOpeBtn($('#dCommoOptionBeOrder'))) { return false; }
+                var vCheckOpeC = new CommotidtyShopOpe();
+                if (!vCheckOpeC.CheckOpeBtn($('#dCommoOptionBeOrder'))) { return false; }
 
                 //Result Data
                 var vResult = null;

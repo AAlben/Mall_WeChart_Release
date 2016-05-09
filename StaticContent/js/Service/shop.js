@@ -180,7 +180,7 @@ function CommotidtyShopOpeNa() {
         //添加一层判断语句：Main页面使用
         var vItem = $('#dModalCommOption');
 
-        if (vItem) {
+        if (vItem && vItem.length > 0) {
             var vFlag = vItem.attr('uFlag') == 'HasOption';
 
             if (vFlag && itemOptionBtn.length != 0) { //存在商品规格

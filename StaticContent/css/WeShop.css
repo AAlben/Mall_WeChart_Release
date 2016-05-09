@@ -146,10 +146,10 @@ hr {
 .uk-modal-dialog {
     width: 100%;
     /*margin: 78% auto;*/
-    height: 50%;
-    position: relative;
+    /*height: 50%;*/
+    position: fixed;
     bottom: 0px;
-    top: 78%;
+    top: 50%;
 }
 
 .commodity-type {

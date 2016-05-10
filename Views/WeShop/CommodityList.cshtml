@@ -70,27 +70,27 @@
 
         @if (ViewBag.listNa != null)
         {
-        <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#FBF9F5;">
-            <br />
-            <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
-                @foreach (var item in ViewBag.listNa)
+            <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#FBF9F5;">
+                <br />
+                <div uRemark="商品列表" class="uk-grid" id="dCommodityList">
+                    @foreach (var item in ViewBag.listNa)
                 {
-                    <div class="uk-width-medium-1-2">
-                        <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
-                            <a href="/WeShop/CommodityInfo/@item.ID">
-                                <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
-                                <p>
-                                    <h1>@item.Title</h1>
-                                </p>
-                                <h1 style="color:red;">￥@item.Price</h1>
-                            </a>
-                            <span class="child-pos main-cart" uId="@item.ID"></span>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-box uk-panel-box-primary shop-item" style="margin-bottom:25px;">
+                                <a href="/WeShop/CommodityInfo/@item.ID">
+                                    <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
+                                    <p>
+                                        <h1>@item.Title</h1>
+                                    </p>
+                                    <h1 style="color:red;">￥@item.Price</h1>
+                                </a>
+                                <span class="child-pos main-cart" uId="@item.ID"></span>
+                            </div>
                         </div>
-                    </div>
                     }
+                </div>
                 <div class="uk-width-1-1" style="height:25px;"></div>
             </div>
-        </div>
         }
 
         <div id="pullUp" class="">
@@ -156,6 +156,7 @@
 
 <input type="hidden" id="hPageIndex" value="1" />
 <input type="hidden" value="" id="hStoreID" />
+<input type="hidden" id="hIsScrollLast" value="False" />
 
 @section LayoutShop{
     <script>
@@ -181,6 +182,14 @@
 
             //底部上划数据加载方法
             var vFunLoad = function (deferred) {
+                var IsLast = $('#hIsScrollLast');
+                //验证是否为最后一页
+                if (IsLast.val() == 'True') {
+                    NotifyAlert('已加载完全部！');
+                    deferred.resolve();
+                    return false;
+                }
+
                 var vHItem = $('#hPageIndex');
                 var vIndex = vHItem.val();
                 vIndex = parseInt(vIndex) + 1;

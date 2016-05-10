@@ -26,7 +26,12 @@
                     <p>
                         <h1>{{value.Title}}</h1>
                     </p>
-                    <h1 style="color:red;">￥{{value.Price}}</h1>
+                    <h1 style="color:red;">
+                        {{if value.HasDiscount}}
+                        <del class="del-color">￥{{value.Price}}</del>
+                        {{/if}}
+                        ￥{{value.DiscountPrice}}
+                    </h1>
                 </a>
                 <span class="child-pos main-cart" uId="{{value.ID}}"></span>
             </div>
@@ -126,8 +131,8 @@
                         </div>
                     }
                 }
-                <div class="uk-width-1-1" style="height:25px;"></div>
             </div>
+            <div class="uk-width-1-1" style="height:25px;"></div>
         </div>
 
         <div id="pullUp" class="" style="margin-bottom:100px;">
@@ -223,6 +228,7 @@
 </div>
 
 <input type="hidden" id="hPageIndex" value="1" />
+<input type="hidden" id="hIsScrollLast" value="False" />
 <input type="hidden" value="" id="hStoreID" />
 
 @section LayoutShop{
@@ -290,6 +296,14 @@
 
             //底部上划数据加载方法
             var vFunLoad = function (deferred) {
+                var IsLast = $('#hIsScrollLast');
+                //验证是否为最后一页
+                if (IsLast.val() == 'True') {
+                    NotifyAlert('已加载完全部！');
+                    deferred.resolve();
+                    return false;
+                }
+
                 var vHItem = $('#hPageIndex');
                 var vIndex = vHItem.val();
                 vIndex = parseInt(vIndex) + 1;
@@ -297,7 +311,7 @@
 
                 $.get('/RequestData/CommodityInfoByPage', { r: Math.random(), par1: '', par2: vIndex, par3: '' }, function (data) {
                     if (data && data.List) {
-                        if (data.List.length == 0) { NotifyAlert('已加载完全部！'); }
+                        if (data.List.length == 0) { NotifyAlert('已加载完全部！'); IsLast.val('True'); }
                         else {
                             var vHtml = template('tplCommodity', data);
                             $('#dCommodityList').append(vHtml);

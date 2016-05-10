@@ -315,3 +315,7 @@ hr {
     width: 150px;
     height: 150px;
 }
+
+.del-color {
+    color: #888;
+}

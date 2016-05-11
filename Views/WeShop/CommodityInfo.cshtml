@@ -70,7 +70,13 @@
     @{
         <h1>@Model.SCommodityInfo.Title</h1>
         <hr />
-        <h1 style="color:red;">￥@Model.SCommodityPriceInterVal</h1>
+        <h1 style="color:red;">
+            @if (Model.SCommodityInfo.HasDiscount)
+            {
+                <del class="del-color">￥@Model.SCommodityInfo.Price</del>
+            }
+            ￥@Model.SCommodityPriceInterVal
+        </h1>
         <hr />
         <h1>运费：@Model.SPostType</h1>
         <br />
@@ -153,7 +159,9 @@
             <div class="uk-flex" id="dCommoOptionBeOrder" uid="" uPrice="0">
                 @foreach (var vItem in Model.SCommdityOptionInfo)
                 {
-                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
+                    string strPrice = (vItem.Price * Model.DiscountValue).ToString("F2");
+
+                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@strPrice" onclick="btnOptionClick('beOrder');">@vItem.Name</button>
                 }
             </div>
             <br />
@@ -214,7 +222,9 @@
             <div class="uk-flex" id="dCommoOptionShop" uid="" uPrice="0">
                 @foreach (var vItem in Model.SCommdityOptionInfo)
                 {
-                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@vItem.Price" onclick="btnOptionClick('shop');">@vItem.Name</button>
+                    string strPrice = (vItem.Price * Model.DiscountValue).ToString("F2");
+
+                    <button class="uk-button commodity-type" uId="@vItem.ID" uPrice="@strPrice" onclick="btnOptionClick('shop');">@vItem.Name</button>
                 }
             </div>
             <br />

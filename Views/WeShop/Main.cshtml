@@ -33,7 +33,7 @@
                         ￥{{value.DiscountPrice}}
                     </h1>
                 </a>
-                <span class="child-pos main-cart" uId="{{value.ID}}"></span>
+                <span class="child-pos main-cart" uId="{{value.ID}}" onclick="BtnMainCartClickOpe();"></span>
             </div>
         </div>
         {{/each}}
@@ -124,7 +124,13 @@
                                     <p>
                                         <h1>@item.Title</h1>
                                     </p>
-                                    <h1 style="color:red;">￥@item.Price</h1>
+                                    <h1 style="color:red;">
+                                        @if (item.HasDiscount)
+                                        {
+                                            <del class="del-color">￥@item.Price</del>
+                                        }
+                                        ￥@item.DiscountPrice
+                                    </h1>
                                 </a>
                                 <span class="child-pos main-cart" uId="@item.ID"></span>
                             </div>

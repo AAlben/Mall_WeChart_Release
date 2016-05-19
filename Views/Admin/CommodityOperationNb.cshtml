@@ -71,7 +71,18 @@
                         var vPhotoList = data.PhotoList;
                         var vOptionList = data.OptionList;
 
-                        //图片
+                        //富文本编辑器 Ready函数
+                        ue.addListener("ready", function () {
+                            // editor准备好之后才可以使用
+                            ue.setContent(vCommInfo.Intro);
+                        });
+
+                        try {
+                            ue.setContent(vCommInfo.Intro);
+                        }
+                        catch (e) { }
+
+                        //商品信息
                         $('#txtTitle').val(vCommInfo.Title);
                         $('#txtPrice').val(vCommInfo.Price);
                         $('#txtStock').val(vCommInfo.Stock);
@@ -79,11 +90,6 @@
                         $('#txtIOrder').val(vCommInfo.iOrder);
                         $('#txtRemark').val(vCommInfo.Remark);
                         $('#hPostFlag').val(vCommInfo.PostType);
-                        //Ready函数
-                        ue.addListener("ready", function () {
-                            // editor准备好之后才可以使用
-                            ue.setContent(vCommInfo.Intro);
-                        });
 
                         //邮递费用相关
                         if (vCommInfo.PostType == '1') {

@@ -84,7 +84,7 @@ function loaded(type, vDeferred, vFunNa, vFunNb) {
     if (upFlag) { pullUpOffset = pullUpEl.offsetHeight; }
 
     myScroll = new iScroll('wrapper', {
-        bounce: false,
+        bounce: true,
         useTransition: false,
         topOffset: pullDownOffset,
         onRefresh: function () {

@@ -576,8 +576,8 @@
                 momentumX = newPosX ? that._momentum(newPosX - that.startX, duration, -that.x, that.scrollerW - that.wrapperW + that.x, that.options.bounce ? that.wrapperW : 0) : momentumX;
                 momentumY = newPosY ? that._momentum(newPosY - that.startY, duration, -that.y, (that.maxScrollY < 0 ? that.scrollerH - that.wrapperH + that.y - that.minScrollY : 0), that.options.bounce ? that.wrapperH : 0) : momentumY;
 
-                newPosX = that.x + momentumX.dist;
-                newPosY = that.y + momentumY.dist;
+                newPosX = that.x + momentumX.dist/2.5;
+                newPosY = that.y + momentumY.dist/2.5;
 
                 if ((that.x > 0 && newPosX > 0) || (that.x < that.maxScrollX && newPosX < that.maxScrollX)) momentumX = { dist: 0, time: 0 };
                 if ((that.y > that.minScrollY && newPosY > that.minScrollY) || (that.y < that.maxScrollY && newPosY < that.maxScrollY)) momentumY = { dist: 0, time: 0 };
@@ -599,7 +599,7 @@
                     }
                 }
 
-                that.scrollTo(m.round(newPosX), m.round(newPosY), newDuration * 10);
+                that.scrollTo(m.round(newPosX), m.round(newPosY), newDuration * 1.2);
 
                 if (that.options.onTouchEnd) that.options.onTouchEnd.call(that, e);
                 return;

@@ -92,7 +92,10 @@
 </div>
 <div uRemark="介绍1" class="uk-article" style="background-color:white;">
     @{
-        <h1>@Model.SCommodityInfo.Title</h1>
+        <h1>
+            @Model.SCommodityInfo.Title
+            @Model.SCommodityInfo.Remark
+        </h1>
         <hr />
         <h1 style="color:red;">
             @if (Model.SCommodityInfo.HasDiscount)
@@ -188,7 +191,10 @@
                 }
             </div>
             <div class="uk-width-3-6">
-                <h1 style="font-size:36px;">@Model.SCommodityInfo.Title</h1>
+                <h1 style="font-size:36px;">
+                    @Model.SCommodityInfo.Title
+                    @Model.SCommodityInfo.Remark
+                </h1>
                 <h1 style="color:red;font-size:36px;" id="showOrderPrice">￥@Model.SCommodityPriceInterVal</h1>
             </div>
             <div class="uk-width-1-6">
@@ -251,7 +257,10 @@
                 }
             </div>
             <div class="uk-width-3-6">
-                <h1 style="font-size:36px;">@Model.SCommodityInfo.Title</h1>
+                <h1 style="font-size:36px;">
+                    @Model.SCommodityInfo.Title
+                    @Model.SCommodityInfo.Remark
+                </h1>
                 <h1 style="color:red;font-size:36px;" id="showShopPrice">￥@Model.SCommodityPriceInterVal</h1>
             </div>
             <div class="uk-width-1-6">

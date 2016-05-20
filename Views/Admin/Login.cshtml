@@ -33,6 +33,9 @@
             $('#btnSigin').click(function () {
                 window.location.href = '/Admin/Sigin';
             });
+
+            //捕捉Enter键
+            KeyDown();
         }
 
         //用户名、密码提交方法
@@ -68,6 +71,18 @@
         function CreateCodeOpe() {
             var vLoginValidateItem = new LoginValidateNa();
             vLoginValidateItem.createCode();
+        }
+
+        //捕捉Enter键
+        function KeyDown() {
+            document.onkeydown = function (event_e) {
+                if (window.event)
+                    event_e = window.event;
+                var int_keycode = event_e.charCode || event_e.keyCode;
+                if (int_keycode == 13) {
+                    $("#btnLogin").click();
+                }
+            }
         }
     </script>
 }

@@ -422,12 +422,6 @@
                 btnCountChangeOpe('plus', btnCount, showPrice);
             });
 
-            //悬浮购物车按钮事件
-            $('#dShopCart').click(function () {
-                //跳转到购物车页面
-                window.location.href = "/WeShop/ShoppingList";
-            });
-
             //Tab按钮事件
             $('.uk-tab li').on('click', function () {
                 var vThis = event.currentTarget;
@@ -436,6 +430,8 @@
                 vThis.addClass('active');
                 vThis.siblings('li').removeClass('active');
             });
+
+            SearchBtnBindEvent();
         }
 
         //推荐商品加载

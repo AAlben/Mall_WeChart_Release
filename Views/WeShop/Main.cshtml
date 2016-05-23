@@ -29,6 +29,13 @@
             font-size: 35px;
             top: 25px;
         }
+
+        .spc {
+            position: fixed;
+            bottom: 125px;
+            right: 25px;
+            z-index: 2;
+        }
     </style>
 
     <link href="~/StaticContent/css/selfScroll.css" rel="stylesheet" />
@@ -199,6 +206,9 @@
         </div>
     </div>
 
+    <div class="spc" id="dShopCart" style="background-image: url('/StaticContent/image/public/shopping-cart.png');height:100px;width:100px;background-position:800px -200px;">
+    </div>
+
     <div id="modalAddShop" class="uk-modal">
         <div class="uk-modal-dialog">
             <div class="uk-modal-header uk-grid">
@@ -304,6 +314,8 @@
 
                 window.location.href = '/WeShop/CommoditySearch/' + vTxt;
             });
+
+            SearchBtnBindEvent();
         }
 
         //--------------------上拉下滑相关代码--------------------//

@@ -259,6 +259,16 @@ function CommotidtyShopOpeNa() {
         return true;
     }
 }
+
+//搜索按钮事件绑定
+function SearchBtnBindEvent() {
+    //悬浮购物车按钮事件
+    $('#dShopCart').click(function () {
+        //跳转到购物车页面
+        window.location.href = "/WeShop/ShoppingList";
+    });
+}
+
 /*
 *************************************公共工具方法*************************************
 */

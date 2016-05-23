@@ -10,8 +10,24 @@
             background: #FBF9F5;
         }
 
-        .uk-text-bold{
+        .uk-text-bold {
             font-weight: 500;
+        }
+
+        .search-font {
+            width: 100%;
+            font-size: 35px;
+            padding-left: 100px;
+            font-family: Helvetica,"STHeiti STXihei","Microsoft JhengHei","Microsoft YaHei",Tohoma,Arial;
+            height: 70px;
+        }
+
+        .search-icon {
+            left: 35px;
+            position: absolute;
+            color: #BDBDBD;
+            font-size: 35px;
+            top: 20px;
         }
     </style>
 
@@ -84,8 +100,9 @@
 
         <div uRemark="内容区域" class="uk-container uk-block" style="width:100%;background-color:#f8f8f8;">
             <br />
-            <div uRemark="搜素" class="uk-container-center">
-                <input type="text" placeholder="商品搜索：请输入商品关键字" class="uk-form-large" style="width:100%;font-size:48px;">
+            <div uRemark="搜素" class="uk-container-center" style="position:relative">
+                <i class="uk-icon-search search-icon"></i>
+                <input type="text" placeholder="商品搜索：请输入商品关键字" class="uk-form-large search-font">
             </div>
             <br />
 

@@ -1114,4 +1114,15 @@
     if (typeof exports !== 'undefined') exports.iScroll = iScroll;
     else window.iScroll = iScroll;
 
+
+    function allowFormsInIscroll() {
+        [].slice.call(doc.querySelectorAll('input, select, button')).forEach(function (el) {
+            el.addEventListener(('ontouchstart' in window) ? 'touchstart' : 'mousedown', function (e) {
+                e.stopPropagation();
+
+            })
+        })
+    }
+    doc.addEventListener('DOMContentLoaded', allowFormsInIscroll, false);
+
 })(this, document);

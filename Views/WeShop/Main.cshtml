@@ -102,7 +102,7 @@
             <br />
             <div uRemark="搜素" class="uk-container-center" style="position:relative">
                 <i class="uk-icon-search search-icon"></i>
-                <input type="text" placeholder="商品搜索：请输入商品关键字" class="search-font">
+                <input type="text" placeholder="商品搜索：请输入商品关键字" class="search-font" id="txtSearch">
             </div>
             <br />
 
@@ -271,21 +271,6 @@
         });
 
         $(function () {
-            ////悬浮代码如下：
-            //new function (w, b, c, d, o) { // www.jquerycn.cn
-            //    d = document;
-            //    b = d.body;
-            //    o = b.childNodes;
-            //    c = "className";
-            //    b.appendChild(w = d.createElement("div"))[c] = "b";
-            //    for (var i = 0; i < o.length - 1; i++)
-            //        if (o[i][c] != "w") w.appendChild(o[i]), i--;
-            //    (window.touchmove = function () {
-            //        w.style.width = d.documentElement.clientWidth + "px";
-            //        w.style.height = d.documentElement.clientHeight + "px";
-            //    })();
-            //}; // suspend function end
-
             //事件绑定
             BindEvent();
 
@@ -307,6 +292,18 @@
             $('#susBtnNc').click(function () { window.location.href = '/WeShop/ShoppingList'; });
             //我的商城
             $('#susBtnNd').click(function () { window.location.href = '/WeShop/CustomerCenter'; });
+
+            //搜索框事件
+            $('#txtSearch').on('blur', function () {
+                var vThis = $(event.currentTarget);
+                var vTxt = vThis.val();
+
+                if (!vTxt || vTxt == undefined || vTxt.replace(/(^\s*)|(\s*$)/g, '') == "") {
+                    return false;
+                }
+
+                window.location.href = '/WeShop/CommoditySearch/' + vTxt;
+            });
         }
 
         //--------------------上拉下滑相关代码--------------------//

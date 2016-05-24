@@ -49,6 +49,7 @@
             vertical-align: middle;
             border: 1px solid #DDDDDD;
             height: 40px;
+            color: #3F3F3F;
         }
     </style>
 
@@ -99,7 +100,7 @@
 </div>
 <div uRemark="介绍1" class="uk-article" style="background-color:white;">
     @{
-        <h1>
+        <h1 class="shop-title">
             @Model.SCommodityInfo.Title
             @Model.SCommodityInfo.Remark
         </h1>
@@ -121,37 +122,34 @@
     <div class="br-box">
         <br />
     </div>
-
     <div rRemark="介绍" class="uk-block">
-        <div class="uk-block">
-            <div uRemark="导航">
-                <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
-                    <li class="uk-width-medium-1-3 uk-text-center uk-active active" uid="shopPhotoList">
-                        <h1 class="nav-li-font">商品介绍</h1>
-                    </li>
-                    <li class="uk-width-medium-1-3 uk-text-center" uid="shopIntro">
-                        <h1 class="nav-li-font">商品参数</h1>
-                    </li>
-                    <li class="uk-width-medium-1-3 uk-text-center" uid="moreShop">
-                        <h1 class="nav-li-font">推荐商品</h1>
-                    </li>
-                </ul>
-                <br />
-                <ul id="tab-content" class="uk-switcher">
-                    <li class="uk-active">
-                        <div class="uk-article">
-                            @Html.Raw(Model.SCommodityInfo.Intro)
-                            <br />
-                        </div>
-                    </li>
-                    <li>
-                        <table class="uk-table" id="tblPar"></table>
-                    </li>
-                    <li id="lMoreShop" class="uk-grid"></li>
-                </ul>
-            </div>
-            <div uRemark="购物车列表"></div>
+        <div uRemark="导航">
+            <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
+                <li class="uk-width-medium-1-3 uk-text-center uk-active active" uid="shopPhotoList">
+                    <h1 class="nav-li-font">商品介绍</h1>
+                </li>
+                <li class="uk-width-medium-1-3 uk-text-center" uid="shopIntro">
+                    <h1 class="nav-li-font">商品参数</h1>
+                </li>
+                <li class="uk-width-medium-1-3 uk-text-center" uid="moreShop">
+                    <h1 class="nav-li-font">推荐商品</h1>
+                </li>
+            </ul>
+            <br />
+            <ul id="tab-content" class="uk-switcher">
+                <li class="uk-active">
+                    <div class="uk-article">
+                        @Html.Raw(Model.SCommodityInfo.Intro)
+                        <br />
+                    </div>
+                </li>
+                <li>
+                    <table class="uk-table" id="tblPar"></table>
+                </li>
+                <li id="lMoreShop" class="uk-grid"></li>
+            </ul>
         </div>
+        <div uRemark="购物车列表"></div>
     </div>
 </div>
 <div uRemark="底部" data-uk-sticky class="uk-grid">
@@ -171,7 +169,7 @@
                 }
             </div>
             <div class="uk-width-3-6">
-                <h1 style="font-size:36px;">
+                <h1 style="font-size:36px;" class="shop-title">
                     @Model.SCommodityInfo.Title
                     @Model.SCommodityInfo.Remark
                 </h1>
@@ -237,7 +235,7 @@
                 }
             </div>
             <div class="uk-width-3-6">
-                <h1 style="font-size:36px;">
+                <h1 style="font-size:36px;" class="shop-title">
                     @Model.SCommodityInfo.Title
                     @Model.SCommodityInfo.Remark
                 </h1>

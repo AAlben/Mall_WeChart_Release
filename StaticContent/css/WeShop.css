@@ -6,7 +6,7 @@ body {
 
 body {
     /*font-family: Helvetica Neue, Helvetica, Arial, sans-serif;*/
-    font-size: 48px;
+    font-size: 40px;
     color: #000;
     margin: 0;
     padding: 0;
@@ -81,9 +81,10 @@ a {
 }
 
 .mobile-button {
-    height: 120px;
+    height: 90px;
     color: white;
-    font-size: 48px;
+    font-size: 40px;
+    border-radius: 20px;
 }
 
 .mobile-redirectButton {
@@ -243,7 +244,7 @@ hr {
 }
 
 .nav-li-font {
-    font-size: 45px;
+    font-size: 40px;
 }
 
 .right-btn {

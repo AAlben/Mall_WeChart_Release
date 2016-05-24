@@ -22,11 +22,14 @@
                 function (data) {
                     if (data && data.List) {
                         if (data.List.length != 0) {
+                            var valueConfig = [];
                             $.each(data.List, function (index, item) {
                                 vHtml += TxtFormat('<li><input type="text" placeholder="" class="textbox" value="{0}">', [item.Text]);
                                 vHtml += TxtFormat('：<input type="text" placeholder="" class="textbox" value="{0}"></li>', [item.Value]);
+                                valueConfig.push(item.Text);
                             });
                             $('#ulPar').append(vHtml);
+                            CommodityParameterInitCommon(type, valueConfig);
                             return false;
                         }
                         else {
@@ -42,12 +45,17 @@
     }
 
     //默认无值 + 新增状态
-    function CommodityParameterInitCommon(type) {
+    function CommodityParameterInitCommon(type, valueConfig) {
         var vHtml = '';
+        if (valueConfig == null || valueConfig == undefined) {
+            valueConfig = [];
+        }
         //默认无值 + 新增状态
         $.each(ParameterConfig[type], function (index, item) {
-            vHtml += TxtFormat('<li><input type="text" placeholder="" class="textbox" value="{0}">', [item]);
-            vHtml += '：<input type="text" placeholder="" class="textbox"></li>';
+            if (valueConfig.indexOf(item) == -1) {
+                vHtml += TxtFormat('<li><input type="text" placeholder="" class="textbox" value="{0}">', [item]);
+                vHtml += '：<input type="text" placeholder="" class="textbox"></li>';
+            }
         });
         $('#ulPar').append(vHtml);
     }

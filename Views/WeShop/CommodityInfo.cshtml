@@ -139,10 +139,10 @@
             <div uRemark="导航">
                 <ul class="uk-tab" data-uk-tab="{connect:'#tab-content'}">
                     <li class="uk-width-medium-1-3 uk-text-center uk-active active" uid="shopPhotoList">
-                        <h1 class="nav-li-font">图片介绍</h1>
+                        <h1 class="nav-li-font">商品介绍</h1>
                     </li>
                     <li class="uk-width-medium-1-3 uk-text-center" uid="shopIntro">
-                        <h1 class="nav-li-font">商品详情</h1>
+                        <h1 class="nav-li-font">商品参数</h1>
                     </li>
                     <li class="uk-width-medium-1-3 uk-text-center" uid="moreShop">
                         <h1 class="nav-li-font">推荐商品</h1>
@@ -151,21 +151,13 @@
                 <br />
                 <ul id="tab-content" class="uk-switcher">
                     <li class="uk-active">
-                        @if (Model.SDicPhoto.ContainsKey(2))
-                        {
-                            foreach (var item in Model.SDicPhoto[2])
-                            {
-                                <div class="uk-text-center">
-                                    <img src="~/@item" />
-                                </div>
-                            }
-                        }
-                    </li>
-                    <li>
                         <div class="uk-article">
                             @Html.Raw(Model.SCommodityInfo.Intro)
                             <br />
                         </div>
+                    </li>
+                    <li>
+
                     </li>
                     <li id="lMoreShop" class="uk-grid"></li>
                 </ul>

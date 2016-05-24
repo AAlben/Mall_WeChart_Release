@@ -204,3 +204,24 @@ function InitDataCommon() {
         },
         'json');
 }
+
+//商品参数编辑按钮事件
+function btnParameterOpe() {
+    LoadDialog('商品参数编辑', function () {
+        CommodityParDataOpe();
+    });
+
+    var vCommID = '';
+    var vItem = $('#hCommID');
+    if (vItem.length > 0) {
+        vCommID = vItem.val();
+    }
+
+    //加载HTML
+    $('.pop_cont_input').load('/Admin/CommodityParameter/' + vCommID, null, function () {
+        DialogShowHide(true);
+
+        //调用页面中的Init方法
+        CommodityParameterInit('book');
+    });
+}

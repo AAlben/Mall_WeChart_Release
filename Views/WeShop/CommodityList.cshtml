@@ -17,7 +17,7 @@
                 <a href="/WeShop/CommodityInfo/{{value.ID}}">
                     <img src="/{{value.Photo}}" alt="" class="uk-thumbnail uk-align-center shop-img">
                     <p>
-                        <h1>{{value.Title}}</h1>
+                        <h1 class="shop-title">{{value.Title}}</h1>
                     </p>
                     <h1 style="color:red;">
                         {{if value.HasDiscount}}
@@ -92,7 +92,7 @@
                                 <a href="/WeShop/CommodityInfo/@item.ID">
                                     <img src="~/@item.Photo" alt="" class="uk-thumbnail uk-align-center shop-img">
                                     <p>
-                                        <h1>@item.Title</h1>
+                                        <h1 class="shop-title">@item.Title</h1>
                                     </p>
                                     <h1 style="color:red;">
                                         @if (item.HasDiscount)

@@ -319,3 +319,9 @@ hr {
 .del-color {
     color: #888;
 }
+
+.shop-title {
+    height: 84px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

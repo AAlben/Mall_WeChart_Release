@@ -1,0 +1,94 @@
+﻿
+<ul id="ulPar"></ul>
+
+<input type="hidden" id="hParCommID" value="@ViewBag.CommodityID" />
+
+<script type="text/javascript">
+
+    var ParameterConfig = { 'book': ['作者', '出版社', '出版时间', '页数'] };
+
+    //自定义方法区
+
+    //页面初始化
+    function CommodityParameterInit(type) {
+        //Init
+        var vHtml = '';
+
+        //判断
+        var vCommID = $('#hParCommID').val();
+        if (vCommID != '' && vCommID != undefined) { //有商品ID，编辑状态
+            $.get('/Admin/CommodityParameterContent/',
+                { par1: vCommID },
+                function (data) {
+                    if (data && data.List) {
+                        if (data.List.length != 0) {
+                            $.each(data.List, function (index, item) {
+                                vHtml += TxtFormat('<li><input type="text" placeholder="" class="textbox" value="{0}">', [item.Text]);
+                                vHtml += TxtFormat('：<input type="text" placeholder="" class="textbox" value="{0}"></li>', [item.Value]);
+                            });
+                            $('#ulPar').append(vHtml);
+                            return false;
+                        }
+                        else {
+                            CommodityParameterInitCommon(type);
+                        }
+                    }
+                },
+                'json');
+        } // end if
+        else {
+            CommodityParameterInitCommon(type);
+        }
+    }
+
+    //默认无值 + 新增状态
+    function CommodityParameterInitCommon(type) {
+        var vHtml = '';
+        //默认无值 + 新增状态
+        $.each(ParameterConfig[type], function (index, item) {
+            vHtml += TxtFormat('<li><input type="text" placeholder="" class="textbox" value="{0}">', [item]);
+            vHtml += '：<input type="text" placeholder="" class="textbox"></li>';
+        });
+        $('#ulPar').append(vHtml);
+    }
+
+    //数据提交方法
+    function CommodityParDataOpe() {
+        var vItem = $('#ulPar input');
+        var vCommID = $('#hParCommID').val();
+
+        vPar = {};
+
+        for (var i = 0; i < vItem.length; i = i + 2) {
+            var valueFlag = true; //值没有问题
+
+            var vValNa = $(vItem[i]).val();
+            var vValNb = $(vItem[i + 1]).val();
+
+            if (vValNa == undefined || vValNa == '' || vValNb == undefined || vValNb == '') {
+                valueFlag = false; //值有问题
+                return false;
+            }
+
+            vPar[vValNa] = vValNb;
+        }
+
+        vPar = JSON.stringify(vPar);
+
+        $.post('/Admin/CommodityParameterOpe',
+            { par1: vCommID, par2: vPar },
+            function (data) {
+                if (data && data.Flag) {
+                    $('#hCommID').val(data.Msg);
+                    DialogShowHide(false);
+                    return false;
+                }
+                else {
+                    alert('保存失败！');
+                    return false;
+                }
+            },
+            'json');
+    }
+
+</script>

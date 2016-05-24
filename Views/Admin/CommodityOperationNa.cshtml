@@ -80,6 +80,8 @@
 
                 //数据准备
                 var vPar = {};
+                var vCommID = $('#hCommID').val();
+                vPar.commID = (vCommID == undefined || vCommID == '') ? '' : vCommID;
                 vPar.commodityname = $('#txtTitle').val();
                 vPar.Price = $('#txtPrice').val();
                 vPar.Quantity = $('#txtStock').val();
@@ -219,9 +221,10 @@
             //默认调用获取最大iOrder方法
             setTimeout(function () { $('#selModule').trigger('change'); }, 1000);
         }
-
     </script>
 }
+
+<input type="hidden" id="hCommID" />
 
 @Html.Partial("CommodityOperationCommonPage")
 

@@ -62,7 +62,7 @@
                 <a href="/WeShop/CommodityInfo/{{value.ID}}">
                     <img src="/{{value.Photo}}" alt="" class="uk-thumbnail uk-align-center shop-img">
                     <p>
-                        <h1>{{value.Title}}</h1>
+                        <h1 class="shop-title">{{value.Title}}</h1>
                     </p>
                     <h1 style="color:red;">
                         {{if value.HasDiscount}}
@@ -446,9 +446,6 @@
                 if (data && data.List) {
                     var vHtml = template('tplCommodity', data);
                     $('#lMoreShop').append(vHtml);
-
-                    //注册事件
-                    //BindMoreCommodityEvent();
                 }
             }, 'json');
         }

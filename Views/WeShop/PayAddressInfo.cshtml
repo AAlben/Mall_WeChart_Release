@@ -38,8 +38,6 @@
 
     //获取共享地址
     function editAddress() {
-
-
         $.getJSON('/WeShop/PayAddressContent', { r: Math.random() }, function (data) {
             if (data) { vWxEditAddrParam = data; }
         }).done(function () {
@@ -71,56 +69,18 @@
     }
 
     window.onload = function () {
-
         wx.ready(function () {
             wx.checkJsApi({
                 jsApiList: [
                     'openAddress',
                 ],
                 success: function (res) {
-                    alert(JSON.stringify(res));
+                    //alert(JSON.stringify(res));
                 }
             });
-
-            wx.openAddress({
-                trigger: function (res) {
-                    alert('用户开始拉出地址');
-                },
-                success: function (res) {
-                    alert('用户成功拉出地址');
-                    alert(JSON.stringify(res));
-                    document.form1.address1.value = res.provinceName;
-                    document.form1.address2.value = res.cityName;
-                    document.form1.address3.value = res.countryName;
-                    document.form1.detail.value = res.detailInfo;
-                    document.form1.national.value = res.nationalCode;
-                    document.form1.user.value = res.userName;
-                    document.form1.phone.value = res.telNumber;
-                    document.form1.postcode.value = res.postalCode;
-                    document.form1.errmsg.value = res.errMsg;
-                    document.form1.qq.value = 1354386063;
-                },
-                cancel: function (res) {
-                    alert('用户取消拉出地址');
-                },
-                fail: function (res) {
-                    alert(JSON.stringify(res));
-                }
-            });
+            //地址共享
+            WxJsApiOpe();
         });
-
-        //if (typeof WeixinJSBridge == "undefined") {
-        //    if (document.addEventListener) {
-        //        document.addEventListener('WeixinJSBridgeReady', editAddress, false);
-        //    }
-        //    else if (document.attachEvent) {
-        //        document.attachEvent('WeixinJSBridgeReady', editAddress);
-        //        document.attachEvent('onWeixinJSBridgeReady', editAddress);
-        //    }
-        //}
-        //else {
-        //    editAddress();
-        //}
     };
 
     //自定义方法区
@@ -149,6 +109,43 @@
         $.get('/WeShop/OrderExpressOpe',
             { par1: vOrderNum, par2: vAddr, par3: vPhone, par4: vName },
             function (data) { }).done(funNa);
+    }
+
+    //微信地址共享逻辑业务代码
+    function WxJsApiOpe() {
+        wx.openAddress({
+            trigger: function (res) {
+
+            },
+            success: function (res) {
+
+                var addr1 = res.provinceName;
+                var addr2 = res.cityName;
+                var addr3 = res.countryName;
+                var addr4 = res.detailInfo;
+                var tel = res.telNumber;
+                var addr = addr1 + addr2 + addr3 + addr4;
+                var vName = res.userName;
+
+                //用户信息确认
+                $.get('/WeShop/UserInfoOpe',
+                    { r: Math.random(), Address: addr, PhoneNum: tel, Name: vName },
+                    function (data) { });
+
+                //数据展示
+                $('#hAddr').text('收货地址：' + addr);
+                $('#hPhone').text('联系电话：' + tel);
+                $('#hName').text('收货人：' + vName);
+            },
+            cancel: function (res) {
+                alert('请您选择收货人姓名地址信息！');
+                WxJsApiOpe();
+            },
+            fail: function (res) {
+                //alert(JSON.stringify(res));
+                window.location.href = '/WeShop/OrderList';
+            }
+        });
     }
 </script>
 

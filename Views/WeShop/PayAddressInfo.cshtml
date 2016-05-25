@@ -10,13 +10,35 @@
             font-size: 40px;
         }
     </style>
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+
+    <script>
+        var vWxEditAddrParam = {};
+        $.getJSON('/WeShop/PayAddressContent', { r: Math.random() }, function (data) {
+            if (data) { vWxEditAddrParam = data; }
+        }).done(function () {
+            wx.config({
+                debug: false,
+                appId: vWxEditAddrParam.appId,
+                timestamp: vWxEditAddrParam.timestamp,
+                nonceStr: vWxEditAddrParam.nonceStr,
+                signature: vWxEditAddrParam.addrSign,
+                jsApiList: [
+                  // 所有要调用的 API 都要加到这个列表中
+                    'checkJsApi',
+                    'openAddress',
+                ]
+            });
+        });
+    </script>
 }
 
 <script type="text/javascript">
 
     //获取共享地址
     function editAddress() {
-        var vWxEditAddrParam = {};
+
 
         $.getJSON('/WeShop/PayAddressContent', { r: Math.random() }, function (data) {
             if (data) { vWxEditAddrParam = data; }
@@ -49,18 +71,56 @@
     }
 
     window.onload = function () {
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
-            }
-            else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', editAddress);
-                document.attachEvent('onWeixinJSBridgeReady', editAddress);
-            }
-        }
-        else {
-            editAddress();
-        }
+
+        wx.ready(function () {
+            wx.checkJsApi({
+                jsApiList: [
+                    'openAddress',
+                ],
+                success: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+
+            wx.openAddress({
+                trigger: function (res) {
+                    alert('用户开始拉出地址');
+                },
+                success: function (res) {
+                    alert('用户成功拉出地址');
+                    alert(JSON.stringify(res));
+                    document.form1.address1.value = res.provinceName;
+                    document.form1.address2.value = res.cityName;
+                    document.form1.address3.value = res.countryName;
+                    document.form1.detail.value = res.detailInfo;
+                    document.form1.national.value = res.nationalCode;
+                    document.form1.user.value = res.userName;
+                    document.form1.phone.value = res.telNumber;
+                    document.form1.postcode.value = res.postalCode;
+                    document.form1.errmsg.value = res.errMsg;
+                    document.form1.qq.value = 1354386063;
+                },
+                cancel: function (res) {
+                    alert('用户取消拉出地址');
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+        });
+
+        //if (typeof WeixinJSBridge == "undefined") {
+        //    if (document.addEventListener) {
+        //        document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+        //    }
+        //    else if (document.attachEvent) {
+        //        document.attachEvent('WeixinJSBridgeReady', editAddress);
+        //        document.attachEvent('onWeixinJSBridgeReady', editAddress);
+        //    }
+        //}
+        //else {
+        //    editAddress();
+        //}
     };
 
     //自定义方法区

@@ -83,6 +83,11 @@
         });
     };
 
+    $(function () {
+        //check元素事件绑定
+        ItemCheckOpe()
+    });
+
     //自定义方法区
 
     //立即支付按钮事件
@@ -92,6 +97,9 @@
 
         //订单运单消息Insert
         OrderExpressOpe(function () {
+            //0.需要向数据库插入值
+
+
             //1.带参数的页面跳转
             window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}&ordernum={2}&title={3}&content={4}',
                                                 [vOpenID, total_fee, '@ViewBag.OrderNum', '@ViewBag.Title', '@ViewBag.Param']);
@@ -146,10 +154,27 @@
             }
         });
     }
+
+    //是否需要发票按钮点击事件
+    function ItemCheckOpe() {
+        //选中图标Click事件
+        $('.item-check').click(function () {
+            var vThis = $(this);
+            var isCheck = vThis.hasClass('item-check');
+            if (isCheck) {
+                vThis.removeClass('item-check'); vThis.addClass('item-uncheck');
+                $('#IsNeedInvoice').val('False');
+            }
+            else {
+                vThis.removeClass('item-uncheck'); vThis.addClass('item-check');
+                $('#IsNeedInvoice').val('True');
+            }
+        });
+    }
+
 </script>
 
 <div class="uk-container page-body">
-
     <div uRemark="address" class="uk-block bgWhite shop-item uk-vertical-align">
         <div class="uk-grid" onclick="WxJsApiOpe();">
             <div class="uk-width-medium-1-6">
@@ -217,17 +242,21 @@
             <br />
             <div style="border-top:3px solid #e5e5e5"></div>
             <br />
-            <div class="uk-grid">
+            <div class="uk-grid" style="height:60px;">
                 <br />
                 <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">需要发票</h1>
-                <div class="uk-width-medium-1-2 item-check uk-text-right" style="padding-right:35px;width:50px;" id="ckNeedInvoice"></div>
+                <div class="uk-width-medium-1-2">
+                    <div class="item-check uk-text-right" style="padding-right:35px;width:50px;float:right" id="ckNeedInvoice"></div>
+                </div>
+                <br />
                 <br />
             </div>
             <div style="border-top:3px solid #e5e5e5"></div>
             <br />
             <div class="uk-grid">
-                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">发票抬头</h1>
-                <input type="text" id="txtInvoiceName" class="uk-text-right uk-width-medium-1-2" style="height:110px;font-size:36px;" />
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;vertical-align:middle;line-height:110px;">发票抬头</h1>
+                <input type="text" id="txtInvoiceName" class="uk-width-medium-1-2" style="height:110px;font-size:36px;" placeholder="默认收货人姓名" />
                 <br />
             </div>
             <br />
@@ -253,10 +282,12 @@
     <br />
     <div uRemark="button">
         <div class="uk-width-medium-1-1">
-            <a href="javascript:;" onclick="btnPayApply();" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#00CD00;line-height:80px;">微信安全支付</a>
+            <a href="javascript:;" onclick="btnPayApply();" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#00CD00;line-height:90px;">微信安全支付</a>
         </div>
     </div>
     <br />
     <div style="height:50px"></div>
 </div>
+
+<input type="hidden" id="IsNeedInvoice" value="True" />
 

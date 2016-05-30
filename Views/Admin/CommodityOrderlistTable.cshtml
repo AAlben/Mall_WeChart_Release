@@ -5,6 +5,8 @@
     Func<string, string> _funStateConvert = new Mall_WeChart_Nf.Operator.CodeChange.AdminControllerCodeChange().OrderStateConvert;
 
     Func<object, string> _funLogisticsStateConvert = new Mall_WeChart_Nf.Operator.CodeChange.AdminControllerCodeChange().LogisticsStateConvert;
+
+    Func<object, object, Tuple<string, string>> _funIsNeedInvoiceConvert = new Mall_WeChart_Nf.Operator.CodeChange.AdminControllerCodeChange().IsNeedVoiceConvert;
 }
 
 @{
@@ -25,6 +27,8 @@
                 <th>用户电话</th>
                 <th>收货地址</th>
                 <th>订单状态</th>
+                <th>需要发票</th>
+                <th>发票抬头</th>
                 <th>操作</th>
             </tr>
 
@@ -44,6 +48,8 @@
                     <td>@item.PhoneNum</td>
                     <td>@item.Address</td>
                     <td>@_funStateConvert(item.OrderState.ToString())</td>
+                    <td>@_funIsNeedInvoiceConvert(item.NeedInvoice, item.InvoiceTitle).Item1</td>
+                    <td>@_funIsNeedInvoiceConvert(item.NeedInvoice, item.InvoiceTitle).Item2</td>
                     <td>
                         <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="ChangePrice('@item.ID')">修改价格</a>
                         <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="OrderClose('@item.ID')">关闭</a>
@@ -69,6 +75,8 @@
                 <th>用户电话</th>
                 <th>收货地址</th>
                 <th>订单状态</th>
+                <th>需要发票</th>
+                <th>发票抬头</th>
                 <th>物流状态</th>
                 <th>物流单号</th>
                 <th>物流公司</th>
@@ -91,6 +99,8 @@
                     <td>@item.PhoneNum</td>
                     <td>@item.Address</td>
                     <td>@_funStateConvert(item.OrderState.ToString())</td>
+                    <td>@_funIsNeedInvoiceConvert(item.NeedInvoice, item.InvoiceTitle).Item1</td>
+                    <td>@_funIsNeedInvoiceConvert(item.NeedInvoice, item.InvoiceTitle).Item2</td>
                     <td>@_funLogisticsStateConvert(item.LogisticsState)</td>
                     <td>@item.ExpressNum</td>
                     <td>@item.ExpressType</td>

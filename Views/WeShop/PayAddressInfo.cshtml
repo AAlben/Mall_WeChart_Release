@@ -97,12 +97,25 @@
 
         //订单运单消息Insert
         OrderExpressOpe(function () {
+
+            //是否需要发票相关数据插入
+            var vIsNeedInvoice = $('#IsNeedInvoice').val();
+            var vInvoiceTitle = $('#txtInvoiceName').val();
+            if (vInvoiceTitle == undefined || vInvoiceTitle == '') { vInvoiceTitle = $('#hBuyerName').val(); }
+            var vRemark = $('#txtRemark').val();
+
             //0.需要向数据库插入值
-
-
-            //1.带参数的页面跳转
-            window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}&ordernum={2}&title={3}&content={4}',
-                                                [vOpenID, total_fee, '@ViewBag.OrderNum', '@ViewBag.Title', '@ViewBag.Param']);
+            $.get('/WeShop/OrderIsNeedInvoiceOpe',
+                { r: Math.random(), par1: '@ViewBag.OrderID', par2: vIsNeedInvoice, par3: vInvoiceTitle, par4: vRemark },
+                function (data) {
+                    if (data && data.Flag) {
+                    }
+                },
+                'json').done(function () {
+                    //1.带参数的页面跳转
+                    window.location.href = TxtFormat('/WeShop/PayApply?openid={0}&total_fee={1}&ordernum={2}&title={3}&content={4}',
+                                                        [vOpenID, total_fee, '@ViewBag.OrderNum', '@ViewBag.Title', '@ViewBag.Param']);
+                });
         });
     }
 
@@ -143,6 +156,7 @@
                 $('#hAddr').text('收货地址：' + addr);
                 $('#hPhone').text('联系电话：' + tel);
                 $('#hName').text('收货人：' + vName);
+                $('#hBuyerName').val(vName);
             },
             cancel: function (res) {
                 alert('请您选择收货人姓名地址信息！');
@@ -265,7 +279,7 @@
             <div class="uk-grid">
                 <br />
                 <div class="uk-width-medium-1-10"></div>
-                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:110px;font-size:36px;">
+                <input type="text" placeholder="给卖家留言..." class="uk-width-medium-8-10" style="height:110px;font-size:36px;" id="txtRemark">
                 <div class="uk-width-medium-1-10"></div>
                 <br />
                 <div class="uk-width-1-1" style="height:25px;"></div>
@@ -290,4 +304,4 @@
 </div>
 
 <input type="hidden" id="IsNeedInvoice" value="True" />
-
+<input type="hidden" id="hBuyerName" value="True" />

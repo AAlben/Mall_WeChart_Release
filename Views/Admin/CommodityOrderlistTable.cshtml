@@ -106,6 +106,7 @@
                     <td>@item.ExpressType</td>
                     <td>
                         <a href="javascript:;" class="inner_btn" uState="@item.OrderState" onclick="WriteExpNum('@item.OrderNum','@item.ExpressCode','@item.ExpressNum')">填写快递单号</a>
+                        <a href="@string.Format("http://www.kuaidi100.com/chaxun?com={0}&nu={1}",item.ExpressCode,item.ExpressNum)" class="inner_btn" target="_blank">查询快递</a>
                     </td>
                 </tr>
             }

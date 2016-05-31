@@ -1,0 +1,26 @@
+﻿@model ZZSCModel.WX_ZZSCOrderRefundInfo
+
+<ul>
+    <li>
+        <span class="tt1">订单总额：</span>
+        <span>@Model.TotalPrice</span>
+    </li>
+    <li>
+        <span class="tt1">申请退款额：</span>
+        <span>@Model.RefundPrice</span>
+    </li>
+    <li>
+        <span class="tt1">退款理由：</span>
+        <span>@ViewBag.DicConfig[Model.ResonType]</span>
+    </li>
+    <li>
+        <span class="tt1">退款详细理由：</span>
+        <span >@Model.ResonRemark</span>
+    </li>
+</ul>
+
+<input type="hidden" id="refID" value="@Model.ID" />
+<input type="hidden" id="refOrderNum" value="@Model.OrderNum" />
+<input type="hidden" id="refOrderID" value="@Model.OrderID" />
+<input type="hidden" id="refPrice" value="@Model.RefundPrice" />
+<input type="hidden" id="refTotalPrice" value="@Model.TotalPrice" />

@@ -72,6 +72,9 @@
 
                     LoadEnd();
                 });
+
+                //按钮处理：处理退款
+                $('.uState5').remove();
             });
         });
     </script>
@@ -210,8 +213,53 @@
             });
         }
 
+        //4.处理退款申请
+        function OrderRefundOpe(orderID) {
+            //Init Check
+            var vEvent = event;
+            var vArguments = arguments;
+
+            if (!FuncCanOpeCheck(vEvent, vArguments)) { alert('无权进行此操作！'); return false; }
+
+            LoadDialog('处理退款申请',
+                function () {
+                    var vPar = {};
+                    vPar.RefundID = $('#refID').val();
+                    vPar.OrderID = $('#refOrderID').val();
+                    vPar.OrderNum = $('#refOrderNum').val();
+                    vPar.RefundPrice = $('#refPrice').val();
+                    vPar.TotalPrice = $('#refTotalPrice').val();
+
+                    var vStrPar = JSON.stringify(vPar);
+
+                    $.post('/Admin/OrderRefundOpe',
+                        { par1: 'success', par2: vStrPar },
+                        function (data) { },
+                        'json');
+                },
+                function () {
+                    if (confirm('要拒绝该退款申请吗？')) { //拒绝申请
+                        var vPar = {};
+                        vPar.RefundID = $('#refID').val();
+                        vPar.OrderID = $('#refOrderID').val();
+
+                        var vStrPar = JSON.stringify(vPar);
+
+                        $.post('/Admin/OrderRefundOpe',
+                            { par1: 'refused', par2: vStrPar },
+                            function (data) { },
+                            'json');
+                    }
+                });
+
+            //加载HTML
+            $('.pop_cont_input').load('/Admin/OrderRefund', { par1: orderID }, function () {
+                DialogShowHide(true);
+            });
+        }
+
         //OrderState + 可执行方法的配置信息
-        var vStateFunctionConfig = { '0': [], '1': ['ChangePrice', 'OrderClose'], '3': ['WriteExpNum'], '4': [] };
+        var vStateFunctionConfig = { '0': [], '1': ['ChangePrice', 'OrderClose'], '3': ['WriteExpNum'], '4': [], '5': ['WriteExpNum', 'OrderRefundOpe'] };
 
         //异常提示方法封装
         function ErrorTips(vItem, vMsg, flag) {

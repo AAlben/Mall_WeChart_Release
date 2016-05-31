@@ -50,6 +50,11 @@ function btnLogistics(beOrderID, vExpCode, vExpNum) {
     window.location.href = TxtFormat('http://m.kuaidi100.com/index_all.html?type={0}&postid={1}&callbackurl={2}', [vExpCode, vExpNum, 'http://inovoseed.com/WeShop/MyFunctionList/' + vFunctionName]);
 }
 
+//申请退款按钮事件
+function btnRefund(orderID) {
+    window.location.href = '/Weshop/OrderRefund/' + orderID;
+}
+
 //确认收货按钮事件
 function btnAffirmReceive(beOrderID) {
 

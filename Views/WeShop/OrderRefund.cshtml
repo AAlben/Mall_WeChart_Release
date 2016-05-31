@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "申请退款";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+@section LayoutHead{
+    <style type="text/css">
+        .row-height {
+            line-height: 110px;
+            height: 104px;
+        }
+    </style>
+
+    <script src="~/StaticContent/js/Service/inputValidate.js"></script>
+}
+
+<div class="uk-container page-body">
+    <div class="uk-width-1-1" style="height:25px;"></div>
+    <div uRemark="CommodityInfo">
+        <div class="bgWhite shop-item">
+            <br />
+            <h1>店铺：@ViewBag.StoreName</h1>
+            <br />
+            @{
+                if (ViewBag.BeOrderLine != null)
+                {
+                    foreach (var vItem in ViewBag.BeOrderLine)
+                    {
+                        <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv">
+                            <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-2-10 mini-photo">
+                            <h1 class="uk-width-medium-5-10 uk-text-break">@vItem.Title</h1>
+                            <div class="uk-width-medium-2-10 mobile-font">
+                                <h1 style="color:red;">￥@vItem.RealUnitPrice</h1>
+                                <h1 style="color:red;">×@vItem.Count</h1>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">订单总金额</h1>
+                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px;color:red;" id="hTotalPrice">￥@ViewBag.TotalPrice</h1>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid" style="height:60px;">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">全额退款</h1>
+                <div class="uk-width-medium-1-2">
+                    <div class="item-uncheck uk-text-right" style="padding-right:35px;width:50px;float:right" id="ckRefundAll"></div>
+                </div>
+                <br />
+                <br />
+            </div>
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left row-height" style="padding-left:60px;vertical-align:middle;">退款金额</h1>
+                <input type="text" id="txtRefundPrice" class="uk-width-medium-1-2 row-height" style="font-size:36px;" placeholder="请输入退款金额" />
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left row-height" style="padding-left:60px;">退款理由</h1>
+                <select id="selRefund" class="uk-width-medium-1-2 uk-text-right row-height" style="font-size:36px;" placehoder="请选择退款理由">
+                    <option value="1">买错了，拍错了，想退款</option>
+                    <option value="2">不想买了，想退款</option>
+                    <option value="3">没收到货，想退款</option>
+                    <option value="4">收到货了，想退款</option>
+                    <option value="-1">其他理由</option>
+                </select>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <div class="uk-width-medium-1-10"></div>
+                <textarea placeholder="详细退款理由..." class="uk-width-medium-8-10" style="height:210px;font-size:36px;" id="txtRemark"></textarea>
+                <div class="uk-width-medium-1-10"></div>
+                <br />
+                <div class="uk-width-1-1" style="height:25px;"></div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div uRemark="button">
+        <div class="uk-width-medium-1-1">
+            <a href="javascript:;" id="btnRefund" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#00CD00;line-height:90px;">确认退款</a>
+        </div>
+    </div>
+    <br />
+    <div style="height:50px"></div>
+</div>
+
+<input type="hidden" id="IsRefundAll" value="False" />
+
+@section LayoutShop{
+    <script type="text/javascript">
+        $(function () {
+            //事件绑定初始化
+            BindEvent();
+        });
+
+        //自定义方法区
+
+        //输入项相关配置
+        var InputConfig = {
+            'txtRefundPrice': { require: true, name: '退款金额' },
+            'selRefund': { require: true, name: '退款理由' },
+            'txtRemark': { require: true, name: '详细退款理由' }
+        };
+
+        //事件绑定方法
+        function BindEvent() {
+            //是否全部退款
+            ItemCheckOpe();
+
+            //退款按钮事件
+            $('#btnRefund').click(function () {
+                //Init
+                var vOrderID = '@ViewBag.BeOrderID';
+                var vOrderNum = '@ViewBag.OrderNum';
+
+                //验证
+                var inputValidate = new InputValidateCNa();
+                if (!inputValidate.CheckInput(InputConfig, inputValidate)) {
+                    return false;
+                }
+
+                var vPar = {};
+                vPar.OrderID = vOrderID;
+                vPar.OrderNum = vOrderNum;
+                vPar.ResonType = $('#selRefund').val();
+                vPar.ResonRemark = $('#txtRemark').val();
+                vPar.TotalPrice = $('#hTotalPrice').text().substr(1);
+                vPar.RefundPrice = $('#txtRefundPrice').val();
+
+                var vStrPar = JSON.stringify(vPar);
+
+                $.post('/WeShop/OrderRefundOpe',
+                    { r: Math.random(), par1: vStrPar },
+                    function (data) {
+                        if (data && data.Flag) {
+                            alert(data.Msg);
+                            window.location.href = '/WeShop/MyFunctionList';
+                            return false;
+                        }
+                        alert(data.Msg);
+                    },
+                    'json');
+            });
+        }
+
+        //是否全部退款按钮点击事件
+        function ItemCheckOpe() {
+            //选中图标Click事件
+            $('.item-uncheck').click(function () {
+                var vThis = $(this);
+                var isCheck = vThis.hasClass('item-check');
+                if (isCheck) {
+                    vThis.removeClass('item-check'); vThis.addClass('item-uncheck');
+                    $('#IsRefundAll').val('False');
+                    $('#txtRefundPrice').val('0');
+                }
+                else {
+                    vThis.removeClass('item-uncheck'); vThis.addClass('item-check');
+                    $('#IsRefundAll').val('True');
+                    $('#txtRefundPrice').val($('#hTotalPrice').text().substr(1))
+                }
+            });
+        }
+    </script>
+}

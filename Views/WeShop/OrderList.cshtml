@@ -54,7 +54,7 @@
                                     string sTxt = string.Empty;
                                     var vItem = item.ElementAt(0);
                                     if (vItem.OrderState == 3) { if (vItem.LogisticsState == 0) { sTxt = "未发货"; } else if (vItem.LogisticsState == 1) { sTxt = "已发货"; } else if (vItem.LogisticsState == 2) { sTxt = "已签收"; } }
-                                    else if (vItem.OrderState == 4) { sTxt = "已取消"; } else if (vItem.OrderState == 5) { sTxt = "退款中"; }
+                                    else if (vItem.OrderState == 4) { sTxt = "已取消"; } else if (vItem.OrderState == 5) { sTxt = "退款中"; } else if (vItem.OrderState == 7) { sTxt = "退款成功"; }
 
                                     <h1>订单号：<span class="">@item.ElementAt(0).OrderNum</span><span class="uk-float-right right-btn">@sTxt</span></h1>
                                 }

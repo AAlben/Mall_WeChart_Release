@@ -234,7 +234,16 @@
 
                     $.post('/Admin/OrderRefundOpe',
                         { par1: 'success', par2: vStrPar },
-                        function (data) { },
+                        function (data) {
+                            if (data && data.Flag) {
+                                alert('退款处理成功！');
+                                DialogShowHide(false);
+                            }
+                            else {
+                                alert(data.Msg);
+                                return false;
+                            }
+                        },
                         'json');
                 },
                 function () {
@@ -247,7 +256,10 @@
 
                         $.post('/Admin/OrderRefundOpe',
                             { par1: 'refused', par2: vStrPar },
-                            function (data) { },
+                            function (data) {
+                                alert(data.Msg);
+                                if (!data.Flag) { return false; } //阻止关掉弹窗
+                            },
                             'json');
                     }
                 });

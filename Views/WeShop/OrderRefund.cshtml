@@ -148,6 +148,15 @@
                 vPar.TotalPrice = $('#hTotalPrice').text().substr(1);
                 vPar.RefundPrice = $('#txtRefundPrice').val();
 
+                //验证金额
+                var dTotalPrice = parseFloat(vPar.TotalPrice);
+                var dRefundPrice = parseFloat(vPar.RefundPrice);
+                if (dTotalPrice < dRefundPrice) {
+                    NotifyAlert('退款金额不得大于订单总额！');
+                    $('#txtRefundPrice').val('0');
+                    return false;
+                }
+
                 var vStrPar = JSON.stringify(vPar);
 
                 $.post('/WeShop/OrderRefundOpe',

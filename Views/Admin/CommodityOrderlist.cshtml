@@ -238,6 +238,8 @@
                             if (data && data.Flag) {
                                 alert('退款处理成功！');
                                 DialogShowHide(false);
+                                //数据刷新
+                                $('#btnQuery').click();
                             }
                             else {
                                 alert(data.Msg);
@@ -259,6 +261,10 @@
                             function (data) {
                                 alert(data.Msg);
                                 if (!data.Flag) { return false; } //阻止关掉弹窗
+                                else {
+                                    //数据刷新
+                                    $('#btnQuery').click();
+                                }
                             },
                             'json');
                     }

@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewBag.Title = "发表评价";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+@section LayoutHead{
+    <style type="text/css">
+        .oc-star-n {
+            margin-top: -2px;
+            background: url('../../StaticContent/image/public/star.png') no-repeat;
+            text-align: left;
+            width: 100%;
+            background-size: 100%;
+            height: 70px;
+        }
+
+            .oc-star-n ul {
+                background: url(../../StaticContent/image/public/star.png) no-repeat;
+                background-size: 100%;
+                padding-left: 0px;
+            }
+
+            .oc-star-n li {
+                display: inline-block;
+                width: 65px;
+                height: 70px;
+                text-indent: -999px;
+                overflow: hidden;
+                padding: 0;
+                margin-bottom: 0;
+                margin-left: 15px;
+            }
+
+        .star1 {
+            background-position: -361px -105px;
+        }
+
+        .star2 {
+            background-position: -273px -105px;
+        }
+
+        .star3 {
+            background-position: -182px -105px;
+        }
+
+        .star4 {
+            background-position: -91px -105px;
+        }
+
+        .star5 {
+            background-position: 0 -105px;
+        }
+
+        .row-att {
+            padding-left: 60px;
+            line-height: 70px;
+        }
+    </style>
+}
+
+<div class="uk-container page-body">
+    <div class="uk-width-1-1" style="height:25px;"></div>
+    <div uRemark="CommodityInfo">
+        <div class="bgWhite shop-item">
+            <br />
+            <h1>店铺：@ViewBag.StoreName</h1>
+            <br />
+            @{
+                if (ViewBag.BeOrderLine != null)
+                {
+                    foreach (var vItem in ViewBag.BeOrderLine)
+                    {
+                        <div class="uk-panel uk-panel-box uk-flex uk-flex-space-between uk-flex-middle mobile-shopDiv">
+                            <img src="~/@vItem.Photo" alt="" class="uk-thumbnail uk-width-medium-2-10 mini-photo">
+                            <h1 class="uk-width-medium-5-10 uk-text-break">@vItem.Title</h1>
+                            <div class="uk-width-medium-2-10 mobile-font">
+                                <h1 style="color:red;">￥@vItem.RealUnitPrice</h1>
+                                <h1 style="color:red;">×@vItem.Count</h1>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div style="border-top:3px solid #e5e5e5"></div>
+                        <br />
+                        <div class="uk-grid">
+                            <br />
+                            <div class="uk-width-medium-1-10"></div>
+                            <textarea placeholder="请发表评价..." class="uk-width-medium-8-10 txtEvaluation" style="height:210px;font-size:36px;"></textarea>
+                            <div class="uk-width-medium-1-10"></div>
+                            <br />
+                            <div class="uk-width-1-1" style="height:25px;"></div>
+                        </div>
+                        <br />
+                        <div style="border-top:3px solid #e5e5e5"></div>
+                        <br />
+                        <div class="uk-grid">
+                            <br />
+                            <h1 class="uk-width-medium-1-2 uk-text-left row-att">描述相符</h1>
+                            <div class="uk-width-medium-1-2">
+                                <div class="oc-star-n" uType="comm" uID="@vItem.ID"> <ul class="star5" style="background-position: 0px -105px;">  <li val="1"> star1 </li>  <li val="2"> star2 </li>  <li val="3"> star3 </li>  <li val="4"> star4 </li>  <li val="5"> star5 </li>  </ul> </div>
+                            </div>
+                            <br />
+                        </div>
+                    }
+                }
+            }
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left" style="padding-left:60px;">订单总金额</h1>
+                <h1 class="uk-width-medium-1-2 uk-text-right" style="padding-right:35px;color:red;" id="hTotalPrice">￥@ViewBag.TotalPrice</h1>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left row-att">服务态度</h1>
+                <div class="uk-width-medium-1-2">
+                    <div class="oc-star-n" uType="service"> <ul class="star5" style="background-position: 0px -105px;">  <li val="1"> star1 </li>  <li val="2"> star2 </li>  <li val="3"> star3 </li>  <li val="4"> star4 </li>  <li val="5"> star5 </li>  </ul> </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div style="border-top:3px solid #e5e5e5"></div>
+            <br />
+            <div class="uk-grid">
+                <br />
+                <h1 class="uk-width-medium-1-2 uk-text-left row-att">物流服务</h1>
+                <div class="uk-width-medium-1-2">
+                    <div class="oc-star-n" uType="logistics"> <ul class="star5" style="background-position: 0px -105px;">  <li val="1"> star1 </li>  <li val="2"> star2 </li>  <li val="3"> star3 </li>  <li val="4"> star4 </li>  <li val="5"> star5 </li>  </ul> </div>
+                </div>
+                <br />
+            </div>
+            <br />
+        </div>
+    </div>
+    <br />
+    <div uRemark="button">
+        <div class="uk-width-medium-1-1">
+            <a href="javascript:;" id="btnEvaluation" class="uk-button uk-button-large uk-width-1-1 mobile-button" style="background-color:#00CD00;line-height:90px;">确认收货</a>
+        </div>
+    </div>
+    <br />
+    <div style="height:50px"></div>
+</div>
+
+@section LayoutShop{
+    <script type="text/javascript">
+        $(function () {
+            //事件初始化
+            BindEvent();
+        });
+
+        //自定义方法区
+
+        //星星相关样式配置
+        var vStarConfig = {
+            'star1': '-360px -105px',
+            'star2': '-270px -105px',
+            'star3': '-180px -105px',
+            'star4': '-90px -105px',
+            'star5': '0 -105px'
+        }
+
+        //输入项相关配置
+        var InputConfig = {
+            '.txtEvaluation': { dataType: 'list', require: true, name: '商品评价' }
+        };
+
+        //事件初始化
+        function BindEvent() {
+            //评价星星效果事件
+            $('.oc-star-n li').click(function () {
+                //给ul进行class替换即可
+                var vThis = $(event.currentTarget);
+                var vParent = vThis.parent('ul');
+
+                var val = vThis.attr('val');
+                vParent.css('backgroundPosition', vStarConfig['star' + val]);
+            });
+
+            //确认收货按钮事件
+            function btnEvaluation() {
+
+                //验证
+                var inputValidate = new InputValidateCNb();
+                if (!inputValidate.CheckInput(InputConfig, inputValidate)) {
+                    return false;
+                }
+
+                var vBeOrderID = '@ViewBag.BeOrderID';
+
+                //商品评价
+                var arrTxt = $('.txtEvaluation');
+
+                //循环div
+                $('.oc-star-n').each(function (index, item) {
+                    var vThis = $(item);
+                    var vType = vThis.attr('uType');
+
+                    //1.需要记录的数据：商品评分 + 商品评价 + 2 * 整体评分
+                    var vPar = { 'OrderID': vBeOrderID };
+                    var vIDs = '';
+                    var vLevels = '';
+                    var vTxts = '';
+
+                    switch (vType) {
+                        case 'comm':
+                            vIDs += vThis.attr('uID') + ';';
+                            vLevels += vThis.find('ul').attr('class').substr(3) + ';';
+                            vTxts += arrTxt.eq(index) + '|zzsc|';
+                            break;
+
+                        case 'service':
+                            vPar.Service = vThis.find('ul').attr('class').substr(3);
+                            break;
+
+                        case 'logistics':
+                            vPar.Logistics = vThis.find('ul').attr('class').substr(3);
+                            break;
+
+                        default:
+                            break;
+                    } //end switch
+
+                    vPar.IDs = vIDs;
+                    vPar.Levels = vLevels;
+                    vPar.Txts = vTxts;
+
+                    var vStrPar = JSON.stringify(vPar);
+
+                    $.post('/WeShop/OrderEvaluationOpe',
+                        { r: Math.random(), par1: vStrPar },
+                        function (data) {
+                            if (data) {
+                                alert(data.Msg);
+
+                                if (data.Flag) {
+                                    //页面跳转
+                                    window.location.href = '/WeShop/MyFunctionList';
+                                    return false;
+                                }
+                            }
+                        },
+                        'json');
+                });
+            }
+        }
+    </script>
+}

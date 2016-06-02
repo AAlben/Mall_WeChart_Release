@@ -57,5 +57,5 @@ function btnRefund(orderID) {
 
 //确认收货按钮事件
 function btnAffirmReceive(beOrderID) {
-
+    window.location.href = '/WeShop/OrderEvaluation/' + beOrderID;
 }

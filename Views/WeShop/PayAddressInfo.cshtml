@@ -136,7 +136,7 @@
     function WxJsApiOpe() {
         wx.openAddress({
             trigger: function (res) {
-
+                alert(JSON.stringify(res));
             },
             success: function (res) {
                 var addr1 = res.provinceName;
@@ -163,7 +163,7 @@
                 WxJsApiOpe();
             },
             fail: function (res) {
-                //alert(JSON.stringify(res));
+                alert(JSON.stringify(res));
                 window.location.href = '/WeShop/OrderList';
             }
         });
